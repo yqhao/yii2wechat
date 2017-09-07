@@ -1,9 +1,9 @@
 <?php
 $config = [
-    'name'=>'Yii2 Starter Kit',
+    'name'=>'wechat',
     'vendorPath'=>dirname(dirname(__DIR__)).'/vendor',
     'extensions' => require(__DIR__ . '/../../vendor/yiisoft/extensions.php'),
-    'sourceLanguage'=>'zh-CN',
+    'sourceLanguage'=>'en-US',
     'language'=>'zh-CN',
     'bootstrap' => ['log'],
     'components' => [

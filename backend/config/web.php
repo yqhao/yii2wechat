@@ -1,8 +1,6 @@
 <?php
 $config = [
     'homeUrl' => Yii::getAlias('@backendUrl'),
-    'sourceLanguage'=>'zh-CN',
-    'language'=>'zh-CN',
     'controllerNamespace' => 'backend\controllers',
     'defaultRoute' => 'timeline-event/index',
     'controllerMap' => [

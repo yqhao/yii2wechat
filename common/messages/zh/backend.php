@@ -17,9 +17,9 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Main' => '',
-    'Other' => '',
-    'This email has already been taken.' => '',
+    'Main' => '主面板',
+    'Other' => '其他',
+    'This email has already been taken.' => '此电子邮件已被使用',
     'Account' => '账号',
     'Application' => '应用程序',
     'Application settings' => '系统设置',
@@ -35,7 +35,7 @@ return [
     'Cache' => '缓存',
     'Cache entry has been successfully deleted' => '缓存删除成功',
     'Cache has been successfully flushed' => '缓存全部清除成功',
-    'Carousel Widgets' => 'Carousel Widgets',
+    'Carousel Widgets' => '转盘小部件',
     'Carousel slide was successfully saved' => 'Carousel slide was successfully saved',
     'Category' => '分类',
     'Clear' => '清除',
@@ -154,7 +154,7 @@ return [
     'View user' => '查看用户',
     'Web Server' => 'Web 服务',
     'Widget Carousel Items' => 'Widget Carousel Items',
-    'Widget Carousels' => 'Widget Carousels',
+    'Widget Carousels' => '转盘小部件',
     'Widget Menus' => 'Widget Menus',
     'You have new event' => '你有新的事件',
     'You have new user!' => '你有新的用户',

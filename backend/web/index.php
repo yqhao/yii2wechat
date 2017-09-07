@@ -21,5 +21,4 @@ $config = \yii\helpers\ArrayHelper::merge(
 );
 
 $app = (new yii\web\Application($config));
-$app->language = "zh-CN";
 $app->run();
