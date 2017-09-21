@@ -160,6 +160,12 @@ $bundle = BackendAsset::register($this);
                         ]
                     ],
                     [
+                        'label' => Yii::t('backend', 'Machine'),
+                        'icon' => '<i class="fa fa-bar-chart-o"></i>',
+                        'url' => ['/machine/index'],
+                        'badgeBgClass' => 'label-success',
+                    ],
+                    [
                         'label' => Yii::t('backend', 'System'),
                         'options' => ['class' => 'header']
                     ],
