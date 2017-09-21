@@ -38,7 +38,24 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'dist_id',
             // 'order_count',
             // 'order_amount',
-
+            [
+                'attribute' => 'order_counts',
+                'label'=>'订单总数',
+                'value'=>
+                    function($model){
+                        return  count($model->machineOrders);
+                    },
+                'headerOptions' => ['width' => '80'],
+            ],
+            [
+                'attribute' => 'order_amounts',
+                'label'=>'订单总额',
+                'value'=>
+                    function($model){
+                        return  ($model->machineOrderAmount);
+                    },
+                'headerOptions' => ['width' => '80'],
+            ],
             ['class' => 'yii\grid\ActionColumn','template'=>'{view}'],
         ],
     ]); ?>

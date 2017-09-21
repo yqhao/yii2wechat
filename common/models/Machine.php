@@ -19,6 +19,8 @@ use Yii;
  * @property integer $dist_id
  * @property integer $order_count
  * @property string $order_amount
+ *
+ * @property MachineOrder[] $machineOrders
  */
 class Machine extends \yii\db\ActiveRecord
 {
@@ -36,7 +38,7 @@ class Machine extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['m_id'], 'required'],
+            [['m_id', 'm_code', 'm_name'], 'required'],
             [['m_id', 'city_id', 'dist_id', 'order_count'], 'integer'],
             [['last_time'], 'safe'],
             [['max_amount', 'order_amount'], 'number'],
@@ -65,5 +67,21 @@ class Machine extends \yii\db\ActiveRecord
             'order_count' => Yii::t('common', 'Order Count'),
             'order_amount' => Yii::t('common', 'Order Amount'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMachineOrders()
+    {
+        return $this->hasMany(MachineOrder::className(), ['machine_id' => 'm_id']);
+    }
+    public function getMachineOrderAmount()
+    {
+        $mid = $this->m_id;
+        $order_amount = Yii::$app->db->createCommand("SELECT SUM(spend_money) as order_amount FROM machine_order WHERE machine_id=:m_id GROUP BY machine_id")
+            ->bindParam(":m_id",$mid)
+            ->queryScalar();
+        return (float)$order_amount;
     }
 }

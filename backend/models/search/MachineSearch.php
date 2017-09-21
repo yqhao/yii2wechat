@@ -54,19 +54,22 @@ class MachineSearch extends Machine
 
         $query->andFilterWhere([
             'm_id' => $this->m_id,
-            'last_time' => $this->last_time,
+//            'last_time' => $this->last_time,
             'max_amount' => $this->max_amount,
             'city_id' => $this->city_id,
             'dist_id' => $this->dist_id,
-            'order_count' => $this->order_count,
-            'order_amount' => $this->order_amount,
+//            'order_count' => $this->order_count,
+//            'order_amount' => $this->order_amount,
         ]);
 
         $query->andFilterWhere(['like', 'm_code', $this->m_code])
             ->andFilterWhere(['like', 'm_name', $this->m_name])
             ->andFilterWhere(['like', 'city_name', $this->city_name])
             ->andFilterWhere(['like', 'dist_name', $this->dist_name])
-            ->andFilterWhere(['like', 'street', $this->street]);
+            ->andFilterWhere(['like', 'street', $this->street])
+            ->andFilterWhere(['between', 'last_time',
+                date("Y-m-d 00:00:00",strtotime($this->last_time)),
+                date("Y-m-d 23:59:59",strtotime($this->last_time))]);
 
         return $dataProvider;
     }
