@@ -1,6 +1,6 @@
 <?php
 $config = [
-    'name'=>'wechat',
+    'name'=>'yii2',
     'vendorPath'=>dirname(dirname(__DIR__)).'/vendor',
     'extensions' => require(__DIR__ . '/../../vendor/yiisoft/extensions.php'),
     'sourceLanguage'=>'en-US',
@@ -63,7 +63,25 @@ $config = [
             'charset' => 'utf8',
             'enableSchemaCache' => YII_ENV_PROD,
         ],
+        'db_online'=>[
+            'class'=>'yii\db\Connection',
+            'dsn' => env('ONLINE_DB_DSN'),
+            'username' => env('ONLINE_DB_USERNAME'),
+            'password' => env('ONLINE_DB_PASSWORD'),
+            'tablePrefix' => env('ONLINE_DB_TABLE_PREFIX'),
+            'charset' => 'utf8',
+            'enableSchemaCache' => YII_ENV_PROD,
+        ],
 
+        'db_bi'=>[
+            'class'=>'yii\db\Connection',
+            'dsn' => env('BI_DB_DSN'),
+            'username' => env('BI_DB_USERNAME'),
+            'password' => env('BI_DB_PASSWORD'),
+            'tablePrefix' => env('BI_DB_TABLE_PREFIX'),
+            'charset' => 'utf8',
+            'enableSchemaCache' => YII_ENV_PROD,
+        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -95,7 +113,7 @@ $config = [
                         'backend'=>'backend.php',
                         'frontend'=>'frontend.php',
                     ],
-                    'on missingTranslation' => ['\backend\modules\i18n\Module', 'missingTranslation']
+                    //'on missingTranslation' => ['\backend\modules\i18n\Module', 'missingTranslation']
                 ],
                 /* Uncomment this code to use DbMessageSource
                  '*'=> [

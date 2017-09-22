@@ -66,10 +66,14 @@ class MachineSearch extends Machine
             ->andFilterWhere(['like', 'm_name', $this->m_name])
             ->andFilterWhere(['like', 'city_name', $this->city_name])
             ->andFilterWhere(['like', 'dist_name', $this->dist_name])
-            ->andFilterWhere(['like', 'street', $this->street])
-            ->andFilterWhere(['between', 'last_time',
-                date("Y-m-d 00:00:00",strtotime($this->last_time)),
-                date("Y-m-d 23:59:59",strtotime($this->last_time))]);
+            ->andFilterWhere(['like', 'street', $this->street]);
+
+        $last_time = strtotime($this->last_time);
+        if($this->last_time && $last_time>1451577600){
+            $query->andFilterWhere(['between', 'last_time',
+                date("Y-m-d 00:00:00",$last_time),
+                date("Y-m-d 23:59:59",$last_time)]);
+        }
 
         return $dataProvider;
     }
