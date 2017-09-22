@@ -56,7 +56,28 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                 'headerOptions' => ['width' => '80'],
             ],
-            ['class' => 'yii\grid\ActionColumn','template'=>'{view}'],
+            //['class' => 'yii\grid\ActionColumn','template'=>'{view}'],
+            [
+                'header' => "查看",
+                'class' => 'yii\grid\ActionColumn',
+                'template'=> '{view} {update}',
+                'headerOptions' => ['width' => '140'],
+                'buttons' => [
+                    'view' => function ($url, $model, $key) {
+                        return Html::a('查看', [
+                            'machine/view','id'=>$model->m_id
+                        ], ['class' => 'btn btn-xs btn-success','target'=>'_blank']
+                        );
+                    },
+                    'update' => function ($url, $model, $key) {
+                        return Html::a('订单', [
+                            'machine-order/index','MachineOrderSearch[machine_id]'=>$model->m_id
+                            ], ['class' => 'btn btn-xs btn-info','target'=>'_blank']
+                        );
+                    }
+
+                ]
+            ],
         ],
     ]); ?>
 
