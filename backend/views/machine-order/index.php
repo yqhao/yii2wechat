@@ -14,11 +14,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?php echo Html::a(Yii::t('backend', 'Create {modelClass}', [
-    'modelClass' => 'Machine Order',
-]), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+<!--    <p>-->
+<!--        --><?php //echo Html::a(Yii::t('backend', 'Create {modelClass}', [
+//    'modelClass' => 'Machine Order',
+//]), ['create'], ['class' => 'btn btn-success']) ?>
+<!--    </p>-->
 
     <?php echo GridView::widget([
         'dataProvider' => $dataProvider,

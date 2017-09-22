@@ -18,9 +18,9 @@ class MachineSearch extends Machine
     public function rules()
     {
         return [
-            [['m_id', 'city_id', 'dist_id', 'order_count'], 'integer'],
+            [['m_id', 'city_id', 'dist_id'], 'integer'],
             [['m_code', 'm_name', 'city_name', 'dist_name', 'street', 'last_time'], 'safe'],
-            [['max_amount', 'order_amount'], 'number'],
+            [['max_amount'], 'number'],
         ];
     }
 

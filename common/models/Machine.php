@@ -19,6 +19,8 @@ use Yii;
  * @property integer $dist_id
  * @property integer $order_count
  * @property string $order_amount
+ * @property integer $last_order_count
+ * @property string $last_order_amount
  *
  * @property MachineOrder[] $machineOrders
  */
@@ -39,9 +41,9 @@ class Machine extends \yii\db\ActiveRecord
     {
         return [
             [['m_id', 'm_code', 'm_name'], 'required'],
-            [['m_id', 'city_id', 'dist_id', 'order_count'], 'integer'],
+            [['m_id', 'city_id', 'dist_id', 'order_count', 'last_order_count'], 'integer'],
             [['last_time'], 'safe'],
-            [['max_amount', 'order_amount'], 'number'],
+            [['max_amount', 'order_amount', 'last_order_amount'], 'number'],
             [['m_code'], 'string', 'max' => 64],
             [['m_name', 'street'], 'string', 'max' => 255],
             [['city_name', 'dist_name'], 'string', 'max' => 32],
@@ -66,6 +68,8 @@ class Machine extends \yii\db\ActiveRecord
             'dist_id' => Yii::t('common', 'Dist ID'),
             'order_count' => Yii::t('common', 'Order Count'),
             'order_amount' => Yii::t('common', 'Order Amount'),
+            'last_order_count' => Yii::t('common', 'Last Order Count'),
+            'last_order_amount' => Yii::t('common', 'Last Order Amount'),
         ];
     }
 

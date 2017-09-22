@@ -14,11 +14,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?php echo Html::a(Yii::t('backend', 'Create {modelClass}', [
-    'modelClass' => 'Machine',
-]), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+<!--    <p>-->
+<!--        --><?php //echo Html::a(Yii::t('backend', 'Create {modelClass}', [
+//    'modelClass' => 'Machine',
+//]), ['create'], ['class' => 'btn btn-success']) ?>
+<!--    </p>-->
 
     <?php echo GridView::widget([
         'dataProvider' => $dataProvider,
@@ -36,26 +36,28 @@ $this->params['breadcrumbs'][] = $this->title;
              'max_amount',
             // 'city_id',
             // 'dist_id',
-            // 'order_count',
-            // 'order_amount',
-            [
-                'attribute' => 'order_counts',
-                'label'=>'订单总数',
-                'value'=>
-                    function($model){
-                        return  count($model->machineOrders);
-                    },
-                'headerOptions' => ['width' => '80'],
-            ],
-            [
-                'attribute' => 'order_amounts',
-                'label'=>'订单总额',
-                'value'=>
-                    function($model){
-                        return  ($model->machineOrderAmount);
-                    },
-                'headerOptions' => ['width' => '80'],
-            ],
+             'order_count',
+             'order_amount',
+             'last_order_count',
+             'last_order_amount',
+//            [
+//                'attribute' => 'order_counts',
+//                'label'=>'订单总数',
+//                'value'=>
+//                    function($model){
+//                        return  count($model->machineOrders);
+//                    },
+//                'headerOptions' => ['width' => '80'],
+//            ],
+//            [
+//                'attribute' => 'order_amounts',
+//                'label'=>'订单总额',
+//                'value'=>
+//                    function($model){
+//                        return  ($model->machineOrderAmount);
+//                    },
+//                'headerOptions' => ['width' => '80'],
+//            ],
             //['class' => 'yii\grid\ActionColumn','template'=>'{view}'],
             [
                 'header' => "查看",

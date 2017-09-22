@@ -8,17 +8,51 @@ use yii\helpers\Console;
 
 /**
  * @author Eugene Terentev <eugene@terentev.net>
+ * @property \yii\db\Connection $db_to The database connection. This property is read-only.
+ * @property \yii\db\Connection $db_from The database connection. This property is read-only.
  */
 class SyncController extends Controller
 {
 
+    public $sync_order_start_date;
+    public $sync_order_start_time;
+    public $this_month;
+    public $last_month;
+
+    public $db_to;
+    public $db_from;
+
+    public $range_day = 60;
+
+    public function beforeAction($action)
+    {
+        $this->db_to = Yii::$app->db;
+        $this->db_from = Yii::$app->db_bi;
+
+        $this->sync_order_start_time = strtotime("-".$this->range_day." day",time());//用于同步订单,开始时间
+        $this->sync_order_start_date = date('Y-m-d',$this->sync_order_start_time);//用于同步订单,开始时间
+
+        $this->this_month = date('Ym',time());//用于统计
+        $this->last_month = date('Ym',strtotime("-1 month",time()));//用于统计
+
+        return parent::beforeAction($action);
+    }
     public function actionRun()
     {
+
         set_time_limit(0);
-        echo "START".PHP_EOL;
+        echo "START ".$this->db_to->dsn.PHP_EOL;
         $t = time();
-        $order_start_time = strtotime("2017-09-01");
-        $last_order_id = Yii::$app->db_online->createCommand("SELECT max(id) FROM machine_order")->queryScalar();
+        $this->db_to->createCommand()->update('machine',[
+            'order_count'=>0,
+            'order_amount'=>0,
+            'last_order_count'=>0,
+            'last_order_amount'=>0
+        ])->execute();
+        echo "CLEAN amount".PHP_EOL;
+
+        $last_order_id = $this->db_to->createCommand("SELECT max(id) FROM machine_order")->queryScalar();
+        echo "last_order_id ".$last_order_id.PHP_EOL;
 
         $sql = "SELECT
                 m.id as m_id,
@@ -73,15 +107,15 @@ class SyncController extends Controller
                     city_id = VALUES(city_id),
                     dist_id = VALUES(dist_id)";
 
-        $command = Yii::$app->db_bi->createCommand($sql);
+        $command = $this->db_from->createCommand($sql);
         $command->execute();
         $reader = $command->query();
         foreach ($reader as $key => $val) {
             if(!empty($val)){
                 echo $key." ";
-                $status = Yii::$app->db_online->createCommand($insertSql,$val)->execute();
+                $status = $this->db_to->createCommand($insertSql,$val)->execute();
                 if($status) echo "UPDATE ".$val['m_id'].'-'.$status.PHP_EOL;
-                $this->syncOrder((int)$last_order_id,$val['m_id'],$order_start_time);
+                $this->syncOrder((int)$last_order_id,$val['m_id']);
             }
             unset($reader->$key);
         }
@@ -90,9 +124,17 @@ class SyncController extends Controller
         echo PHP_EOL."END used times ".(time()-$t).PHP_EOL;
     }
 
-    public function syncOrder($o_id,$m_id,$c_time)
+    public function syncOrder($o_id,$m_id)
     {
         $t = time();
+        $c_time = $this->sync_order_start_time;
+        $order_count = 0;
+        $order_total_amount = 0;
+        $last_order_count = 0;
+        $last_order_total_amount = 0;
+
+
+
         $sql = "SELECT
                 `id`,
                 `franchisee_id`,
@@ -168,19 +210,41 @@ class SyncController extends Controller
                 :gcp_order_code
                 )";
 
-        $command = Yii::$app->db_bi->createCommand($sql,[":o_id"=>$o_id,":m_id"=>$m_id,":c_time"=>$c_time]);
+        $command = $this->db_from->createCommand($sql,[":o_id"=>$o_id,":m_id"=>$m_id,":c_time"=>$c_time]);
         $command->execute();
         $reader = $command->query();
         $i = 0;
         foreach ($reader as $key => $val) {
             if(!empty($val)){
-                $status = Yii::$app->db_online->createCommand($insertSql,$val)->execute();
+                if($this->this_month == date('Ym',$val['create_time'])){
+                    $order_count++;
+                    $order_total_amount += $val['spend_money'];
+                }else{
+                    $last_order_count++;
+                    $last_order_total_amount += $val['spend_money'];
+                }
+
+                $status = $this->db_to->createCommand($insertSql,$val)->execute();
                 if($status) $i++;
             }
             //unset($reader->$key);
         }
 
+        if($order_count>0 || $last_order_count>0){
+            $this->db_to->createCommand()->update('machine',
+                [
+                    'order_count'=>$order_count,
+                    'order_amount'=>$order_total_amount,
+                    'last_order_count'=>$last_order_count,
+                    'last_order_amount'=>$last_order_total_amount
+                ],
+                'm_id=:m_id',[':m_id'=>$m_id])->execute();
+        }
 
-        echo "INSERT ORDERS ".$i." END. Used times ".(time()-$t).PHP_EOL;
+        echo "  INSERT ORDERS ".$i." END. Used times ".(time()-$t).PHP_EOL;
+    }
+
+    public function sumOrderTotalAmount(){
+
     }
 }

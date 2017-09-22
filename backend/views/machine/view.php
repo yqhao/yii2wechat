@@ -12,16 +12,16 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="machine-view">
 
-    <p>
-        <?php echo Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->m_id], ['class' => 'btn btn-primary']) ?>
-        <?php echo Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->m_id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('backend', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+<!--    <p>-->
+<!--        --><?php //echo Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->m_id], ['class' => 'btn btn-primary']) ?>
+<!--        --><?php //echo Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->m_id], [
+//            'class' => 'btn btn-danger',
+//            'data' => [
+//                'confirm' => Yii::t('backend', 'Are you sure you want to delete this item?'),
+//                'method' => 'post',
+//            ],
+//        ]) ?>
+<!--    </p>-->
 
     <?php echo DetailView::widget([
         'model' => $model,
