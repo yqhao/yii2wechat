@@ -46,6 +46,11 @@ class MachineOrderSearch extends MachineOrder
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'create_time' => SORT_DESC,
+                ]
+            ],
         ]);
 
         if (!($this->load($params) && $this->validate())) {

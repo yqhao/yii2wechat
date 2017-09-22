@@ -46,6 +46,11 @@ class MachineSearch extends Machine
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'last_time' => SORT_DESC,
+                ]
+            ],
         ]);
 
         if (!($this->load($params) && $this->validate())) {
