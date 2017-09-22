@@ -241,7 +241,7 @@ class SyncController extends Controller
                 'm_id=:m_id',[':m_id'=>$m_id])->execute();
         }
 
-        echo "  INSERT ORDERS ".$i." END. Used times ".(time()-$t).PHP_EOL;
+        echo "    INSERT ORDERS ".$i." END. Used times ".(time()-$t).PHP_EOL;
     }
 
     public function sumOrderTotalAmount(){
