@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+
 use Yii;
 use common\models\WeiboMedia;
 use yii\data\ActiveDataProvider;
@@ -9,7 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\Weibo;
-
+use yii\helpers\Url;
 /**
  * WeiboMediaController implements the CRUD actions for WeiboMedia model.
  */
@@ -73,9 +74,13 @@ class WeiboMediaController extends Controller
     }*/
     public function actionCreate()
     {
+        $path = Yii::getAlias('@app').DIRECTORY_SEPARATOR.'web'.DIRECTORY_SEPARATOR.'dl'.DIRECTORY_SEPARATOR;
+        $host = Yii::getAlias('@backendUrl');
         $model = new WeiboMedia();
         $Weibo = new Weibo();
         $medias = [];
+        $mediasLocal = [];
+
         if(Yii::$app->request->isPost && $model->load(Yii::$app->request->post())){
 
             if($model->is_vedio){
@@ -85,8 +90,12 @@ class WeiboMediaController extends Controller
             }
 
             if (!empty($medias))foreach ($medias as $fileName => $src){
-                if($model->save_path){
-                    $status = $Weibo->saveFile($src,$model->save_path.DIRECTORY_SEPARATOR.$fileName);
+                if($model->is_save){
+                    $status = $Weibo->saveFile($src,$path.$fileName);
+                    if($status){
+//                        $mediasLocal[$fileName] = $host.'/dl/'.$fileName;
+                        $mediasLocal[$fileName] = Url::to(['weibo-media/dl','filename'=>$fileName]);
+                    }
                 }
                 //echo '<a target="_blank" href="'.$src.'">'.$src.'</a> - ok</br>';
             }
@@ -94,19 +103,33 @@ class WeiboMediaController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'mediasLocal' => $mediasLocal,
             'medias' => $medias
         ]);
     }
-    public function loadPage($url,$savePath=''){
 
-        $medias = $this->findPageMedia($this->curl($url));
-        if (!empty($medias))foreach ($medias as $fileName => $src){
-            if($savePath){
-                $status = $this->saveFile($src,$savePath.DIRECTORY_SEPARATOR.$fileName);
-            }
-            echo '<a target="_blank" href="'.$src.'">'.$src.'</a> - ok</br>';
-        }
-
+    public function actionDl($filename)
+    {
+        $path = Yii::getAlias('@app').DIRECTORY_SEPARATOR.'web'.DIRECTORY_SEPARATOR.'dl'.DIRECTORY_SEPARATOR;
+        $filePath = $path.$filename;
+        $fileinfo = pathinfo($filePath);
+        //var_dump($fileinfo);exit;
+        header('Content-type: application/x-'.$fileinfo['extension']);
+        header('Content-Disposition: attachment; filename='.$fileinfo['basename']);
+        header('Content-Length: '.filesize($filePath));
+        readfile($filePath);
+        exit();
+//
+//        header('Content-Description: File Transfer');
+//
+//        header('Content-Type: application/octet-stream');
+//        header('Content-Disposition: attachment; filename='.basename($filePath));
+//        header('Content-Transfer-Encoding: binary');
+//        header('Expires: 0');
+//        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+//        header('Pragma: public');
+//        header('Content-Length: ' . filesize($filePath));
+//        readfile($filePath);
     }
 
     /**

@@ -15,6 +15,14 @@ use yii\bootstrap\ActiveForm;
         <?php endforeach; ?>
     </div>
 <?php endif; ?>
+<?php if(!empty($mediasLocal)): ?>
+    <div>
+        <span>下载:</span></br>
+        <?php foreach ($mediasLocal as $name => $src): ?>
+            <a target="_blank" href="<?= $src;?>"><?= $name;?></a></br></br>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
 <div class="weibo-media-form">
 
     <?php $form = ActiveForm::begin(); ?>
