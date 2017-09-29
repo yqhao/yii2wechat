@@ -160,6 +160,12 @@ $bundle = BackendAsset::register($this);
                         ]
                     ],
                     [
+                        'label' => '微博解析',
+                        'icon' => '<i class="fa fa-bar-chart-o"></i>',
+                        'url' => ['/weibo-media/create'],
+                        'badgeBgClass' => 'label-success',
+                    ],
+                    [
                         'label' => Yii::t('backend', 'Machine'),
                         'icon' => '<i class="fa fa-bar-chart-o"></i>',
                         'url' => ['/machine/index'],
