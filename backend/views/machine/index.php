@@ -36,8 +36,24 @@ $this->params['breadcrumbs'][] = $this->title;
              'max_amount',
             // 'city_id',
             // 'dist_id',
-             'order_count',
-             'order_amount',
+            [
+                'format'=>'raw',
+                'attribute' => 'order_count',
+                'label'=>'order_count',
+                'value'=>
+                    function($model){
+                        return  $model->order_count>0 ? "<label class='text-red'>".$model->order_count."</label>" : $model->order_count;
+                    }
+            ],
+            [
+                'format'=>'raw',
+                'attribute' => 'order_amount',
+                'label'=>'order_amount',
+                'value'=>
+                    function($model){
+                        return  $model->order_amount>0 ? "<label class='text-red'>".$model->order_amount."</label>" : $model->order_amount;
+                    }
+            ],
              'last_order_count',
              'last_order_amount',
 //            [
