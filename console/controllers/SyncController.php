@@ -120,7 +120,8 @@ class SyncController extends Controller
             unset($reader->$key);
         }
 
-
+        $this->sumOrderTotalAmountThisMonth();
+        $this->sumOrderTotalAmountLastMonth();
         echo PHP_EOL."END used times ".(time()-$t).PHP_EOL;
     }
 
@@ -216,13 +217,13 @@ class SyncController extends Controller
         $i = 0;
         foreach ($reader as $key => $val) {
             if(!empty($val)){
-                if($this->this_month == date('Ym',$val['create_time'])){
-                    $order_count++;
-                    $order_total_amount += $val['spend_money'];
-                }else{
-                    $last_order_count++;
-                    $last_order_total_amount += $val['spend_money'];
-                }
+//                if($this->this_month == date('Ym',$val['create_time'])){
+//                    $order_count++;
+//                    $order_total_amount += $val['spend_money'];
+//                }else{
+//                    $last_order_count++;
+//                    $last_order_total_amount += $val['spend_money'];
+//                }
 
                 $status = $this->db_to->createCommand($insertSql,$val)->execute();
                 if($status) $i++;
@@ -230,21 +231,77 @@ class SyncController extends Controller
             //unset($reader->$key);
         }
 
-        if($order_count>0 || $last_order_count>0){
-            $this->db_to->createCommand()->update('machine',
-                [
-                    'order_count'=>$order_count,
-                    'order_amount'=>$order_total_amount,
-                    'last_order_count'=>$last_order_count,
-                    'last_order_amount'=>$last_order_total_amount
-                ],
-                'm_id=:m_id',[':m_id'=>$m_id])->execute();
-        }
+//        if($order_count>0 || $last_order_count>0){
+//            $this->db_to->createCommand()->update('machine',
+//                [
+//                    'order_count'=>$order_count,
+//                    'order_amount'=>$order_total_amount,
+//                    'last_order_count'=>$last_order_count,
+//                    'last_order_amount'=>$last_order_total_amount
+//                ],
+//                'm_id=:m_id',[':m_id'=>$m_id])->execute();
+//        }
 
         echo "    INSERT ORDERS ".$i." END. Used times ".(time()-$t).PHP_EOL;
     }
 
-    public function sumOrderTotalAmount(){
+    public function sumOrderTotalAmountThisMonth(){
+        $this_month_start = strtotime($this->this_month.'01');
+        $last_month_start = strtotime($this->last_month.'01');
+
+        $sql = "SELECT 	machine_id,COUNT(machine_id) AS order_count,SUM(spend_money) AS order_amount 
+                FROM machine_order WHERE create_time BETWEEN :st AND :ed 
+                GROUP BY machine_id";
+        //$update = "UPDATE machine SET order_count=:oc,order_amount=:oa WHERE m_id=:mid";
+        //this month
+        $command = $this->db_to->createCommand($sql,[":st"=>$this_month_start,":ed"=>(time()+864000)]);
+        $command->execute();
+        $reader = $command->query();
+        $this_updates = 0;
+        foreach ($reader as $key => $val) {
+            if(!empty($val)){
+                $this->db_to->createCommand()->update('machine',
+                    [
+                        'order_count'=>$val['order_count'],
+                        'order_amount'=>$val['order_amount']
+                    ],
+                    'm_id=:m_id',[':m_id'=>$val['machine_id']])->execute();
+                $this_updates++;
+            }
+        }
+        echo PHP_EOL." UPDATE THIS MONTH ".$this_updates;
+
+    }
+    public function sumOrderTotalAmountLastMonth(){
+        $this_month_start = strtotime($this->this_month.'01');
+        $last_month_start = strtotime($this->last_month.'01');
+
+        $sql = "SELECT 	machine_id,COUNT(machine_id) AS order_count,SUM(spend_money) AS order_amount 
+                FROM machine_order WHERE create_time BETWEEN :st AND :ed 
+                GROUP BY machine_id";
+
+        // last month
+        $command = $this->db_to->createCommand($sql,[":st"=>$last_month_start,":ed"=>($this_month_start-1)]);
+        $command->execute();
+        $reader = $command->query();
+        $this_updates = 0;
+        foreach ($reader as $key => $val) {
+            if(!empty($val)){
+                $this->db_to->createCommand()->update('machine',
+                    [
+                        'last_order_count'=>$val['order_count'],
+                        'last_order_amount'=>$val['order_amount']
+                    ],
+                    'm_id=:m_id',[':m_id'=>$val['machine_id']])->execute();
+                $this_updates++;
+            }
+        }
+        echo PHP_EOL." UPDATE THIS MONTH ".$this_updates;
+    }
+
+    public function actionSum(){
+        $this->sumOrderTotalAmountThisMonth();
+        $this->sumOrderTotalAmountLastMonth();
 
     }
 }
