@@ -1,0 +1,56 @@
+<view class="communityNotify-wrap" id="communityNotify">
+  <view class="communityNotify-head">
+    <icon class="communityNotify-back ico-moon icon-leftarrow" catchtap="turnBack"></icon>
+    <view class="communityNotify-tab">
+      <view class="{{tabActive == 'like' ? 'active' : ''}}" data-type="like" catchtap="changeTab" style="color:{{tabActive == 'like' ? theme_color : ''}};border-color:{{tabActive == 'like' ? theme_color : ''}};">点赞</view>
+      <view class="{{tabActive == 'comment' ? 'active' : ''}}" data-type="comment" catchtap="changeTab" style="color:{{tabActive == 'comment' ? theme_color : ''}};border-color:{{tabActive == 'comment' ? theme_color : ''}};">评论</view>
+    </view>
+  </view>
+  <view class="communityNotify-content" id="communityNotify-content">
+    <scroll-view class="communityNotify-scrollwrap {{tabActive == 'like' ? 'active' : ''}}" data-type="publish" scroll-y="true" bindscrolltolower="likeScroll">
+      <view class="communityNotify-like-ul">
+        <view class="communityNotify-li" wx:for="{{likeList}}" data-id="{{item.id}}">
+          <view>
+            <view class="community-li-cover">
+              <image src="{{item.headimgurl}}"></image>
+            </view>
+            <view class="community-li-author">
+              <text class="community-li-name text-p">{{item.nickname}}</text>
+              <text class="community-li-time text-p">{{item.add_time}}</text>
+            </view>
+          </view>
+          <view class="communityNotify-li-content">
+            <text wx:if="{{item.type == 1}}" class="text-p">赞了你的话题</text>
+            <text wx:if="{{item.type == 2}}" class="text-p">赞了你的评论</text>
+          </view>
+          <view class="communityNotify-li-post" data-id="{{item.article_id}}" catchtap="turnToDetail">
+            <image wx:if="{{item.type == 1 && item.obj.content.imgs}}" src="{{item.obj.content.imgs[0]}}"></image><text class="communityNotify-li-post-text">{{item.post_text}}</text>
+          </view>
+        </view>
+        <view wx:if="{{likeListData.nomore}}" class="communityNotify-li-none">没有更多了</view>
+      </view>
+    </scroll-view>
+    <scroll-view class="communityNotify-scrollwrap {{tabActive == 'comment' ? 'active' : ''}}" data-type="reply" scroll-y="true" bindscrolltolower="commentScroll">
+      <view class="communityNotify-comment-ul">
+        <view class="communityNotify-li" wx:for="{{commentList}}" data-id="{{item.id}}">
+          <view>
+            <view class="community-li-cover">
+              <image src="{{item.headimgurl}}"></image>
+            </view>
+            <view class="community-li-author">
+              <text class="community-li-name text-p">{{item.nickname}}</text>
+              <text class="community-li-time text-p">{{item.add_time}}</text>
+            </view>
+          </view>
+          <view class="communityNotify-li-content">
+            <text class="text-p"><text wx:if="{{item.comment_id != 0 && !!item.comment_id}}" class="communityNotify-replyto">@{{item.content.reply_to.nickname}}</text>{{item.content_text}}</text>
+          </view>
+          <view class="communityNotify-li-post" data-id="{{item.obj_id}}" catchtap="turnToDetail" >
+            <image wx:if="{{item.obj.content.imgs}}" src="{{item.obj.content.imgs[0]}}"></image><text class="communityNotify-li-post-text">{{item.article_text}}</text>
+          </view>
+        </view>
+        <view wx:if="{{commentListData.nomore}}" class="communityNotify-li-none">没有更多了</view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

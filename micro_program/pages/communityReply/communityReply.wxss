@@ -1,0 +1,29 @@
+.communityReply-wrap{
+  background-color: #eee;
+  height: 100vh;
+}
+.communityReply-main{
+  width: 100%;
+  background-color: #fff;
+  border-bottom: 1px solid #d7d7d7;
+}
+.communityReply-text{
+  width: 90%;
+  padding: 5%;
+  height: 200px;
+  resize: none;
+  outline: none;
+  border: none;
+}
+.communityReply-btn{
+  display: block;
+  width: 90%;
+  height: 35px;
+  border: none;
+  color: #fff;
+  background-color: #00b6f8;
+  margin: 0 auto;
+  border-radius: 3px;
+  margin-top: 20px;
+  line-height: 35px;
+}

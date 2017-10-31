@@ -1,0 +1,64 @@
+<view class="communityUsercenter-wrap" id="communityUsercenter">
+  <view class="communityUsercenter-head">
+    <icon class="communityUsercenter-back ico-moon icon-leftarrow" catchtap="turnBack"></icon>
+    <view class="communityUsercenter-tab">
+      <view class="{{tabActive == 'publish' ? 'active' : ''}}" data-type="publish" catchtap="changeTab" style="color:{{tabActive == 'publish' ? theme_color : ''}};border-color:{{tabActive == 'publish' ? theme_color : ''}};">发布（{{myArticleCount}}）</view>
+      <view class="{{tabActive == 'reply' ? 'active' : ''}}" data-type="reply" catchtap="changeTab" style="color:{{tabActive == 'reply' ? theme_color : ''}};border-color:{{tabActive == 'reply' ? theme_color : ''}};">回帖（{{myCommentCount}}）</view>
+    </view>
+  </view>
+  <view class="communityUsercenter-content" id="communityUsercenter-content">
+    <scroll-view class="communityUsercenter-scrollwrap {{tabActive == 'publish' ? 'active' : ''}}" data-type="publish" scroll-y="true" bindscrolltolower="myArticleScroll">
+      <view class="communityUsercenter-mytopic-ul">
+        <view class="communityUsercenter-li" wx:for="{{myArticleList}}" wx:for-index="sInd" data-id="{{item.id}}" catchtap="turnToDetail">
+          <view>
+            <view class="community-li-cover">
+              <image src="{{item.headimgurl}}"></image>
+            </view>
+            <view class="community-li-author">
+              <text class="community-li-name">{{item.nickname}}</text>
+              <text class="community-li-time">{{item.add_time}}</text>
+            </view>
+            <view wx:if="{{item.hot_flag == 1}}" class="communityUsercenter-myli-label">精品</view>
+          </view>
+          <text class="communityUsercenter-myli-title">{{item.title}}</text>
+          <view class="communityUsercenter-myli-content">
+            <text class="text-p">{{item.content_text}}</text>
+          </view>
+          <view wx:if="{{item.content.imgs}}" class="communityUsercenter-imgli-wrap">
+            <view wx:for="{{item.content.imgs}}" wx:for-item="it" class="{{item.content.imgs.length == 1 ? 'communityUsercenter-imgli-one' : 'communityUsercenter-imgli'}}">
+              <image wx:if="{{item.content.imgs.length == 1}}" src="{{it}}" data-index="{{sInd}}" alt="" bindload="imgLoad" style="width:{{imgData[sInd].imgWidth}}rpx;height:{{imgData[sInd].imgHeight}}rpx;" ></image>
+              <image wx:else src="{{it}}" mode="aspectFill" alt="" ></image>
+            </view>
+          </view>
+          <view class="communityUsercenter-myli-foot">
+            <view class="communityUsercenter-myli-info"><icon class="ico-moon icon-like"></icon><text>{{item.like_count}}</text></view>
+            <view class="communityUsercenter-myli-info"><icon class="ico-moon icon-reply"></icon><text>{{item.comment_count}}</text></view>
+          </view>
+        </view>
+        <view wx:if="{{getMyArticleData.nomore}}" class="communityUsercenter-li-none">没有更多了</view>
+      </view>
+    </scroll-view>
+    <scroll-view class="communityUsercenter-scrollwrap {{tabActive == 'reply' ? 'active' : ''}}" data-type="reply" scroll-y="true" bindscrolltolower="myCommentScroll">
+      <view class="communityUsercenter-myreply-ul">
+        <view class="communityUsercenter-li" wx:for="{{myCommentList}}" data-id="{{item.id}}">
+          <view>
+            <view class="community-li-cover">
+              <image src="{{item.headimgurl}}"></image>
+            </view>
+            <view class="community-li-author">
+              <text class="community-li-name text-p">{{item.nickname}}</text>
+              <text class="community-li-time text-p">{{item.add_time}}</text>
+            </view>
+          </view>
+          <view class="communityUsercenter-reply-li-content">
+            <text class="text-p"><text wx:if="{{item.comment_id != 0 && !!item.comment_id}}" class="communityUsercenter-replyto">@{{item.content.reply_to.nickname}}</text>{{item.content_text}}</text>
+          </view>
+          <view class="communityUsercenter-reply-li-post" data-id="{{item.obj_id}}" catchtap="turnToDetail">
+            <image wx:if="{{item.obj.content.imgs}}" src="{{item.obj.content.imgs[0]}}"></image><text>{{item.obj.title}}</text>
+          </view>
+        </view>
+        <view wx:if="{{myCommentData.nomore}}" class="communityUsercenter-li-none">没有更多了</view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

@@ -1,0 +1,323 @@
+.community-li-cover{
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  border: 1px solid #eee;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.community-li-cover > image{
+  width: 100%;
+  height: 100%;
+}
+.community-li-author{
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: bottom;
+}
+.community-li-name{
+  display: block;
+  color: #f2b302;
+  margin-bottom: 5px;
+}
+.community-li-time{
+  font-size: 12px;
+  color: #959595;
+}
+.community-hot-wrap{
+  display: inline-block;
+  color: #ff6c3e;
+  font-size: 12px;
+  float: right;
+}
+.community-hot{
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-color: #ff6c3e;
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
+  line-height: 16px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+.community-hot:before{
+  display: block;
+}
+
+
+
+
+
+
+
+.communityDetail-wrap{
+  height: 100vh;
+  -webkit-overflow-scrolling: touch;
+  font-size: 14px;
+}
+.communityDetail-main{
+  margin-top: 15px;
+  padding: 0 15px;
+}
+.communityDetail-cover{
+  display: inline-block;
+  /*width: 40px;
+  height: 40px;*/
+  border-radius: 5px;
+  /*border: 1px solid #eee;
+  overflow: hidden;
+  vertical-align: bottom;*/
+}
+/*.communityDetail-cover > .communityDetail-head{
+  width: 100%;
+  height: 100%;
+}*/
+.communityDetail-author{
+  display: inline-block;
+  width: 230px;
+  width: calc(100% - 57px);
+  /*margin-left: 10px;
+  vertical-align: bottom;*/
+}
+.communityDetail-name{
+  display: inline-block;
+  /*color: #f2b302;
+  margin-bottom: 5px;*/
+}
+/*.communityDetail-time{
+  font-size: 12px;
+  color: #959595;
+}*/
+.communityDetail-time-time{
+  margin-right: 10px;
+}
+.communityDetail-title{
+  margin-top: 10px;
+  color: #313131;
+  font-size: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.text-p{
+  display: block;
+}
+.communityDetail-content{
+  color: #909090;
+  margin-top: 10px;
+}
+.communityDetail-img{
+  margin-top: 10px;
+}
+.communityDetail-imgli{
+  display:inline-block;
+  width:210.6rpx;
+  height:210.6rpx;
+  margin:7.02rpx;
+  overflow:hidden;
+  vertical-align:top;
+}
+.communityDetail-imgli-one{
+  width: auto;
+  height: auto;
+}
+.communityDetail-imgli > image{
+  width: 100%;
+  height: 100%;
+}
+.communityDetail-likebtn{
+  width: 140.4rpx;
+  height: 140.4rpx;
+  border-radius: 50%;
+  color: #fff;
+  background-color: #00b6f8;
+  text-align: center;
+  margin: 20px auto;
+  overflow: hidden;
+}
+.communityDetail-likebtn label{
+  display: block;
+  font-size: 56.16rpx;
+  margin-top: 21.06rpx;
+}
+.communityDetail-likebtn text{
+  display: block;
+  font-size: 28.08rpx;
+  margin-top: 7.02rpx;
+}
+.communityDetail-like{
+  margin: 10px 0;
+}
+.communityDetail-like-ul{
+  display: inline-block;
+  width: 561.6rpx;
+  height: 25px;
+  vertical-align: middle;
+  overflow: hidden;
+}
+.communityDetail-like > view{
+  font-size: 12px;
+  color: #a3a3a3;
+}
+.communityDetail-like-li{
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  border-radius: 15px;
+  margin-right: 5px;
+  overflow: hidden;
+}
+.communityDetail-like-li > image{
+  width: 100%;
+  height: 100%;
+}
+.communityDetail-all-post{
+  background-color: #eee;
+  line-height: 40px;
+  padding: 0 15px;
+}
+.communityDetail-list{
+  margin-bottom: 50px;
+}
+.communityDetail-item{
+  padding: 10px 15px;
+  border-bottom: 1px solid #e6e6e6;
+}
+.communityDetail-item .community-li-cover{
+  width: 35px;
+  height: 35px;
+}
+.communityDetail-floor{
+  display: inline-block;
+  width: 37px;
+  text-align: center;
+  color: #aaa;
+  margin-top: 5px;
+  vertical-align: top;
+  float: left;
+}
+.communityDetail-item-right-top{
+  float: right;
+  font-size: 13px;
+  color: #aaa;
+  margin-top: 15px;
+}
+.communityDetail-item-content{
+  display: inline-block;
+  width: 243px;
+  width: calc(100% - 47px);
+  margin-left: 10px;
+  margin-top: 5px;
+  vertical-align: top;
+}
+.communityDetail-item-footer{
+  text-align: right;
+  margin-top: 5px;
+}
+.tail-info{
+  display: inline-block;
+  margin-left: 15px;
+  color: #999;
+  text-align: left;
+  line-height: 20px;
+  position: relative;
+}
+.tail-info > icon{
+  font-size: 14px;
+  margin-right: 3px;
+  vertical-align: middle;
+}
+.tail-info > icon:before{
+  display: block;
+}
+.tail-info > text{
+  max-width: 50px;
+  vertical-align: middle;
+  overflow: hidden;
+}
+.communityDetail-replyto{
+  color: #577a9f;
+  margin-right: 5px;
+}
+.communityDetail-bottom{
+  width: 100%;
+  height: 50px;
+  box-shadow: 0px -1px 5px #d0d0d0; 
+  background-color: #fff;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+}
+.communityDetail-btn{
+  display: inline-block;
+  width: 559.26rpx;
+  height: 30px;
+  font-size: 12px;
+  border-radius: 15px;
+  border: 1px solid #c0c0c0;
+  background-color: #fff;
+  margin: 9px 15px;
+  text-align: left;
+  vertical-align: middle;
+}
+.communityDetail-btn > icon{
+  font-size: 18px;
+  vertical-align: middle;
+  margin-right: 5px;
+  line-height:30px;
+  vertical-align:top;
+}
+.communityDetail-likebtn2{
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 30px;
+  vertical-align: middle;
+  border: 1px solid #c0c0c0;
+  border-radius: 15px;
+}
+.communityDetail-li-none{
+  text-align: center;
+  margin-top: 20px;
+}
+.communityDetail-li-none image{
+  display: block;
+  margin: 20px auto;
+  width: 170px;
+  height: 88px;
+}
+.communityDetail-li-nomore{
+  padding: 15px 0;
+  text-align: center;
+  font-size: 12px;
+  color: #949494;
+}
+.communityDetail-publish-btn{
+  width: 105.3rpx;
+  height: 105.3rpx;
+  border-radius: 50%;
+  background-color: #00b6f8;
+  color: #fff;
+  text-align: center;
+  font-size: 28.08rpx;
+  line-height: 105.3rpx;
+  box-shadow: 0px 2px 6px #949494;
+  position: fixed;
+  bottom: 70px;
+  right: 15px;
+  z-index: 2;
+  transition: bottom 0.5s ease;
+  -moz-transition: bottom 0.5s ease; 
+  -webkit-transition: bottom 0.5s ease;
+  -o-transition: bottom 0.5s ease;
+}
+.communityDetail-publish-btn.bottom{
+  bottom: -105.3rpx;
+}

@@ -1,0 +1,59 @@
+<scroll-view class="communityPage-wrap" id="communityPage" scroll-y="true" scroll-x="false" bindscrolltolower="scrollTolower" bindscroll="scrollEvent" lower-threshold="100">
+  <view class="communityPage-head">
+    <view class="communityPage-search">
+      <input class="communityPage-search-input" id="communityPage-search-input" type="text" maxlength="64" bindinput="bindKeyInput" bindconfirm="bindconfirmInput" />
+      <view class="communityPage-search-btn" catchtap="bindconfirmInput"><icon class="ico-moon icon-search"></icon>
+      </view>
+    </view><icon class="communityPage-notify-btn ico-moon icon-notify" catchtap="turnToNotify" style="color:{{communityInfo.theme_color}};"></icon><icon class="communityPage-topic-btn ico-moon icon-usercenter" catchtap="turnToUsercenter" style="color:{{communityInfo.theme_color}};"></icon>
+  </view>
+  <view class="communityPage-banner">
+    <swiper class="communityPage-carousel" circular="true" id="communityPage-carousel" wx:if="{{carouselImg.length > 0}}">
+        <swiper-item wx:for="{{carouselImg}}" data-id="{{item.id}}" catchtap="turnToDetail">
+          <image src="{{item.carousel_img}}" class="slide-image"></image>
+        </swiper-item>
+    </swiper>
+  </view>
+  <view class="communityPage-main">
+    <view class="communityPage-info">
+      <image class="communityPage-img" src="{{communityInfo.img}}"></image>
+      <view>
+        <text class="communityPage-title">{{communityInfo.name}}</text>
+        <view class="communityPage-num"><text>话题<text class="communityPage-topic-num" style="color:{{communityInfo.theme_color}};">{{communityInfo.article_count}}</text></text><text>回复<text class="communityPage-comment-num" style="color:{{communityInfo.theme_color}};">{{communityInfo.comment_count}}</text></text></view>
+      </view>
+    </view>
+    <scroll-view scroll-x="true" class="communityPage-topic" id="communityPage-topic">
+      <view wx:for="{{category}}" class="navli {{categoryActive == item.id ? 'active':''}}" style="color:{{categoryActive == item.id ? communityInfo.theme_color : ''}};border-color:{{categoryActive == item.id ? communityInfo.theme_color : ''}};" data-id="{{item.id}}" catchtap="tapCategory">{{item.name}}</view>
+    </scroll-view>
+  </view>
+  <view class="communityPage-list">
+    <view class="communityPage-ul" id="communityPage-ul">
+      <view class="communityPage-li" wx:for="{{sectionList}}" wx:for-index="sInd" data-id="{{item.id}}" catchtap="turnToDetail">
+        <view>
+          <view class="community-li-cover"><image src="{{item.headimgurl}}"></image></view>
+          <view class="community-li-author"><text class="community-li-name">{{item.nickname}}</text><text class="community-li-time">{{item.add_time}}</text></view>
+          <view wx:if="{{item.hot_flag == 1}}" class="community-hot-wrap"><icon class="community-hot ico-moon icon-fire"></icon><text>精品话题</text></view>
+        </view>
+        <text class="communityPage-li-title">{{item.title}}</text>
+        <view wx:if="{{item.content.imgs}}" class="communityPage-li-imgli-wrap">
+          <view wx:for="{{item.content.imgs}}" wx:for-item="it" class="{{item.content.imgs.length == 1 ? 'communityPage-li-imgli-one' : 'communityPage-li-imgli'}}">
+            <image wx:if="{{item.content.imgs.length == 1}}" src="{{it}}" data-index="{{sInd}}" alt="" bindload="imgLoad" style="width:{{imgData[sInd].imgWidth}}rpx;height:{{imgData[sInd].imgHeight}}rpx;" ></image>
+            <image wx:else src="{{it}}" mode="aspectFill" alt="" ></image>
+          </view>
+        </view>
+        <view class="communityPage-li-content">
+          <text wx:for="{{item.content_text}}" wx:for-item="ii" wx:for-index="iind" class="text-p">{{ii}}<text wx:if="{{item.isellipsis && iind == item.content_text.length - 1}}" class="ellipsis-a">全文</text></text>
+        </view>
+        <view class="communityPage-li-foot">
+          <view class="communityPage-li-info" data-id="{{item.id}}" data-liked="{{item.is_liked}}" data-index="{{sInd}}" catchtap="articleLike"><icon class="ico-moon {{item.is_liked == 1 ? 'icon-like-solid' : 'icon-like'}}"></icon><text>{{item.like_count}}</text><view hidden="{{item.likeAnimateShow}}" class="like-animate">{{item.is_liked == 1 ? '+1' : '-1'}}</view></view>
+          <view class="communityPage-li-info" data-id="{{item.id}}" catchtap="turnComment"><icon class="ico-moon icon-reply"></icon><text>{{item.comment_count}}</text></view>
+        </view>
+      </view>
+      <view wx:if="{{getSectionData.nomore && sectionList.length <= 0}}" class="communityPage-li-none">
+        <image src="http://1251027630.cdn.myqcloud.com/1251027630/zhichi_frontend/static/webapp/images/none.png" mode="aspectFill" alt=""></image>
+        <text>还没话题，快来说两句</text>
+      </view>
+      <view wx:if="{{getSectionData.nomore && sectionList.length > 0}}" class="communityPage-li-nomore">没有更多了</view>
+    </view>
+  </view>
+  <view class="communityPage-publish-btn {{showAddArticleBtn ? '' : 'bottom'}}" catchtap="turnToPublish" style="background-color:{{communityInfo.theme_color}};"><text>发帖</text></view>
+</scroll-view>

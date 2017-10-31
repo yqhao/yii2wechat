@@ -27,7 +27,7 @@ class Carousel extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'carousel';
+        return 'wx_carousel';
     }
 
     /**

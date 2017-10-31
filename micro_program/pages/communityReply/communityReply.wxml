@@ -1,0 +1,8 @@
+<view class="communityReply-wrap page" id="communityReply">
+  <view class="communityReply-main">
+    <textarea class="communityReply-text" id="communityReply-text" placeholder="回复" placeholder-style="color:#909090;" bindinput="bindReplyInput"></textarea>
+  </view>
+  <view class="communityReply-foot">
+    <button class="communityReply-btn" catchtap="submitData" style="background-color:{{theme_color}};">回复</button>
+  </view>
+</view>
