@@ -41,6 +41,14 @@ class SyncController extends Controller
     {
 
         set_time_limit(0);
+
+        echo "CHECK DATA".PHP_EOL;
+        $counts_run = $this->db_from->createCommand("SELECT COUNT(id) AS counts_run FROM `gaitong`.`gt_machine` 
+WHERE `status` = 1 AND city_id IN (237, 242) AND `last_open_time` > :yesterday")->bindValue(':yesterday', strtotime(date('Ymd',strtotime("-1 day",time()))))->queryScalar();
+        if($counts_run<1){
+            echo "NO CHANGED";exit;
+        }
+
         echo "START ".$this->db_to->dsn.PHP_EOL;
         $t = time();
         $this->db_to->createCommand()->update('machine',[
@@ -123,6 +131,7 @@ class SyncController extends Controller
         $this->sumOrderTotalAmountThisMonth();
         $this->sumOrderTotalAmountLastMonth();
         echo PHP_EOL."END used times ".(time()-$t).PHP_EOL;
+        sleep(120);
     }
 
     public function syncOrder($o_id,$m_id)
@@ -242,7 +251,7 @@ class SyncController extends Controller
 //                'm_id=:m_id',[':m_id'=>$m_id])->execute();
 //        }
 
-        echo "    INSERT ORDERS ".$i." END. Used times ".(time()-$t).PHP_EOL;
+        if($i)echo "    INSERT ORDERS ".$i." END. Used times ".(time()-$t).PHP_EOL;
     }
 
     public function sumOrderTotalAmountThisMonth(){

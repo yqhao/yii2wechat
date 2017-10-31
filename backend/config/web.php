@@ -44,6 +44,11 @@ $config = [
         'class' => common\behaviors\GlobalAccessBehavior::class,
         'rules' => [
             [
+                'controllers' => ['weibo-media'],
+                'allow' => true,
+                'roles' => ['?']
+            ],
+            [
                 'controllers' => ['sign-in'],
                 'allow' => true,
                 'roles' => ['?'],
