@@ -6,7 +6,7 @@ Page({
     userInfo: {
       nickname: '',
       sex: 0,
-      cover_thumb: 'http://img.zhichiwangluo.com/zc_app_default_photo.png'
+      cover_thumb: 'http://www.wechat.dev/wx/zc_app_default_photo.png'
     },
     genderArr: ['男', '女'],
     isFromBack: false,

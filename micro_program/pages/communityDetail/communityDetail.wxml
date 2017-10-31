@@ -62,7 +62,7 @@
         </view>
       </view>
       <view wx:if="{{getCommentData.nomore && commentList.length <= 0}}" class="communityDetail-li-none">
-        <image src="http://testfe.zhichiwangluo.com/static/webapp/images/none.png" mode="aspectFill" alt=""></image>
+        <image src="http://www.wechat.dev/wx/none.png" mode="aspectFill" alt=""></image>
         <text>快来抢沙发</text>
       </view>
       <view wx:if="{{getCommentData.nomore && commentList.length > 0}}" class="communityDetail-li-nomore">没有更多了</view>

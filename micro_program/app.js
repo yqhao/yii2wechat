@@ -1,47 +1,67 @@
-var WxParse     = require('components/wxParse/wxParse.js');
+var WxParse = require('components/wxParse/wxParse.js');
 var util = require('utils/util.js');
 
 App({
   onLaunch: function () {
+    // 获取用户信息
     var userInfo;
-    if(userInfo = wx.getStorageSync('userInfo')){
+    if (userInfo = wx.getStorageSync('userInfo')) {
       this.globalData.userInfo = userInfo;
     }
+    // 获取系统信息
     this.getSystemInfo();
+    // console.log("-------------userInfo--------------");
+    // console.log(this.globalData.userInfo);
+    // console.log("------------systemInfo---------------");
+    // console.log(this.systemInfo);
   },
-  getSystemInfo : function() {
+  // 获取系统信息
+  getSystemInfo: function () {
     var that = this;
     wx.getSystemInfo({
-      success: function(res) {
+      success: function (res) {
         that.systemInfo = res;
       }
     });
   },
-  sendRequest: function(param, customSiteUrl){
+  // 发送请求
+  // param 参数, customSiteUrl 自定义域名
+  /* param:
+  data:{app_id,_app_id,session_key}
+  header: {},
+  url: "",
+  method: "",
+  hideLoading: bool,
+  success: function (res.data) { },
+  fail: function (res.data) { },
+  complete: function (res.data) { }
+  */
+  sendRequest: function (param, customSiteUrl) {
     var that = this,
-        data = param.data || {},
-        header = param.header,
-        requestUrl;
+      data = param.data || {},
+      header = param.header,
+      requestUrl;
 
-    if(data.app_id){
+    if (data.app_id) {
       data._app_id = data.app_id;
     } else {
       data._app_id = data.app_id = this.getAppId();
     }
     // data._app_id = this.getAppId();
     // data.app_id = this.getAppId();
-    if(!this.globalData.notBindXcxAppId){
+    if (!this.globalData.notBindXcxAppId) {
       data.session_key = this.getSessionKey();
     }
 
-    if(customSiteUrl) {
+    // 组装请求地址
+    if (customSiteUrl) {
       requestUrl = customSiteUrl + param.url;
     } else {
       requestUrl = this.globalData.siteBaseUrl + param.url;
     }
-
-    if(param.method){
-      if(param.method.toLowerCase() == 'post'){
+    // POST请求模式
+    if (param.method) {
+      if (param.method.toLowerCase() == 'post') {
         data = this.modifyPostParam(data);
         header = header || {
           'content-type': 'application/x-www-form-urlencoded;'
@@ -50,12 +70,14 @@ App({
       param.method = param.method.toUpperCase();
     }
 
-    if(!param.hideLoading){
+    if (!param.hideLoading) {
       this.showToast({
         title: '请求中...',
         icon: 'loading'
       });
     }
+    //console.log('---customSiteUrl ' + customSiteUrl+' url '+ param.url);
+    // 请求
     wx.request({
       url: requestUrl,
       data: data,
@@ -63,51 +85,52 @@ App({
       header: header || {
         'content-type': 'application/json'
       },
-      success: function(res) {
-        if(res.statusCode && res.statusCode != 200){
+      success: function (res) {
+        if (res.statusCode && res.statusCode != 200) {
           that.hideToast();
           that.showModal({
-            content: ''+res.errMsg
+            content: '' + res.errMsg
           });
           return;
         }
-        if(res.data.status){
-          if(res.data.status == 401 || res.data.status == 2){
-          // 未登录
+        if (res.data.status) {
+          if (res.data.status == 401 || res.data.status == 2) {
+            // 未登录
             that.login();
             return;
           }
-          if(res.data.status != 0){
+          if (res.data.status != 0) {
             that.hideToast();
             that.showModal({
-              content: ''+res.data.data
+              content: '' + res.data.data
             });
             return;
           }
         }
         typeof param.success == 'function' && param.success(res.data);
       },
-      fail: function(res){
+      fail: function (res) {
         that.showModal({
-          content: '请求失败 '+res.errMsg
+          content: '请求失败 ' + res.errMsg
         })
         typeof param.fail == 'function' && param.fail(res.data);
       },
-      complete: function(res){
+      complete: function (res) {
         // wx.hideLoading();
         that.hideToast();
         typeof param.complete == 'function' && param.complete(res.data);
       }
     });
   },
-  turnToPage: function(url, isRedirect){
-    var tabBarPagePathArr = this.getTabPagePathArr();
+  // 页面跳转
+  turnToPage: function (url, isRedirect) {
+    var tabBarPagePathArr = this.getTabPagePathArr();//tabBar页面数组对象
     // tabBar中的页面改用switchTab跳转
-    if(tabBarPagePathArr.indexOf(url) != -1) {
+    if (tabBarPagePathArr.indexOf(url) != -1) {
       this.switchToTab(url);
       return;
     }
-    if(!isRedirect){
+    if (!isRedirect) {
       wx.navigateTo({
         url: url
       });
@@ -117,44 +140,51 @@ App({
       });
     }
   },
-  tapPrevewPictureHandler:function(e){
+  // 预览图片
+  tapPrevewPictureHandler: function (e) {
     wx.previewImage({
       urls: e.currentTarget.dataset.imgarr instanceof Array ? e.currentTarget.dataset.imgarr : [e.currentTarget.dataset.imgarr],
     })
   },
-  switchToTab: function(url){
+  // 跳转到 tabBar 页面
+  switchToTab: function (url) {
     wx.switchTab({
       url: url
     });
   },
-  turnBack: function(){
+  // 关闭当前页面，返回上一页面或多级页面
+  turnBack: function () {
     wx.navigateBack();
   },
-  setPageTitle: function(title){
+  // 动态设置当前页面的标题。
+  setPageTitle: function (title) {
     wx.setNavigationBarTitle({
       title: title
     });
   },
-  showToast: function(param){
+  // 显示消息提示框
+  showToast: function (param) {
     wx.showToast({
       title: param.title,
       icon: param.icon,
       duration: param.duration || 1500,
-      success: function(res){
+      success: function (res) {
         typeof param.success == 'function' && param.success(res);
       },
-      fail: function(res){
+      fail: function (res) {
         typeof param.fail == 'function' && param.fail(res);
       },
-      complete: function(res){
+      complete: function (res) {
         typeof param.complete == 'function' && param.complete(res);
       }
     })
   },
-  hideToast: function(){
+  // 隐藏消息提示框
+  hideToast: function () {
     wx.hideToast();
   },
-  showModal: function(param){
+  // 显示模态弹窗
+  showModal: function (param) {
     wx.showModal({
       title: param.title || '提示',
       content: param.content,
@@ -163,22 +193,23 @@ App({
       cancelColor: param.cancelColor || '#000000',
       confirmText: param.confirmText || '确定',
       confirmColor: param.confirmColor || '#3CC51F',
-      success: function(res) {
+      success: function (res) {
         if (res.confirm) {
           typeof param.confirm == 'function' && param.confirm(res);
         } else {
           typeof param.cancel == 'function' && param.cancel(res);
         }
       },
-      fail: function(res){
+      fail: function (res) {
         typeof param.fail == 'function' && param.fail(res);
       },
-      complete: function(res){
+      complete: function (res) {
         typeof param.complete == 'function' && param.complete(res);
       }
     })
   },
-  chooseVideo: function(callback, maxDuration){
+  // 拍摄视频或从手机相册中选视频，返回视频的临时文件路径。
+  chooseVideo: function (callback, maxDuration) {
     wx.chooseVideo({
       sourceType: ['album', 'camera'],
       maxDuration: maxDuration || 60,
@@ -188,7 +219,8 @@ App({
       }
     })
   },
-  chooseImage: function(callback, count){
+  // 从本地相册选择图片或使用相机拍照。
+  chooseImage: function (callback, count) {
     var that = this;
     wx.chooseImage({
       count: count || 1,
@@ -196,7 +228,7 @@ App({
       sourceType: ['album', 'camera'],
       success: function (res) {
         var tempFilePaths = res.tempFilePaths,
-            imageUrls = [];
+          imageUrls = [];
 
         that.showToast({
           title: '提交中...',
@@ -205,14 +237,14 @@ App({
         });
         for (var i = 0; i < tempFilePaths.length; i++) {
           wx.uploadFile({
-            url : that.globalData.siteBaseUrl+ '/index.php?r=AppData/uploadImg',
+            url: that.globalData.siteBaseUrl + '/index.php?r=AppData/uploadImg',
             filePath: tempFilePaths[i],
             name: 'img_data',
-            success: function(res){
+            success: function (res) {
               var data = JSON.parse(res.data);
-              if(data.status == 0){
+              if (data.status == 0) {
                 imageUrls.push(data.data);
-                if(imageUrls.length == tempFilePaths.length){
+                if (imageUrls.length == tempFilePaths.length) {
                   that.hideToast();
                   typeof callback == 'function' && callback(imageUrls);
                 }
@@ -222,7 +254,7 @@ App({
                 })
               }
             },
-            fail: function(res){
+            fail: function (res) {
               that.hideToast();
               console.log(res.errMsg);
             }
@@ -232,29 +264,32 @@ App({
       }
     })
   },
-  previewImage: function(options){
+  // 预览图片
+  previewImage: function (options) {
     wx.previewImage({
       current: options.current,
       urls: options.urls || [options.current]
     })
   },
-  playVoice: function(filePath){
+  // 开始播放语音，同时只允许一个语音文件正在播放，如果前一个语音文件还没播放完，将中断前一个语音播放。
+  playVoice: function (filePath) {
     wx.playVoice({
       filePath: filePath
     });
   },
-  pauseVoice: function(){
+  // 暂停正在播放的语音。
+  pauseVoice: function () {
     wx.pauseVoice();
   },
   // 统计用户分享
-  countUserShareApp: function(){
+  countUserShareApp: function () {
     this.sendRequest({
       url: '/index.php?r=AppShop/UserShareApp'
     });
   },
 
   // 调用微信支付接口
-  wxPay: function(param){
+  wxPay: function (param) {
     var _this = this;
     wx.requestPayment({
       'timeStamp': param.timeStamp,
@@ -262,16 +297,16 @@ App({
       'package': param.package,
       'signType': 'MD5',
       'paySign': param.paySign,
-      success: function(res){
+      success: function (res) {
         _this.wxPaySuccess(param);
         typeof param.success === 'function' && param.success();
       },
-      fail: function(res){
-        if(res.errMsg === 'requestPayment:fail cancel'){
+      fail: function (res) {
+        if (res.errMsg === 'requestPayment:fail cancel') {
           typeof param.fail === 'function' && param.fail();
           return;
         }
-        if(res.errMsg === 'requestPayment:fail'){
+        if (res.errMsg === 'requestPayment:fail') {
           res.errMsg = '支付失败';
         }
         _this.showModal({
@@ -282,11 +317,12 @@ App({
       }
     })
   },
-  wxPaySuccess: function(param){
+  // 支付成功回调
+  wxPaySuccess: function (param) {
     var orderId = param.orderId,
-        goodsType = param.goodsType,
-        formId = param.package.substr(10),
-        t_num = goodsType == 1 ? 'AT0104':'AT0009';
+      goodsType = param.goodsType,
+      formId = param.package.substr(10),
+      t_num = goodsType == 1 ? 'AT0104' : 'AT0009';
 
     this.sendRequest({
       hideLoading: true,
@@ -298,9 +334,10 @@ App({
       }
     })
   },
-  wxPayFail: function(param, errMsg){
+  // 支付失败回调
+  wxPayFail: function (param, errMsg) {
     var orderId = param.orderId,
-        formId = param.package.substr(10);
+      formId = param.package.substr(10);
 
     this.sendRequest({
       hideLoading: true,
@@ -314,8 +351,8 @@ App({
     })
   },
   // 拨打电话
-  makePhoneCall: function(number, callback){
-    if(number.currentTarget){
+  makePhoneCall: function (number, callback) {
+    if (number.currentTarget) {
       var dataset = number.currentTarget.dataset;
 
       number = dataset.number;
@@ -326,7 +363,7 @@ App({
     })
   },
   // 获取地理位置
-  getLocation: function(options){
+  getLocation: function (options) {
     wx.getLocation({
       type: 'wgs84',
       success: options.success,
@@ -334,9 +371,9 @@ App({
     })
   },
   // 选择地图上位置
-  chooseLocation: function(options){
+  chooseLocation: function (options) {
     wx.chooseLocation({
-      success: function(res){
+      success: function (res) {
         console.log(res);
         options.success(res);
       },
@@ -344,10 +381,12 @@ App({
       fail: options.fail
     });
   },
-  openLocation: function(options){
+  // 使用微信内置地图查看位置。
+  openLocation: function (options) {
     wx.openLocation(options);
   },
-  setClipboardData: function(options){
+  // 设置系统剪贴板的内容
+  setClipboardData: function (options) {
     wx.setClipboardData({
       data: options.data || '',
       success: options.success,
@@ -355,14 +394,16 @@ App({
       complete: options.complete
     })
   },
-  getClipboardData: function(options){
+  // 获取系统剪贴板内容
+  getClipboardData: function (options) {
     wx.getClipboardData({
       success: options.success,
       fail: options.fail,
       complete: options.complete
     })
   },
-  showShareMenu: function(options){
+  // 显示当前页面的转发按钮
+  showShareMenu: function (options) {
     options = options || {};
     wx.showShareMenu({
       withShareTicket: options.withShareTicket || false,
@@ -371,7 +412,8 @@ App({
       complete: options.complete
     });
   },
-  scanCode: function(options){
+  // 调起客户端扫码界面，扫码成功后返回对应的结果
+  scanCode: function (options) {
     options = options || {};
     wx.scanCode({
       onlyFromCamera: options.onlyFromCamera || false,
@@ -382,61 +424,62 @@ App({
   },
 
   // 登录微信
-  login: function(){
+  login: function () {
     var that = this;
 
     wx.login({
-      success: function(res){
+      success: function (res) {
         if (res.code) {
-          that.sendCode(res.code);
+          that.sendCode(res.code);//服务器代理登录
         } else {
           console.log('获取用户登录态失败！' + res.errMsg)
         }
       },
-      fail: function(res){
-        console.log('login fail: '+res.errMsg);
+      fail: function (res) {
+        console.log('login fail: ' + res.errMsg);
       }
     })
   },
-  checkLogin: function(){
-    if(!this.getSessionKey()){
+  // 验证登录状态
+  checkLogin: function () {
+    if (!this.getSessionKey()) {
       this.sendSessionKey();
     } else {
       this.pageInitial();
     }
   },
-  pageInitial: function(){
+  pageInitial: function () {
     this.getCurrentPage().dataInitial();
   },
   // 向服务器发送微信登录返回的code
-  sendCode: function(code){
+  sendCode: function (code) {
     var that = this;
     this.sendRequest({
       url: '/index.php?r=AppUser/onLogin',
       data: {
         code: code
       },
-      success: function(res){
-        if(res.is_login == 2) {
+      success: function (res) {
+        if (res.is_login == 2) {
           that.globalData.notBindXcxAppId = true;
         }
         that.setSessionKey(res.data);
         that.requestUserInfo(res.is_login);
         that.pageInitial();
       },
-      fail: function(res){
+      fail: function (res) {
         console.log('sendCode fail');
       },
-      complete: function(res){
+      complete: function (res) {
 
       }
     })
   },
-  sendSessionKey: function(){
+  sendSessionKey: function () {
     var that = this;
     try {
       var key = wx.getStorageSync('session_key');
-    } catch(e) {
+    } catch (e) {
 
     }
 
@@ -448,58 +491,63 @@ App({
       this.globalData.sessionKey = key;
       this.sendRequest({
         url: '/index.php?r=AppUser/onLogin',
-        success: function(res){
-          if(!res.is_login){
+        success: function (res) {
+          if (!res.is_login) {
             // 如果没有登录
             that.login();
             return;
-          } else if(res.is_login == 2) {
+          } else if (res.is_login == 2) {
             that.globalData.notBindXcxAppId = true;
           }
           that.requestUserInfo(res.is_login);
           that.pageInitial();
         },
-        fail: function(res){
+        fail: function (res) {
           console.log('sendSessionKey fail');
         }
       });
     }
   },
-  requestUserInfo: function(is_login){
-    if(is_login==1){
+  requestUserInfo: function (is_login) {
+    if (is_login == 1) {
       this.requestUserXcxInfo();
     } else {
       this.requestUserWxInfo();
     }
   },
-  requestUserXcxInfo: function(){
+  // 获取小程序后台会员信息
+  requestUserXcxInfo: function () {
     var that = this;
     this.sendRequest({
       url: '/index.php?r=AppData/getXcxUserInfo',
-      success: function(res){
-        if(res.status == 0){
-          if(res.data){
+      success: function (res) {
+        if (res.status == 0) {
+          if (res.data) {
             that.setUserInfoStorage(res.data);
           }
         }
       },
-      fail: function(res){
+      fail: function (res) {
         console.log('requestUserXcxInfo fail');
       }
     })
   },
-  requestUserWxInfo: function(){
+  // 获取微信用户信息
+  requestUserWxInfo: function () {
     var that = this;
     wx.getUserInfo({
-      success: function(res){
+      success: function (res) {
         that.sendUserInfo(res.userInfo);
       },
-      fail: function(res){
+      fail: function (res) {
         console.log('requestUserWxInfo fail');
       }
     })
   },
-  sendUserInfo: function(userInfo){
+  // 向后台发送用户信息
+  sendUserInfo: function (userInfo) {
+    console.log('屏蔽登录接口');
+    return;
     var that = this;
     this.sendRequest({
       url: '/index.php?r=AppUser/LoginUser',
@@ -512,12 +560,12 @@ App({
         country: userInfo['country'],
         avatarUrl: userInfo['avatarUrl']
       },
-      success: function(res){
-        if(res.status == 0){
+      success: function (res) {
+        if (res.status == 0) {
           that.setUserInfoStorage(res.data.user_info);
         }
       },
-      fail: function(res){
+      fail: function (res) {
         console.log('requestUserXcxInfo fail');
       }
     })
@@ -528,11 +576,12 @@ App({
   //   }
   // },
 
-  dataInitial: function(){
+  // 初始数据
+  dataInitial: function () {
     var _this = this,
-        pageInstance = this.getCurrentPage(),
-        newdata = {};
-           //轮播分组下的轮播项----start------------------
+      pageInstance = this.getCurrentPage(),//当前页面实例
+      newdata = {};
+    //轮播分组下的轮播项----start------------------
     if (!!pageInstance.carouselGroupidsParams) {
       for (let i in pageInstance.carouselGroupidsParams) {
         let compid = pageInstance.carouselGroupidsParams[i].compid;
@@ -562,12 +611,12 @@ App({
                         break;
                       case "inner-link":
                         eventHandler = "tapInnerLinkHandler";
-                        let pageLink = form_data['page-link']; 
-                        if(pageLink == "prePage"){
+                        let pageLink = form_data['page-link'];
+                        if (pageLink == "prePage") {
                           eventParams = '{"inner_page_link":"' + pageLink + '","is_redirect":"0"}';
-                        }else {
-                          let pageLinkPath = '/pages/'+pageLink+'/'+pageLink;
-                          eventParams = '{"inner_page_link":"'+pageLinkPath+'","is_redirect":0}'
+                        } else {
+                          let pageLinkPath = '/pages/' + pageLink + '/' + pageLink;
+                          eventParams = '{"inner_page_link":"' + pageLinkPath + '","is_redirect":0}'
                         }
                         break;
                       case "call":
@@ -602,7 +651,7 @@ App({
                     })
                   }
                 }
-                console.log(content);
+                //console.log(content);
                 newdata[compid] = {};
                 newdata[compid].type = pageInstance.data[compid].type;
                 newdata[compid].style = pageInstance.data[compid].style;
@@ -620,7 +669,7 @@ App({
       }
 
     }
-  //轮播分组下的轮播项----end------------------
+    //轮播分组下的轮播项----end------------------
     if (!!pageInstance.dataId && !!pageInstance.page_form) {
       var dataid = parseInt(pageInstance.dataId);
       var param = {};
@@ -646,7 +695,7 @@ App({
                 continue;
               }
               // 检测如果不是一个图片链接的话就解析
-              if(typeof description == 'string' && !/^http:\/\/img/g.test(description)){
+              if (typeof description == 'string' && !/^http:\/\/img/g.test(description)) {
                 newdata['detail_data'][i] = _this.getWxParseResult(description);
               }
             }
@@ -659,11 +708,11 @@ App({
                 if (!!newdata.detail_data[vessel_param.param_segment]) {
                   vessel_param.idx = vessel_param.search_segment;
                   vessel_param.idx_value = newdata.detail_data[vessel_param.param_segment];
-                  if(!(typeof vessel_param.idx_value == 'string')){
+                  if (!(typeof vessel_param.idx_value == 'string')) {
                     let iv = vessel_param.idx_value[0];
-                    if( iv == ''){
+                    if (iv == '') {
                       vessel_param.idx_value = '';
-                    }else{
+                    } else {
                       vessel_param.idx_value = iv.text;
                     }
                   }
@@ -675,7 +724,7 @@ App({
                       page: 1
                     },
                     method: 'post',
-                    success: function(res) {
+                    success: function (res) {
                       if (res.status == 0) {
                         let newDynamicData = {};
                         newDynamicData['dynamic_vessel_data_' + compid] = res.data[0];
@@ -683,7 +732,7 @@ App({
                       } else {
                       }
                     },
-                    fail: function() {
+                    fail: function () {
                       console.log("[fail info]dynamic-vessel data request  failed");
                     }
                   });
@@ -708,7 +757,7 @@ App({
             if (res.status == 0) {
               newdata = {};
 
-              if(param.form !== 'form'){ // 动态列表绑定表单则不调用富文本解析
+              if (param.form !== 'form') { // 动态列表绑定表单则不调用富文本解析
                 for (let j in res.data) {
                   for (let k in res.data[j].form_data) {
                     if (k == 'category') {
@@ -721,7 +770,7 @@ App({
                       continue;
                     }
                     // 检测如果不是一个图片链接的话就解析
-                    if(typeof description === 'string' && !/^http:\/\/img/g.test(description)){
+                    if (typeof description === 'string' && !/^http:\/\/img/g.test(description)) {
                       res.data[j].form_data[k] = _this.getWxParseResult(description);
                     }
                   }
@@ -744,13 +793,13 @@ App({
         let compid = pageInstance.goods_compids_params[i].compid;
         let param = pageInstance.goods_compids_params[i].param;
 
-        if(param.form === 'takeout'){
+        if (param.form === 'takeout') {
           param.idx_arr = {
             idx: 'category',
             idx_value: pageInstance.data[compid].content[0].source
           }
         }
-        if(param.form === 'tostore'){
+        if (param.form === 'tostore') {
           param.page_size = 100;
         }
         _this.sendRequest({
@@ -760,18 +809,18 @@ App({
           success: function (res) {
             if (res.status == 0) {
               newdata = {};
-              if(param.form === 'tostore' && res.data.length){
+              if (param.form === 'tostore' && res.data.length) {
                 var arr = [];
-                for(var i = 0; i < res.data.length; i++){
+                for (var i = 0; i < res.data.length; i++) {
                   var data = res.data[i],
-                      maxMinArr = [],
-                      pri = '';
-                  if(data.form_data.goods_model && (data.form_data.goods_model.length >= 2)){
-                    for(var j = 0; j < data.form_data.goods_model.length; j++){
+                    maxMinArr = [],
+                    pri = '';
+                  if (data.form_data.goods_model && (data.form_data.goods_model.length >= 2)) {
+                    for (var j = 0; j < data.form_data.goods_model.length; j++) {
                       maxMinArr.push(data.form_data.goods_model[j].price);
                     }
-                    if(Math.min.apply(null, maxMinArr) != Math.max.apply(null, maxMinArr)){
-                      pri = Math.min.apply(null, maxMinArr).toFixed(2) +'-'+ Math.max.apply(null, maxMinArr).toFixed(2);
+                    if (Math.min.apply(null, maxMinArr) != Math.max.apply(null, maxMinArr)) {
+                      pri = Math.min.apply(null, maxMinArr).toFixed(2) + '-' + Math.max.apply(null, maxMinArr).toFixed(2);
                       data.form_data.price = pri;
                     }
                   }
@@ -779,12 +828,12 @@ App({
                 }
                 if (_this.getHomepageRouter() == pageInstance.page_router) {
                   var second = new Date().getMinutes().toString();
-                  if(second.length <= 1){
+                  if (second.length <= 1) {
                     second = '0' + second;
                   }
-                  var currentTime = new Date().getHours().toString()+ second,
-                      showFlag = true,
-                      showTime = '';
+                  var currentTime = new Date().getHours().toString() + second,
+                    showFlag = true,
+                    showTime = '';
                   _this.sendRequest({
                     url: '/index.php?r=AppShop/getBusinessTime',
                     method: 'post',
@@ -793,15 +842,15 @@ App({
                     },
                     success: function (res) {
                       var businessTime = res.data.business_time;
-                      if (businessTime){
-                        for (var i = 0; i < businessTime.length;i++){
+                      if (businessTime) {
+                        for (var i = 0; i < businessTime.length; i++) {
                           showTime += businessTime[i].start_time.substring(0, 2) + ':' + businessTime[i].start_time.substring(2, 4) + '-' + businessTime[i].end_time.substring(0, 2) + ':' + businessTime[i].end_time.substring(2, 4) + ' / ';
-                          if (+currentTime > +businessTime[i].start_time && +currentTime < +businessTime[i].end_time){
+                          if (+currentTime > +businessTime[i].start_time && +currentTime < +businessTime[i].end_time) {
                             showFlag = false;
                           }
                         }
-                        if (showFlag){
-                          showTime = showTime.substring(0,showTime.length - 2);
+                        if (showFlag) {
+                          showTime = showTime.substring(0, showTime.length - 2);
                           _this.showModal({
                             content: '店铺休息中,暂时无法接单。营业时间为：' + showTime
                           })
@@ -812,13 +861,13 @@ App({
 
                 }
                 newdata[compid + '.goods_data'] = arr;
-              }else{
+              } else {
                 newdata[compid + '.goods_data'] = res.data;
               }
 
-              if(param.form === 'takeout'){
+              if (param.form === 'takeout') {
                 var waimaiList = res.data,
-                    waimaiDetail = [];
+                  waimaiDetail = [];
 
                 for (var i = 0; i < waimaiList.length; i++) {
                   var detail = {
@@ -850,9 +899,9 @@ App({
         let param = pageInstance.franchiseeComps[i].param;
 
         _this.getLocation({
-          success: function(res){
+          success: function (res) {
             var latitude = res.latitude,
-                longitude = res.longitude;
+              longitude = res.longitude;
 
             _this.sendRequest({
               url: '/index.php?r=Region/GetAreaInfoByLatAndLng',
@@ -860,7 +909,7 @@ App({
                 latitude: latitude,
                 longitude: longitude
               },
-              success: function(res){
+              success: function (res) {
                 newdata = {};
                 newdata[compid + '.location_address'] = res.data.addressComponent.street + res.data.sematic_description;
                 pageInstance.setData(newdata);
@@ -880,7 +929,7 @@ App({
                     // for (let j = 0; j < res.data.length; j++) {
                     //   res.data[j].description = _this.getWxParseResult(res.data[j].description);
                     // }
-                    for(let index in res.data){
+                    for (let index in res.data) {
                       let distance = res.data[index].distance;
                       res.data[index].distance = util.formatDistance(distance);
                     }
@@ -953,19 +1002,19 @@ App({
       }
     }
 
-    if(pageInstance.bbsCompIds.length){
+    if (pageInstance.bbsCompIds.length) {
       for (let i in pageInstance.bbsCompIds) {
         let compid = pageInstance.bbsCompIds[i],
-            bbsData = pageInstance.data[compid],
-            bbs_idx_value = '';
+          bbsData = pageInstance.data[compid],
+          bbs_idx_value = '';
 
-        if(bbsData.customFeature.ifBindPage && bbsData.customFeature.ifBindPage !== 'false'){
-          if(pageInstance.page_form){
+        if (bbsData.customFeature.ifBindPage && bbsData.customFeature.ifBindPage !== 'false') {
+          if (pageInstance.page_form) {
             bbs_idx_value = pageInstance.page_form + '_' + pageInstance.dataId;
-          }else{
+          } else {
             bbs_idx_value = pageInstance.page_router;
           }
-        }else{
+        } else {
           bbs_idx_value = _this.getAppId();
         }
         _this.sendRequest({
@@ -980,13 +1029,13 @@ App({
               idx_value: bbs_idx_value
             }
           },
-          success: function(res){
+          success: function (res) {
             let data = {};
 
             res.isloading = false;
 
-            data[compid+'.content'] = res;
-            data[compid+'.comment'] = {};
+            data[compid + '.content'] = res;
+            data[compid + '.comment'] = {};
             pageInstance.setData(data);
           }
         });
@@ -995,38 +1044,38 @@ App({
     if (!!pageInstance.communityComps) {
       for (let i in pageInstance.communityComps) {
         let compid = pageInstance.communityComps[i].compid,
-            dataId = [],
-            content = pageInstance.data[compid].content,
-            customFeature = pageInstance.data[compid].customFeature,
-            styleData = {},
-            imgStyle = [],
-            liStyle = [],
-            secStyle = [];
+          dataId = [],
+          content = pageInstance.data[compid].content,
+          customFeature = pageInstance.data[compid].customFeature,
+          styleData = {},
+          imgStyle = [],
+          liStyle = [],
+          secStyle = [];
 
         secStyle = [
-              'color:'+ customFeature.secColor ,
-              'text-decoration:' + (customFeature.secTextDecoration || 'none'),
-              'text-align:' + (customFeature.secTextAlign || 'left'),
-              'font-size:' + customFeature.secFontSize,
-              'font-style:' + (customFeature.secFontStyle || 'normal'),
-              'font-weight:' + (customFeature.secFontWeight || 'normal')
-          ].join(";");
+          'color:' + customFeature.secColor,
+          'text-decoration:' + (customFeature.secTextDecoration || 'none'),
+          'text-align:' + (customFeature.secTextAlign || 'left'),
+          'font-size:' + customFeature.secFontSize,
+          'font-style:' + (customFeature.secFontStyle || 'normal'),
+          'font-weight:' + (customFeature.secFontWeight || 'normal')
+        ].join(";");
 
         imgStyle = [
-                'width :'+ (customFeature.imgWidth * 2.34) + 'rpx',
-                'height :'+ (customFeature.imgHeight * 2.34) + 'rpx'
-          ].join(";");
+          'width :' + (customFeature.imgWidth * 2.34) + 'rpx',
+          'height :' + (customFeature.imgHeight * 2.34) + 'rpx'
+        ].join(";");
         liStyle = [
-              'height :'+ (customFeature.lineHeight * 2.34) + 'rpx',
-              'margin-bottom :'+ (customFeature.margin * 2.34) +'rpx'
-          ];
+          'height :' + (customFeature.lineHeight * 2.34) + 'rpx',
+          'margin-bottom :' + (customFeature.margin * 2.34) + 'rpx'
+        ];
         customFeature['lineBackgroundColor'] && (liStyle.push('background-color:' + customFeature['lineBackgroundColor']));
         customFeature['lineBackgroundImage'] && (liStyle.push('background-image:' + customFeature['lineBackgroundImage']));
         liStyle = liStyle.join(";");
 
         styleData[compid + '.secStyle'] = secStyle;
         styleData[compid + '.imgStyle'] = imgStyle;
-        styleData[compid + '.liStyle']  = liStyle;
+        styleData[compid + '.liStyle'] = liStyle;
         pageInstance.setData(styleData);
 
         for (let j in content) {
@@ -1036,24 +1085,24 @@ App({
         _this.sendRequest({
           url: '/index.php?r=AppSNS/GetSectionByPage',
           data: {
-            section_ids : dataId ,
-            page: 1 ,
+            section_ids: dataId,
+            page: 1,
             page_size: 100
           },
           method: 'post',
           success: function (res) {
             if (res.status == 0) {
               var ddata = {},
-                  lastdata = [],
-                  newdata = {};
+                lastdata = [],
+                newdata = {};
 
               for (let x = 0; x < res.data.length; x++) {
                 let val = res.data[x];
-                ddata[val.id] =val;
+                ddata[val.id] = val;
               }
               for (let y = 0; y < dataId.length; y++) {
                 let val = ddata[dataId[y]];
-                if(val){
+                if (val) {
                   lastdata.push(val);
                 }
               }
@@ -1066,22 +1115,22 @@ App({
       }
     }
 
-    if (pageInstance.cityLocationComps.length){
-      for (let i in pageInstance.cityLocationComps){
+    if (pageInstance.cityLocationComps.length) {
+      for (let i in pageInstance.cityLocationComps) {
         pageInstance.data[pageInstance.cityLocationComps[i]].hidden = false;
         _this.getLocation({
-          success:function(res){
+          success: function (res) {
             var latitude = res.latitude,
-                longitude = res.longitude;
+              longitude = res.longitude;
             _this.sendRequest({
               url: '/index.php?r=Region/GetAreaInfoByLatAndLng',
               data: {
                 latitude: latitude,
                 longitude: longitude
               },
-              success:function(res){
+              success: function (res) {
                 var newdata = pageInstance.data,
-                    id =  pageInstance.cityLocationComps[i];
+                  id = pageInstance.cityLocationComps[i];
 
                 newdata[id].provinces = [];
                 newdata[id].provinces_ids = [];
@@ -1092,8 +1141,8 @@ App({
                 newdata[id].districts = [];
                 newdata[id].district_ids = [];
                 newdata[id].district = '';
-                newdata[id].value = [0,0,0];
-                newdata[id].local = res.data.addressComponent.province+' '+res.data.addressComponent.city + ' ' +res.data.addressComponent.district + ' >';
+                newdata[id].value = [0, 0, 0];
+                newdata[id].local = res.data.addressComponent.province + ' ' + res.data.addressComponent.city + ' ' + res.data.addressComponent.district + ' >';
                 pageInstance.setData(newdata);
               }
             })
@@ -1101,9 +1150,9 @@ App({
         });
         _this.sendRequest({
           url: '/index.php?r=AppRegion/getAllExistedDataRegionList&is_xcx=1',
-          success:function(data){
+          success: function (data) {
             var newdata = pageInstance.data,
-                    id =  pageInstance.cityLocationComps[i];
+              id = pageInstance.cityLocationComps[i];
             newdata[id].areaList = data.data;
             pageInstance.setData(newdata);
           },
@@ -1111,7 +1160,8 @@ App({
       }
     }
   },
-  pageScrollFunc: function(compid, curpage){
+  // 页面卷轴
+  pageScrollFunc: function (compid, curpage) {
     var currentPage = this.getCurrentPage();
     var newdata = {};
     var param = {};
@@ -1149,7 +1199,7 @@ App({
                   continue;
                 }
                 // 检测如果不是一个图片链接的话就解析
-                if(typeof description === 'string' && !/^http:\/\/img/g.test(description)){
+                if (typeof description === 'string' && !/^http:\/\/img/g.test(description)) {
                   res.data[j].form_data[k] = _this.getWxParseResult(description);
                 }
               }
@@ -1165,10 +1215,10 @@ App({
       })
     }
   },
-  goodsScrollFunc: function(compid, curpage){
+  goodsScrollFunc: function (compid, curpage) {
     var pageInstance = this.getCurrentPage(),
-        newdata = {},
-        param = {};
+      newdata = {},
+      param = {};
 
     if (pageInstance.goods_compids_params) {
       for (let index in pageInstance.goods_compids_params) {
@@ -1199,10 +1249,10 @@ App({
       })
     }
   },
-  franchiseeScrollFunc: function(compid, curpage){
+  franchiseeScrollFunc: function (compid, curpage) {
     var pageInstance = this.getCurrentPage(),
-        newdata = {},
-        param = {};
+      newdata = {},
+      param = {};
 
     if (pageInstance.franchiseeComps) {
       for (let index in pageInstance.franchiseeComps) {
@@ -1222,7 +1272,7 @@ App({
         method: 'post',
         success: function (res) {
           if (res.status == 0) {
-            for(let index in res.data){
+            for (let index in res.data) {
               let distance = res.data[index].distance;
               res.data[index].distance = util.formatDistance(distance);
             }
@@ -1238,57 +1288,57 @@ App({
     }
   },
   // 点赞 取消点赞
-  changeCountRequert : {},
-  changeCount: function(dataset){
+  changeCountRequert: {},
+  changeCount: function (dataset) {
     var that = this,
-        pageInstance = this.getCurrentPage(),
-        newdata = {},
-        counted = dataset.counted,
-        compid = dataset.compid,
-        objrel = dataset.objrel,
-        form = dataset.form,
-        dataIndex = dataset.index,
-        parentcompid = dataset.parentcompid,
-        parentType = dataset.parenttype,
-        url,
-        objIndex = compid + '_' +objrel;
+      pageInstance = this.getCurrentPage(),
+      newdata = {},
+      counted = dataset.counted,
+      compid = dataset.compid,
+      objrel = dataset.objrel,
+      form = dataset.form,
+      dataIndex = dataset.index,
+      parentcompid = dataset.parentcompid,
+      parentType = dataset.parenttype,
+      url,
+      objIndex = compid + '_' + objrel;
 
-    if(counted == 1){
+    if (counted == 1) {
       url = '/index.php?r=AppData/delCount';
     } else {
       url = '/index.php?r=AppData/addCount';
     }
 
-    if(that.changeCountRequert[objIndex]){
-      return ;
+    if (that.changeCountRequert[objIndex]) {
+      return;
     }
     that.changeCountRequert[objIndex] = true;
 
     that.sendRequest({
       url: url,
       data: { obj_rel: objrel },
-      success: function(res){
+      success: function (res) {
         newdata = {};
 
         // if (!!form) {
         // 在容器里面
         if (parentcompid) {
-          if (parentcompid.indexOf('list_vessel') === 0){
+          if (parentcompid.indexOf('list_vessel') === 0) {
             // 动态列表里
             newdata[parentcompid + '.list_data[' + dataIndex + '].count_num'] = counted == 1
               ? parseInt(pageInstance.data[parentcompid].list_data[dataIndex].count_num) - 1
               : parseInt(res.data.count_num);
             newdata[parentcompid + '.list_data[' + dataIndex + '].has_count'] = counted == 1
               ? 0 : parseInt(res.data.has_count);
-          } else if (parentcompid.indexOf('bbs') === 0){
+          } else if (parentcompid.indexOf('bbs') === 0) {
             // 评论组件里
             newdata[parentcompid + '.content.data[' + dataIndex + '].count_num'] = counted == 1
               ? parseInt(pageInstance.data[parentcompid].content.data[dataIndex].count_num) - 1
               : parseInt(res.data.count_num);
             newdata[parentcompid + '.content.data[' + dataIndex + '].has_count'] = counted == 1
               ? 0 : parseInt(res.data.has_count);
-          }else if (parentcompid.indexOf('free_vessel') === 0 || parentcompid.indexOf('dynamic_vessel') === 0){
-          // 自由面板里 或 动态容器里
+          } else if (parentcompid.indexOf('free_vessel') === 0 || parentcompid.indexOf('dynamic_vessel') === 0) {
+            // 自由面板里 或 动态容器里
             let path = compid
             if (compid.search('data.') !== -1) {
               path = compid.substr(5);
@@ -1296,13 +1346,13 @@ App({
             path = parentcompid + '.' + path;
             newdata[path + '.count_data.count_num'] = parseInt(res.data.count_num);
             newdata[path + '.count_data.has_count'] = parseInt(res.data.has_count);
-          }else if(parentType && parentType.indexOf('list_vessel') === 0){
+          } else if (parentType && parentType.indexOf('list_vessel') === 0) {
             // 动态列表里的自由面板里
             newdata[parentType + '.list_data[' + dataIndex + '].count_num'] = parseInt(res.data.count_num);
             newdata[parentType + '.list_data[' + dataIndex + '].has_count'] = parseInt(res.data.has_count);
           }
         } else {
-        // 未放入容器
+          // 未放入容器
           if (parentcompid != '' && parentcompid != null) {
             if (compid.search('data.') !== -1) {
               compid = compid.substr(5);
@@ -1317,7 +1367,7 @@ App({
         pageInstance.setData(newdata);
         that.changeCountRequert[objIndex] = false;
       },
-      complete : function(){
+      complete: function () {
         that.changeCountRequert[objIndex] = false;
       }
     });
@@ -1337,13 +1387,13 @@ App({
     newdata[datakey] = value;
     pageInstance.setData(newdata);
   },
-  bindDateChange: function(dataset, value) {
+  bindDateChange: function (dataset, value) {
     let pageInstance = this.getCurrentPage();
-    let datakey      = dataset.datakey;
-    let compid       = dataset.compid;
-    let formcompid   = dataset.formcompid;
-    let segment      = dataset.segment;
-    let newdata      = {};
+    let datakey = dataset.datakey;
+    let compid = dataset.compid;
+    let formcompid = dataset.formcompid;
+    let segment = dataset.segment;
+    let newdata = {};
 
     compid = formcompid + compid.substr(4);
 
@@ -1366,9 +1416,9 @@ App({
 
       if (obj.length == 16) {
         newdata[datakey] = value + ' ' + time;
-      } else if (obj.length == 10) {  
+      } else if (obj.length == 10) {
         newdata[datakey] = value;
-      } else if (obj.length == 5) {  
+      } else if (obj.length == 5) {
         newdata[datakey] = value + ' ' + obj;
       } else if (obj.length == 0) {
         newdata[datakey] = value;
@@ -1379,13 +1429,13 @@ App({
     newdata[compid + '.date'] = value;
     pageInstance.setData(newdata);
   },
-  bindTimeChange: function(dataset, value){
+  bindTimeChange: function (dataset, value) {
     let pageInstance = this.getCurrentPage();
-    let datakey      = dataset.datakey;
-    let compid       = dataset.compid;
-    let formcompid   = dataset.formcompid;
-    let segment      = dataset.segment;
-    let newdata      = {};
+    let datakey = dataset.datakey;
+    let compid = dataset.compid;
+    let formcompid = dataset.formcompid;
+    let segment = dataset.segment;
+    let newdata = {};
 
     compid = formcompid + compid.substr(4);
 
@@ -1421,7 +1471,7 @@ App({
     newdata[compid + '.time'] = value;
     pageInstance.setData(newdata);
   },
-  bindSelectChange: function(dataset, value) {
+  bindSelectChange: function (dataset, value) {
     let pageInstance = this.getCurrentPage();
     let datakey = dataset.datakey;
     let segment = dataset.segment;
@@ -1436,13 +1486,14 @@ App({
     newdata[datakey] = value;
     pageInstance.setData(newdata);
   },
-  bindScoreChange: function(dataset){
+  // 绑定分数修改事件 pageInstance.setData
+  bindScoreChange: function (dataset) {
     let pageInstance = this.getCurrentPage();
-    let datakey      = dataset.datakey;
-    let value        = dataset.score;
-    let compid       = dataset.compid;
-    let formcompid   = dataset.formcompid;
-    let segment      = dataset.segment;
+    let datakey = dataset.datakey;
+    let value = dataset.score;
+    let compid = dataset.compid;
+    let formcompid = dataset.formcompid;
+    let segment = dataset.segment;
 
     compid = formcompid + compid.substr(4);
 
@@ -1457,7 +1508,15 @@ App({
     newdata[compid + '.editScore'] = value;
     pageInstance.setData(newdata);
   },
-  submitForm: function(dataset){
+
+  // 提交表单
+  /**
+   * dataset.compid
+   * dataset.form
+   * pageInstance.data[compid].form_data {"field":"value"}
+   * pageInstance.data[compid].field_info {0:{"field":"field","title":"title","required":1}}}
+  */
+  submitForm: function (dataset) {
     let pageInstance = this.getCurrentPage();
     let _this = this;
     let compid = dataset.compid;
@@ -1476,7 +1535,7 @@ App({
         }
       }
 
-      if(pageInstance.data[compid].submitting) return;
+      if (pageInstance.data[compid].submitting) return;
       let newdata = {};
       newdata[compid + '.submitting'] = true;
       pageInstance.setData(newdata);
@@ -1487,17 +1546,17 @@ App({
           form: form,
           form_data: form_data
         },
-        header: {'content-type': 'application/x-www-form-urlencoded;'},
+        header: { 'content-type': 'application/x-www-form-urlencoded;' },
         method: 'POST',
         success: function (res) {
-          setTimeout(function(){
+          setTimeout(function () {
             _this.showToast({
               title: '提交成功',
               icon: 'success'
             });
           });
         },
-        complete: function(){
+        complete: function () {
           let newdata = {};
           newdata[compid + '.submitting'] = false;
           pageInstance.setData(newdata);
@@ -1509,9 +1568,10 @@ App({
       });
     }
   },
-  tapMapDetail: function(dataset){
+  // 打开内置地图
+  tapMapDetail: function (dataset) {
     let params = dataset.eventParams;
-    if(!params) return;
+    if (!params) return;
 
     params = JSON.parse(params)[0];
     this.openLocation({
@@ -1521,22 +1581,24 @@ App({
       address: params.name
     });
   },
+  // 拍摄视频或从手机相册中选视频，返回视频的临时文件路径。
   udpateVideoSrc: function (dataset) {
     let pageInstance = this.getCurrentPage();
     let compid = dataset.compid;
 
-    this.chooseVideo(function(filePath){
+    this.chooseVideo(function (filePath) {
       var newdata = {};
       newdata[compid + '.src'] = filePath;
       pageInstance.setData(newdata);
     });
   },
+  // 从本地相册选择图片或使用相机拍照。
   uploadFormImg: function (dataset) {
     let pageInstance = this.getCurrentPage();
-    let compid     = dataset.compid;
+    let compid = dataset.compid;
     let formcompid = dataset.formcompid;
-    let datakey    = dataset.datakey;
-    let segment    = dataset.segment;
+    let datakey = dataset.datakey;
+    let segment = dataset.segment;
 
     compid = formcompid + compid.substr(4);
 
@@ -1558,23 +1620,25 @@ App({
       pageInstance.setData(newdata);
     });
   },
-  deleteUploadImg:function(dataset){
+  // 删除上传前的图片
+  deleteUploadImg: function (dataset) {
     let pageInstance = this.getCurrentPage();
     let formcompid = dataset.formcompid;
     let index = dataset.index,
-        compid = dataset.compid,
-        datakey = dataset.datakey,
-        newdata = pageInstance.data;
+      compid = dataset.compid,
+      datakey = dataset.datakey,
+      newdata = pageInstance.data;
     compid = formcompid + compid.substr(4);
     this.showModal({
       content: '确定删除该图片？',
-      confirm: function (){
-        newdata[compid + '.content'].splice(index,1);
+      confirm: function () {
+        newdata[compid + '.content'].splice(index, 1);
         newdata[datakey].splice(index, 1);
         pageInstance.setData(newdata);
       }
     })
   },
+  // 列表跳转到页面
   listVesselTurnToPage: function (dataset) {
     let pageInstance = this.getCurrentPage();
     let data_id = dataset.dataid;
@@ -1588,23 +1652,24 @@ App({
       this.turnToPage('/pages/' + router + '/' + router + '?detail=' + data_id);
     }
   },
+  // 列表排序
   sortListFunc: function (dataset) {
-    let pageInstance  = this.getCurrentPage();
-    let listid        = dataset.listid;
-    let idx           = dataset.idx;
-    let listParams    = {
-                          'list-vessel': pageInstance.list_compids_params,
-                          'goods-list': pageInstance.goods_compids_params,
-                          'franchisee-list': pageInstance.franchiseeComps
-                        };
+    let pageInstance = this.getCurrentPage();
+    let listid = dataset.listid;
+    let idx = dataset.idx;
+    let listParams = {
+      'list-vessel': pageInstance.list_compids_params,
+      'goods-list': pageInstance.goods_compids_params,
+      'franchisee-list': pageInstance.franchiseeComps
+    };
     let component_params, listType;
 
     for (var key in listParams) {
-      if(listType !== undefined) break;
+      if (listType !== undefined) break;
       component_params = listParams[key];
-      if(component_params.length){
+      if (component_params.length) {
         for (var j = 0; j < component_params.length; j++) {
-          if(component_params[j].param.id === listid){
+          if (component_params[j].param.id === listid) {
             listType = key;
             component_params = component_params[j];
           }
@@ -1612,24 +1677,25 @@ App({
       }
     }
 
-    if(!component_params) return;
+    if (!component_params) return;
     component_params.param.page = 1;
 
     if (idx != 0) {
-      component_params.param.sort_key       = dataset.sortkey;
+      component_params.param.sort_key = dataset.sortkey;
       component_params.param.sort_direction = dataset.sortdirection;
     } else {
-      component_params.param.sort_key       = '';
+      component_params.param.sort_key = '';
       component_params.param.sort_direction = 0;
     }
 
-    switch(listType){
+    switch (listType) {
       case 'list-vessel': this.sortListVessel(component_params, dataset); break;
       case 'goods-list': this.sortGoodsList(component_params, dataset); break;
       case 'franchisee-list': this.sortFranchiseeList(component_params, dataset); break;
     }
   },
-  sortListVessel: function(component_params, dataset){
+  // 列表排序
+  sortListVessel: function (component_params, dataset) {
     var that = this;
     this.sendRequest({
       url: '/index.php?r=AppData/getFormDataList',
@@ -1638,7 +1704,7 @@ App({
       success: function (res) {
         if (res.status == 0) {
           let newdata = {};
-          let compid  = component_params['compid'];
+          let compid = component_params['compid'];
 
           for (let j in res.data) {
             for (let k in res.data[j].form_data) {
@@ -1648,22 +1714,23 @@ App({
               if (!description) continue;
 
               // 检测如果不是一个图片链接的话就解析
-              if(typeof description === 'string' && !/^http:\/\/img/g.test(description)){
+              if (typeof description === 'string' && !/^http:\/\/img/g.test(description)) {
                 res.data[j].form_data[k] = that.getWxParseResult(description);
               }
             }
           }
 
           newdata[compid + '.list_data'] = res.data;
-          newdata[compid + '.is_more']   = res.is_more;
-          newdata[compid + '.curpage']   = 1;
+          newdata[compid + '.is_more'] = res.is_more;
+          newdata[compid + '.curpage'] = 1;
 
           that.updateSortStatus(component_params, dataset);
         }
       }
     });
   },
-  sortGoodsList: function(component_params, dataset){
+  // 商品类别排序
+  sortGoodsList: function (component_params, dataset) {
     var that = this;
     this.sendRequest({
       url: '/index.php?r=AppShop/GetGoodsList',
@@ -1672,7 +1739,7 @@ App({
       success: function (res) {
         if (res.status == 0) {
           let newdata = {};
-          let compid  = component_params['compid'];
+          let compid = component_params['compid'];
 
           newdata[compid + '.goods_data'] = res.data;
           newdata[compid + '.is_more'] = res.is_more;
@@ -1683,7 +1750,8 @@ App({
       }
     });
   },
-  sortFranchiseeList: function(component_params, dataset){
+  // 商家类别排序
+  sortFranchiseeList: function (component_params, dataset) {
     var that = this;
     this.sendRequest({
       url: '/index.php?r=AppShop/GetAppShopByPage',
@@ -1692,9 +1760,9 @@ App({
       success: function (res) {
         if (res.status == 0) {
           let newdata = {};
-          let compid  = component_params['compid'];
+          let compid = component_params['compid'];
 
-          for(let index in res.data){
+          for (let index in res.data) {
             let distance = res.data[index].distance;
             res.data[index].distance = util.formatDistance(distance);
           }
@@ -1707,8 +1775,8 @@ App({
       }
     });
   },
-  updateSortStatus: function(dataset, newdata){
-    let pageInstance  = this.getCurrentPage();
+  updateSortStatus: function (dataset, newdata) {
+    let pageInstance = this.getCurrentPage();
     let sortCompid = dataset.compid;
     let selectSortIndex = dataset.idx;
 
@@ -1723,70 +1791,70 @@ App({
 
     pageInstance.setData(newdata);
   },
-  bbsInputComment: function(dataset, comment){
+  bbsInputComment: function (dataset, comment) {
     var pageInstance = this.getCurrentPage(),
-        compid = dataset.compid,
-        data = {};
+      compid = dataset.compid,
+      data = {};
 
-    data[compid+'.comment.text'] = comment;
+    data[compid + '.comment.text'] = comment;
     pageInstance.setData(data);
   },
-  bbsInputReply: function(dataset, comment){
+  bbsInputReply: function (dataset, comment) {
     var pageInstance = this.getCurrentPage(),
-        compid = dataset.compid,
-        index = dataset.index,
-        data = {};
+      compid = dataset.compid,
+      index = dataset.index,
+      data = {};
 
-    data[compid+'.content.data['+index+'].replyText'] = comment;
+    data[compid + '.content.data[' + index + '].replyText'] = comment;
     pageInstance.setData(data);
   },
-  uploadBbsCommentImage: function(dataset){
+  uploadBbsCommentImage: function (dataset) {
     var pageInstance = this.getCurrentPage(),
-        compid = dataset.compid,
-        data = {};
+      compid = dataset.compid,
+      data = {};
 
-    this.chooseImage(function(res){
-      data[compid+'.comment.img'] = res[0];
+    this.chooseImage(function (res) {
+      data[compid + '.comment.img'] = res[0];
       pageInstance.setData(data);
     });
   },
-  uploadBbsReplyImage: function(dataset){
+  uploadBbsReplyImage: function (dataset) {
     var pageInstance = this.getCurrentPage(),
-        compid = dataset.compid,
-        index = dataset.index,
-        data = {};
+      compid = dataset.compid,
+      index = dataset.index,
+      data = {};
 
-    this.chooseImage(function(res){
-      data[compid+'.content.data['+index+'].replyImg'] = res[0];
+    this.chooseImage(function (res) {
+      data[compid + '.content.data[' + index + '].replyImg'] = res[0];
       pageInstance.setData(data);
     });
   },
-  deleteCommentImage: function(dataset){
+  deleteCommentImage: function (dataset) {
     var pageInstance = this.getCurrentPage(),
-        compid = dataset.compid,
-        data = {};
+      compid = dataset.compid,
+      data = {};
 
-    data[compid+'.comment.img'] = '';
+    data[compid + '.comment.img'] = '';
     pageInstance.setData(data);
   },
-  deleteReplyImage: function(dataset){
+  deleteReplyImage: function (dataset) {
     var pageInstance = this.getCurrentPage(),
-        compid = dataset.compid,
-        index = dataset.index,
-        data = {};
+      compid = dataset.compid,
+      index = dataset.index,
+      data = {};
 
-    data[compid+'.content.data['+index+'].replyImg'] = '';
+    data[compid + '.content.data[' + index + '].replyImg'] = '';
     pageInstance.setData(data);
   },
-  bbsPublishComment: function(dataset){
+  bbsPublishComment: function (dataset) {
     var _this = this,
-        pageInstance  = this.getCurrentPage(),
-        compid = dataset.compid,
-        bbsData = pageInstance.data[compid],
-        comment = bbsData.comment,
-        param;
+      pageInstance = this.getCurrentPage(),
+      compid = dataset.compid,
+      bbsData = pageInstance.data[compid],
+      comment = bbsData.comment,
+      param;
 
-    if(!comment.text || !comment.text.trim()){
+    if (!comment.text || !comment.text.trim()) {
       this.showModal({
         content: '请输入评论内容'
       })
@@ -1803,13 +1871,13 @@ App({
     param.page_url = pageInstance.page_router;
     param.content = comment;
     param.rel_obj = '';
-    if(bbsData.customFeature.ifBindPage && bbsData.customFeature.ifBindPage !== 'false'){
-      if(pageInstance.page_form){
+    if (bbsData.customFeature.ifBindPage && bbsData.customFeature.ifBindPage !== 'false') {
+      if (pageInstance.page_form) {
         param.rel_obj = pageInstance.page_form + '_' + pageInstance.dataId;
-      }else{
+      } else {
         param.rel_obj = pageInstance.page_router;
       }
-    }else{
+    } else {
       param.rel_obj = _this.getAppId();
     }
 
@@ -1820,44 +1888,44 @@ App({
         form: 'bbs',
         form_data: param
       },
-      success: function(res){
+      success: function (res) {
         var commentList = pageInstance.data[compid].content.data || [],
-            newdata = {};
+          newdata = {};
 
         param.id = res.data;
-        newdata[compid+'.content.data'] = [{
+        newdata[compid + '.content.data'] = [{
           form_data: param,
           count_num: 0
         }].concat(commentList);
-        newdata[compid+'.content.count'] = +pageInstance.data[compid].content.count + 1;
-        newdata[compid+'.comment'] = {};
+        newdata[compid + '.content.count'] = +pageInstance.data[compid].content.count + 1;
+        newdata[compid + '.comment'] = {};
 
         pageInstance.setData(newdata);
       }
     })
   },
-  clickBbsReplyBtn: function(dataset){
+  clickBbsReplyBtn: function (dataset) {
     var pageInstance = this.getCurrentPage(),
-        compid = dataset.compid,
-        index = dataset.index,
-        data = {};
+      compid = dataset.compid,
+      index = dataset.index,
+      data = {};
 
-    data[compid+'.content.data['+index+'].showReply'] = !pageInstance.data[compid].content.data[index].showReply;
+    data[compid + '.content.data[' + index + '].showReply'] = !pageInstance.data[compid].content.data[index].showReply;
     pageInstance.setData(data);
   },
-  bbsPublishReply: function(dataset){
+  bbsPublishReply: function (dataset) {
     var _this = this,
-        pageInstance = this.getCurrentPage(),
-        compid = dataset.compid,
-        index = dataset.index,
-        bbsData = pageInstance.data[compid],
-        form_data = bbsData.content.data[index].form_data,
-        comment = {},
-        param;
+      pageInstance = this.getCurrentPage(),
+      compid = dataset.compid,
+      index = dataset.index,
+      bbsData = pageInstance.data[compid],
+      form_data = bbsData.content.data[index].form_data,
+      comment = {},
+      param;
 
     comment.text = bbsData.content.data[index].replyText;
     comment.img = bbsData.content.data[index].replyImg;
-    if(!comment.text || !comment.text.trim()){
+    if (!comment.text || !comment.text.trim()) {
       this.showModal({
         content: '请输入回复内容'
       })
@@ -1880,13 +1948,13 @@ App({
     param.page_url = pageInstance.page_router;
     param.content = comment;
     param.rel_obj = '';
-    if(bbsData.customFeature.ifBindPage && bbsData.customFeature.ifBindPage !== 'false'){
-      if(pageInstance.page_form){
+    if (bbsData.customFeature.ifBindPage && bbsData.customFeature.ifBindPage !== 'false') {
+      if (pageInstance.page_form) {
         param.rel_obj = pageInstance.page_form + '_' + pageInstance.dataId;
-      }else{
+      } else {
         param.rel_obj = pageInstance.page_router;
       }
-    }else{
+    } else {
       param.rel_obj = _this.getAppId();
     }
 
@@ -1897,77 +1965,77 @@ App({
         form: 'bbs',
         form_data: param,
       },
-      success: function(res){
+      success: function (res) {
         var commentList = pageInstance.data[compid].content.data || [],
-            newdata = {};
+          newdata = {};
 
         param.id = res.data;
-        if(commentList.length){
+        if (commentList.length) {
           delete commentList[index].replyText;
           delete commentList[index].showReply;
         }
-        newdata[compid+'.content.data'] = [{
+        newdata[compid + '.content.data'] = [{
           form_data: param,
           count_num: 0
         }].concat(commentList);
-        newdata[compid+'.content.count'] = +pageInstance.data[compid].content.count + 1;
-        newdata[compid+'.comment'] = {};
+        newdata[compid + '.content.count'] = +pageInstance.data[compid].content.count + 1;
+        newdata[compid + '.comment'] = {};
 
         pageInstance.setData(newdata);
       }
     })
   },
-  bbsScrollFuc : function(compid) {
+  bbsScrollFuc: function (compid) {
     var _this = this,
-        pageInstance = this.getCurrentPage(),
-        bbsData = pageInstance.data[compid],
-        bbs_idx_value = '';
+      pageInstance = this.getCurrentPage(),
+      bbsData = pageInstance.data[compid],
+      bbs_idx_value = '';
 
-      if(bbsData.content.isloading || bbsData.content.is_more == 0){
-        return ;
+    if (bbsData.content.isloading || bbsData.content.is_more == 0) {
+      return;
+    }
+    bbsData.content.isloading = true;
+
+    if (bbsData.customFeature.ifBindPage && bbsData.customFeature.ifBindPage !== 'false') {
+      if (pageInstance.page_form) {
+        bbs_idx_value = pageInstance.page_form + '_' + pageInstance.dataId;
+      } else {
+        bbs_idx_value = pageInstance.page_router;
       }
-      bbsData.content.isloading = true;
-
-      if(bbsData.customFeature.ifBindPage && bbsData.customFeature.ifBindPage !== 'false'){
-        if(pageInstance.page_form){
-          bbs_idx_value = pageInstance.page_form + '_' + pageInstance.dataId;
-        }else{
-          bbs_idx_value = pageInstance.page_router;
+    } else {
+      bbs_idx_value = _this.getAppId();
+    }
+    _this.sendRequest({
+      url: '/index.php?r=AppData/getFormDataList',
+      method: 'post',
+      data: {
+        form: 'bbs',
+        is_count: bbsData.customFeature.ifLike ? 1 : 0,
+        page: bbsData.content.current_page + 1,
+        idx_arr: {
+          idx: 'rel_obj',
+          idx_value: bbs_idx_value
         }
-      }else{
-        bbs_idx_value = _this.getAppId();
+      },
+      success: function (res) {
+        let data = {},
+          newData = {};
+        data = res;
+
+        data.data = bbsData.content.data.concat(res.data);
+        data.isloading = false;
+
+        newData[compid + '.content'] = data;
+        pageInstance.setData(newData);
+      },
+      complete: function () {
+        let newData = {};
+        newData[compid + '.content.isloading'] = false;
+        pageInstance.setData(newData);
       }
-      _this.sendRequest({
-        url: '/index.php?r=AppData/getFormDataList',
-        method: 'post',
-        data: {
-          form: 'bbs',
-          is_count: bbsData.customFeature.ifLike ? 1 : 0,
-          page: bbsData.content.current_page + 1,
-          idx_arr: {
-            idx: 'rel_obj',
-            idx_value: bbs_idx_value
-          }
-        },
-        success: function(res){
-          let data = {},
-              newData = {};
-          data = res;
-
-          data.data = bbsData.content.data.concat(res.data);
-          data.isloading = false;
-
-          newData[compid+'.content'] = data;
-          pageInstance.setData(newData);
-        },
-        complete: function() {
-          let newData = {};
-          newData[compid+'.content.isloading'] = false;
-          pageInstance.setData(newData);
-        }
-      });
+    });
   },
-  searchList:function(dataset){
+  searchList: function (dataset) {
     let pageInstance = this.getCurrentPage();
     let that = this;
     let compid = dataset.compid;
@@ -1977,9 +2045,9 @@ App({
     let keyword = pageInstance.keywordList[compid];
 
     let targetList = '';
-    let index      = '';
+    let index = '';
 
-    if(listType === 'list-vessel'){
+    if (listType === 'list-vessel') {
       for (index in pageInstance.list_compids_params) {
         if (pageInstance.list_compids_params[index].param.id === listid) {
           pageInstance.list_compids_params[index].param.page = 1;
@@ -1989,7 +2057,7 @@ App({
       }
     }
 
-    if(listType === 'goods-list'){
+    if (listType === 'goods-list') {
       for (index in pageInstance.goods_compids_params) {
         if (pageInstance.goods_compids_params[index].param.id === listid) {
           pageInstance.goods_compids_params[index].param.page = 1;
@@ -1999,7 +2067,7 @@ App({
       }
     }
 
-    if(listType === 'franchisee-list'){
+    if (listType === 'franchisee-list') {
       for (index in pageInstance.franchiseeComps) {
         if (pageInstance.franchiseeComps[index].param.id === listid) {
           pageInstance.franchiseeComps[index].param.page = 1;
@@ -2010,9 +2078,9 @@ App({
     }
 
     let url = '/index.php?r=appData/search';
-    let param = {"search":{"data":[{"_allkey":keyword,"form": form}],"app_id":targetList.param.app_id}};
+    let param = { "search": { "data": [{ "_allkey": keyword, "form": form }], "app_id": targetList.param.app_id } };
 
-    if(listType === 'franchisee-list'){
+    if (listType === 'franchisee-list') {
       let info = this.getLocationInfo();
       param.search.longitude = info.longitude;
       param.search.latitude = info.latitude;
@@ -2022,13 +2090,13 @@ App({
       url: url,
       data: param,
       success: function (res) {
-        if(res.data.length == 0){
-          setTimeout(function(){
+        if (res.data.length == 0) {
+          setTimeout(function () {
             that.showToast({
-              title: '没有找到与'+keyword+'相关的内容',
+              title: '没有找到与' + keyword + '相关的内容',
               duration: 2000
             });
-          },0)
+          }, 0)
           return;
         }
         if (res.status == 0) {
@@ -2054,15 +2122,15 @@ App({
             }
             newdata[targetList.compid + '.list_data'] = res.data;
           } else if (listType === 'franchisee-list') {
-            for(let index in res.data){
+            for (let index in res.data) {
               let distance = res.data[index].distance;
               res.data[index].distance = util.formatDistance(distance);
             }
             newdata[targetList.compid + '.franchisee_data'] = res.data;
           }
 
-          newdata[targetList.compid + '.is_more']   = res.is_more;
-          newdata[targetList.compid + '.curpage']   = 1;
+          newdata[targetList.compid + '.is_more'] = res.is_more;
+          newdata[targetList.compid + '.curpage'] = 1;
 
           pageInstance.setData(newdata);
         }
@@ -2072,17 +2140,17 @@ App({
       }
     })
   },
-  citylocationList:function(dataset, region_id){
+  citylocationList: function (dataset, region_id) {
     let compid = dataset.id,
-        listid = dataset.listid,
-        listType = dataset.listtype,
-        form = dataset.form,
-        index = '',
-        targetList = '',
-        that = this,
-        pageInstance = this.getCurrentPage();
+      listid = dataset.listid,
+      listType = dataset.listtype,
+      form = dataset.form,
+      index = '',
+      targetList = '',
+      that = this,
+      pageInstance = this.getCurrentPage();
 
-    if(listType === 'list-vessel'){
+    if (listType === 'list-vessel') {
       for (index in pageInstance.list_compids_params) {
         if (pageInstance.list_compids_params[index].param.id === listid) {
           pageInstance.list_compids_params[index].param.page = 1;
@@ -2092,7 +2160,7 @@ App({
       }
     }
 
-    if(listType === 'goods-list'){
+    if (listType === 'goods-list') {
       for (index in pageInstance.goods_compids_params) {
         if (pageInstance.goods_compids_params[index].param.id === listid) {
           pageInstance.goods_compids_params[index].param.page = 1;
@@ -2102,7 +2170,7 @@ App({
       }
     }
 
-    if(listType === 'franchisee-list'){
+    if (listType === 'franchisee-list') {
       for (index in pageInstance.franchiseeComps) {
         if (pageInstance.franchiseeComps[index].param.id === listid) {
           pageInstance.franchiseeComps[index].param.page = 1;
@@ -2111,19 +2179,19 @@ App({
         }
       }
     }
-    let url = '/index.php?r=AppData/GetFormDataList&idx_arr[idx]=region_id&idx_arr[idx_value]='+region_id+'&extra_cond_arr[latitude]='+this.globalData.locationInfo.latitude+'&extra_cond_arr[longitude]='+this.globalData.locationInfo.longitude + '&extra_cond_arr[county_id]='+region_id,
-        param = {'form':form};
+    let url = '/index.php?r=AppData/GetFormDataList&idx_arr[idx]=region_id&idx_arr[idx_value]=' + region_id + '&extra_cond_arr[latitude]=' + this.globalData.locationInfo.latitude + '&extra_cond_arr[longitude]=' + this.globalData.locationInfo.longitude + '&extra_cond_arr[county_id]=' + region_id,
+      param = { 'form': form };
     this.sendRequest({
       url: url,
       data: param,
-      success:function(res){
-        if(res.data.length == 0){
-          setTimeout(function(){
+      success: function (res) {
+        if (res.data.length == 0) {
+          setTimeout(function () {
             that.showToast({
               title: '没有找到与所选区域的相关的内容',
               duration: 2000
             });
-          },0)
+          }, 0)
           return;
         }
         if (res.status == 0) {
@@ -2133,41 +2201,41 @@ App({
           } else if (listType === 'list-vessel') {
             newdata[targetList.compid + '.list_data'] = res.data;
           } else if (listType === 'franchisee-list') {
-            for(let index in res.data){
+            for (let index in res.data) {
               let distance = res.data[index].distance;
               res.data[index].distance = util.formatDistance(distance);
             }
             newdata[targetList.compid + '.franchisee_data'] = res.data;
           }
 
-          newdata[targetList.compid + '.is_more']   = res.is_more;
-          newdata[targetList.compid + '.curpage']   = 1;
+          newdata[targetList.compid + '.is_more'] = res.is_more;
+          newdata[targetList.compid + '.curpage'] = 1;
 
           pageInstance.setData(newdata);
         }
       },
-      fail:function(err){
+      fail: function (err) {
         console.log(err)
       }
     })
   },
-  tapFranchiseeLocation: function(event){
+  tapFranchiseeLocation: function (event) {
     var _this = this,
-        compid = event.currentTarget.dataset.compid,
-        pageInstance = this.getCurrentPage();
+      compid = event.currentTarget.dataset.compid,
+      pageInstance = this.getCurrentPage();
 
-    function success(res){
+    function success(res) {
       var name = res.name,
-          lat = res.latitude,
-          lng = res.longitude,
-          newdata = {},
-          param, requestData;
+        lat = res.latitude,
+        lng = res.longitude,
+        newdata = {},
+        param, requestData;
 
-      newdata[compid +'.location_address'] = name;
+      newdata[compid + '.location_address'] = name;
       pageInstance.setData(newdata);
 
-      for(var index in pageInstance.franchiseeComps){
-        if(pageInstance.franchiseeComps[index].param.id = compid){
+      for (var index in pageInstance.franchiseeComps) {
+        if (pageInstance.franchiseeComps[index].param.id = compid) {
           param = pageInstance.franchiseeComps[index].param;
           param.latitude = lat;
           param.longitude = lng;
@@ -2186,11 +2254,11 @@ App({
       _this.refreshFranchiseeList(compid, requestData, pageInstance);
     }
 
-    function cancel(){
+    function cancel() {
       console.log('cancel');
     }
 
-    function fail(){
+    function fail() {
       console.log('fail');
     }
     this.chooseLocation({
@@ -2201,31 +2269,31 @@ App({
   },
 
   // 获取"详情页"数据
-  getDynamicPageData: function(param){
+  getDynamicPageData: function (param) {
     param.url = '/index.php?r=AppData/getFormData';
     this.sendRequest(param);
   },
-  getDynamicListData: function(param){
+  getDynamicListData: function (param) {
     param.url = '/index.php?r=AppData/getFormDataList';
     this.sendRequest(param);
   },
-  getAssessList: function(param){
+  getAssessList: function (param) {
     param.url = '/index.php?r=AppShop/GetAssessList';
     this.sendRequest(param);
   },
-  getOrderDetail: function(param){
+  getOrderDetail: function (param) {
     param.url = '/index.php?r=AppShop/getOrder';
     this.sendRequest(param);
   },
-  modifyPostParam: function(obj) {
+  modifyPostParam: function (obj) {
     let query = '',
-        name, value, fullSubName, subName, subValue, innerObj, i;
+      name, value, fullSubName, subName, subValue, innerObj, i;
 
-    for(name in obj) {
+    for (name in obj) {
       value = obj[name];
 
-      if(value instanceof Array) {
-        for(i=0; i < value.length; ++i) {
+      if (value instanceof Array) {
+        for (i = 0; i < value.length; ++i) {
           subValue = value[i];
           fullSubName = name + '[' + i + ']';
           innerObj = {};
@@ -2233,8 +2301,8 @@ App({
           query += this.modifyPostParam(innerObj) + '&';
         }
       }
-      else if(value instanceof Object) {
-        for(subName in value) {
+      else if (value instanceof Object) {
+        for (subName in value) {
           subValue = value[subName];
           fullSubName = name + '[' + subName + ']';
           innerObj = {};
@@ -2242,36 +2310,36 @@ App({
           query += this.modifyPostParam(innerObj) + '&';
         }
       }
-      else if(value !== undefined && value !== null)
+      else if (value !== undefined && value !== null)
         query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
     }
 
     return query.length ? query.substr(0, query.length - 1) : query;
   },
-  getHomepageRouter: function(){
+  getHomepageRouter: function () {
     return this.globalData.homepageRouter;
   },
-  getAppId: function(){
+  getAppId: function () {
     return this.globalData.appId;
   },
-  getDefaultPhoto: function(){
+  getDefaultPhoto: function () {
     return this.globalData.defaultPhoto;
   },
-  getSessionKey: function(){
+  getSessionKey: function () {
     return this.globalData.sessionKey;
   },
-  setSessionKey: function(session_key){
+  setSessionKey: function (session_key) {
     this.globalData.sessionKey = session_key;
     wx.setStorage({
       key: 'session_key',
       data: session_key
     })
   },
-  getUserInfo: function(){
+  getUserInfo: function () {
     return this.globalData.userInfo;
   },
-  setUserInfoStorage: function(info){
-    for(var key in info){
+  setUserInfoStorage: function (info) {
+    for (var key in info) {
       this.globalData.userInfo[key] = info[key];
     }
     wx.setStorage({
@@ -2279,66 +2347,66 @@ App({
       data: this.globalData.userInfo
     })
   },
-  setPageUserInfo: function(){
+  setPageUserInfo: function () {
     var currentPage = this.getCurrentPage(),
-        newdata = {};
+      newdata = {};
 
     newdata['userInfo'] = this.getUserInfo();
     currentPage.setData(newdata);
   },
-  getCurrentPage: function(){
+  getCurrentPage: function () {
     var pages = getCurrentPages();
     return pages[pages.length - 1];
   },
-  getWaimaiTotalNum: function(){
+  getWaimaiTotalNum: function () {
     return this.globalData.waimaiTotalNum;
   },
-  setWaimaiTotalNum: function(num){
+  setWaimaiTotalNum: function (num) {
     this.globalData.waimaiTotalNum = num;
   },
-  getWaimaiTotalPrice: function(){
+  getWaimaiTotalPrice: function () {
     return this.globalData.waimaiTotalPrice;
   },
-  setWaimaiTotalPrice: function(price){
+  setWaimaiTotalPrice: function (price) {
     this.globalData.waimaiTotalPrice = price;
   },
-  getWaimaiCartIds: function(){
+  getWaimaiCartIds: function () {
     return this.globalData.waimaiCartIds;
   },
-  setWaimaiCartId: function(goodsId, cartId){
-    if(cartId && cartId != 0){
+  setWaimaiCartId: function (goodsId, cartId) {
+    if (cartId && cartId != 0) {
       this.globalData.waimaiCartIds[goodsId] = cartId;
     } else {
       delete this.globalData.waimaiCartIds[goodsId];
     }
   },
-  getTabPagePathArr: function(){
+  getTabPagePathArr: function () {
     return JSON.parse(this.globalData.tabBarPagePathArr);
   },
-  getWxParseOldPattern: function(){
+  getWxParseOldPattern: function () {
     return this.globalData.wxParseOldPattern;
   },
-  getWxParseResult: function(data, setDataKey){
+  getWxParseResult: function (data, setDataKey) {
     var page = this.getCurrentPage();
-    return WxParse.wxParse(setDataKey || this.getWxParseOldPattern(),'html', data, page);
+    return WxParse.wxParse(setDataKey || this.getWxParseOldPattern(), 'html', data, page);
   },
-  tapGoodsTradeHandler: function(event) {
+  tapGoodsTradeHandler: function (event) {
     if (event.currentTarget.dataset.eventParams) {
       let goods = JSON.parse(event.currentTarget.dataset.eventParams),
-          goods_id = goods['goods_id'],
-          goods_type = goods['goods_type'];
+        goods_id = goods['goods_id'],
+        goods_type = goods['goods_type'];
       if (!!goods_id) {
         goods_type == 3 ? this.turnToPage('/pages/toStoreDetail/toStoreDetail?detail=' + goods_id)
-                        : this.turnToPage('/pages/goodsDetail/goodsDetail?detail=' + goods_id);
+          : this.turnToPage('/pages/goodsDetail/goodsDetail?detail=' + goods_id);
       }
     }
   },
-  tapInnerLinkHandler: function(event) {
+  tapInnerLinkHandler: function (event) {
     var param = event.currentTarget.dataset.eventParams;
     if (param) {
       param = JSON.parse(param);
       var url = param.inner_page_link;
-      if(url === 'prePage'){
+      if (url === 'prePage') {
         this.turnBack();
       } else if (url) {
         var is_redirect = param.is_redirect == 1 ? true : false;
@@ -2346,31 +2414,31 @@ App({
       }
     }
   },
-  tapPhoneCallHandler: function(event) {
+  tapPhoneCallHandler: function (event) {
     if (event.currentTarget.dataset.eventParams) {
       var phone_num = JSON.parse(event.currentTarget.dataset.eventParams)['phone_num'];
       this.makePhoneCall(phone_num);
     }
   },
-  tapGetCouponHandler: function(event) {
+  tapGetCouponHandler: function (event) {
     if (event.currentTarget.dataset.eventParams) {
       var coupon_id = JSON.parse(event.currentTarget.dataset.eventParams)['coupon_id'];
       this.turnToPage('/pages/couponDetail/couponDetail?detail=' + coupon_id);
     }
   },
-  tapCommunityHandler: function(event) {
+  tapCommunityHandler: function (event) {
     if (event.currentTarget.dataset.eventParams) {
       let community_id = JSON.parse(event.currentTarget.dataset.eventParams)['community_id'];
       this.turnToPage('/pages/communityPage/communityPage?detail=' + community_id);
     }
   },
-  tapToFranchiseeHandler: function(event){
+  tapToFranchiseeHandler: function (event) {
     if (event.currentTarget.dataset.eventParams) {
       let franchisee_id = JSON.parse(event.currentTarget.dataset.eventParams)['franchisee_id'];
       this.turnToPage('/pages/franchiseeDetail/franchiseeDetail?detail=' + franchisee_id);
     }
   },
-  tapToTransferPageHandler: function(event) {
+  tapToTransferPageHandler: function (event) {
     this.turnToPage('/pages/transferPage/transferPage');
   },
   tapRefreshListHandler: function (event, pageInstance) {
@@ -2378,7 +2446,7 @@ App({
     var refreshObject = eventParams.refresh_object;
     var compids_params;
 
-    if((compids_params = pageInstance.goods_compids_params).length) {
+    if ((compids_params = pageInstance.goods_compids_params).length) {
       for (let index in compids_params) {
         if (compids_params[index].param.id === refreshObject) {
           this.refreshPageList('goods-list', eventParams, compids_params[index], pageInstance);
@@ -2386,7 +2454,7 @@ App({
         }
       }
     }
-    if((compids_params = pageInstance.list_compids_params).length) {
+    if ((compids_params = pageInstance.list_compids_params).length) {
       for (let index in compids_params) {
         if (compids_params[index].param.id === refreshObject) {
           this.refreshPageList('list-vessel', eventParams, compids_params[index], pageInstance);
@@ -2394,7 +2462,7 @@ App({
         }
       }
     }
-    if((compids_params = pageInstance.franchiseeComps).length) {
+    if ((compids_params = pageInstance.franchiseeComps).length) {
       for (let index in compids_params) {
         if (compids_params[index].param.id === refreshObject) {
           this.refreshPageList('franchisee-list', eventParams, compids_params[index], pageInstance);
@@ -2403,16 +2471,16 @@ App({
       }
     }
   },
-  refreshPageList: function(eleType, eventParams, compids_params, pageInstance){
+  refreshPageList: function (eleType, eventParams, compids_params, pageInstance) {
     var requestData = {
-          page: 1,
-          form: compids_params.param.form,
-          is_count: compids_params.param.form.is_count ? 1 : 0,
-          idx_arr: {
-            idx: eventParams.index_segment,
-            idx_value: eventParams.index_value
-          }
-        };
+      page: 1,
+      form: compids_params.param.form,
+      is_count: compids_params.param.form.is_count ? 1 : 0,
+      idx_arr: {
+        idx: eventParams.index_segment,
+        idx_value: eventParams.index_value
+      }
+    };
 
     if (eventParams.parent_type == 'classify') { // 如果是分类组件的分类项 需要更改当前选中元素的索引
       var classify_selected_index = {};
@@ -2422,20 +2490,20 @@ App({
 
     compids_params.param.idx_arr = requestData.idx_arr;
 
-    switch(eleType){
+    switch (eleType) {
       case 'goods-list': this.refreshGoodsList(compids_params['compid'], requestData, pageInstance); break;
       case 'list-vessel': this.refreshListVessel(compids_params['compid'], requestData, pageInstance); break;
       case 'franchisee-list': this.refreshFranchiseeList(compids_params['compid'], requestData, pageInstance); break;
     }
   },
-  refreshGoodsList: function(targetCompId, requestData, pageInstance){
+  refreshGoodsList: function (targetCompId, requestData, pageInstance) {
     var _this = this;
 
     this.sendRequest({
       url: '/index.php?r=AppShop/GetGoodsList',
       method: 'post',
       data: requestData,
-      success: function(res){
+      success: function (res) {
         var newData = {};
         for (let j in res.data) {
           res.data[j].form_data.description = _this.getWxParseResult(res.data[j].form_data.description);
@@ -2447,7 +2515,7 @@ App({
       }
     })
   },
-  refreshListVessel: function(targetCompId, requestData, pageInstance){
+  refreshListVessel: function (targetCompId, requestData, pageInstance) {
     var _this = this;
 
     this.sendRequest({
@@ -2466,7 +2534,7 @@ App({
               continue;
             }
             // 检测如果不是一个图片链接的话就解析
-            if(typeof description == 'string' && !/^http:\/\/img/g.test(description)){
+            if (typeof description == 'string' && !/^http:\/\/img/g.test(description)) {
               res.data[j].form_data[k] = _this.getWxParseResult(description);
             }
           }
@@ -2478,7 +2546,7 @@ App({
       }
     })
   },
-  refreshFranchiseeList: function(targetCompId, requestData, pageInstance){
+  refreshFranchiseeList: function (targetCompId, requestData, pageInstance) {
     var _this = this;
 
     this.sendRequest({
@@ -2488,7 +2556,7 @@ App({
       success: function (res) {
         var newData = {};
 
-        for(let index in res.data){
+        for (let index in res.data) {
           let distance = res.data[index].distance;
           res.data[index].distance = util.formatDistance(distance);
         }
@@ -2499,40 +2567,44 @@ App({
       }
     })
   },
-  getAppTitle: function(){
+
+  // 全局变量get,set ---------------------------------
+  getAppTitle: function () {
     return this.globalData.appTitle;
   },
-  getAppDescription: function(){
+  getAppDescription: function () {
     return this.globalData.appDescription;
   },
-  setLocationInfo: function(info){
+  setLocationInfo: function (info) {
     this.globalData.locationInfo = info;
   },
-  getLocationInfo: function(){
+  getLocationInfo: function () {
     return this.globalData.locationInfo;
   },
-  getSiteBaseUrl: function(){
+  getSiteBaseUrl: function () {
     return this.globalData.siteBaseUrl;
   },
-  getUrlLocationId:function(){
+  getUrlLocationId: function () {
     return this.globalData.urlLocationId;
   },
-  getPreviewGoodsInfo: function(){
+  getPreviewGoodsInfo: function () {
     return this.globalData.previewGoodsOrderGoodsInfo;
   },
-  setPreviewGoodsInfo: function(goodsInfoArr){
+  setPreviewGoodsInfo: function (goodsInfoArr) {
     this.globalData.previewGoodsOrderGoodsInfo = goodsInfoArr;
   },
-  getGoodsAdditionalInfo: function(){
+  getGoodsAdditionalInfo: function () {
     return this.globalData.goodsAdditionalInfo;
   },
-  setGoodsAdditionalInfo: function(additionalInfo){
+  setGoodsAdditionalInfo: function (additionalInfo) {
     this.globalData.goodsAdditionalInfo = additionalInfo;
   },
-  globalData:{
+
+  // 全局变量
+  globalData: {
     appId: 'GBx0maE3vC',
-        tabBarPagePathArr: '["\/pages\/page10000\/page10000","\/pages\/page10003\/page10003","\/pages\/page10002\/page10002","\/pages\/page10001\/page10001"]',
-        homepageRouter: 'page10000',
+    tabBarPagePathArr: '["\/pages\/page10000\/page10000","\/pages\/page10003\/page10003","\/pages\/page10002\/page10002","\/pages\/page10001\/page10001"]',
+    homepageRouter: 'page10000',
     formData: null,
     userInfo: {},
     sessionKey: '',
@@ -2543,12 +2615,12 @@ App({
       address: ''
     },
     previewGoodsOrderGoodsInfo: [],
-    goodsAdditionalInfo: {}, 
-    urlLocationId:'',
+    goodsAdditionalInfo: {},
+    urlLocationId: '',
     wxParseOldPattern: '_listVesselRichText_',
     cdnUrl: 'http://1251027630.cdn.myqcloud.com/1251027630',
     defaultPhoto: 'http://1251027630.cdn.myqcloud.com/1251027630/zhichi_frontend/static/webapp/images/default_photo.png',
-    siteBaseUrl:'https://xcx.yingyonghao8.com',
+    siteBaseUrl: 'https://xcx.yingyonghao8.com/',
     appTitle: '票务lite',
     appDescription: '我的应用',
     appLogo: 'http://1251027630.cdn.myqcloud.com/1251027630/zhichi_frontend/static/invitation/images/logo.png'

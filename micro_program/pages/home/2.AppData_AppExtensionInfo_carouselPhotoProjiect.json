@@ -1,0 +1,25 @@
+{
+  "status": 0,
+  "data": [
+    {
+      "id": "3979",
+      "app_id": "2bbvDivi8B",
+      "form_data": "{\"groupName\":\"\u620f\u5267\u6b4c\u5267\",\"groupId\":\"3967\",\"pic\":\"http:\\\/\\\/img.weiye.me\\\/zcimgdir\\\/album\\\/file_594cc8830f9b8.png\",\"isShow\":\"1\",\"action\":\"goods-trade\",\"actionText\":\"\u5546\u54c1\u4e70\u5356\",\"goods-id\":\"1081174\",\"goods-name\":\"\u767e\u8001\u6c47\u539f\u7248\u7ecf\u5178\u559c\u5267\u97f3\u4e50\u5267\u300a\u4fee\u5973\u4e5f\u75af\u72c2\u300b\u6df1\u5733\u7ad9\",\"goods-type\":\"0\",\"page-link\":\"prePage\"}",
+      "weight": "100",
+      "type": "3967",
+      "add_time": "1498204305"
+    },
+    {
+      "id": "3981",
+      "app_id": "2bbvDivi8B",
+      "form_data": "{\"groupName\":\"\u620f\u5267\u6b4c\u5267\",\"groupId\":\"3967\",\"pic\":\"http:\\\/\\\/img.weiye.me\\\/zcimgdir\\\/album\\\/file_594cc882f05ac.png\",\"isShow\":\"1\",\"action\":\"goods-trade\",\"actionText\":\"\u5546\u54c1\u4e70\u5356\",\"goods-id\":\"1081528\",\"goods-name\":\"\u5f00\u5fc3\u9ebb\u82b1\u7206\u7b11\u821e\u53f0\u5267\u300a\u4e0a\u8d3c\u8239\u300b\u6df1\u5733\u7ad9\",\"goods-type\":\"0\",\"page-link\":\"prePage\"}",
+      "weight": "0",
+      "type": "3967",
+      "add_time": "1498204316"
+    }
+  ],
+  "is_more": 0,
+  "current_page": 1,
+  "count": "2",
+  "total_page": 1
+}

@@ -1,29 +1,29 @@
 var appInstance = getApp();
-var WxParse     = require('../../components/wxParse/wxParse.js');
-var util        = require('../../utils/util.js');
+var WxParse = require('../../components/wxParse/wxParse.js');
+var util = require('../../utils/util.js');
 
-var pageData    = {
-  data: {"carousel1":{"type":"carousel","style":"height:328.125rpx;margin-left:auto;margin-right:auto;margin-top:0;opacity:1;","content":[{"customFeature":[],"pic":"http:\/\/img.weiye.me\/zcimgdir\/album\/file_594a2feeefe32.png","content":"","parentCompid":"carousel1","style":""},{"customFeature":[],"pic":"http:\/\/img.weiye.me\/zcimgdir\/album\/file_594a2fa277d42.png","content":"","parentCompid":"carousel1","style":""},{"customFeature":[],"pic":"http:\/\/img.weiye.me\/zcimgdir\/album\/file_594a2fef09516.png","content":"","parentCompid":"carousel1","style":""}],"customFeature":{"autoplay":true,"interval":2,"carouselgroupId":"1108"},"animations":[],"page_form":"","compId":"carousel1"},"picture2":{"type":"picture","style":"opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:58.59375rpx;width:670.3125rpx;margin-left:auto;margin-right:auto;margin-top:-309.375rpx;","content":"http:\/\/img.weiye.me\/zcimgdir\/album\/file_594a33b0b812a.png","customFeature":{"boxShadow":"('#000','0','0','5')","boxColor":"#000","boxX":"0","boxY":"0","boxR":"5","action":"inner-link","inner-page-link":"page10007"},"animations":[],"page_form":"","compId":"picture2","parentCompid":"picture2","itemType":"picture","itemParentType":null,"itemIndex":"picture2","eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10007\\\/page10007\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},"free_vessel3":{"type":"free-vessel","style":"width:750rpx;height:351.5625rpx;background-color:rgb(255, 255, 255);margin-bottom:auto;margin-right:auto;margin-top:253.125rpx;opacity:1;margin-left:auto;","content":[{"type":"picture","style":"opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:75rpx;width:60.9375rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:75rpx;top:35.15625rpx;","content":"http:\/\/img.weiye.me\/zcimgdir\/album\/file_594b29a0c0661.png","customFeature":{"boxShadow":"('#000','0','0','5')","boxColor":"#000","boxX":"0","boxY":"0","boxR":"5","action":"inner-link","inner-page-link":"page10013"},"animations":[],"compId":"data.content[0]","parentCompid":"free_vessel3","itemType":"picture","itemParentType":"free-vessel","itemIndex":0,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10013\\\/page10013\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(76, 76, 76);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:60.9375rpx;top:121.875rpx;margin-right:0;","content":"演唱会","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0","action":"inner-link","inner-page-link":"page10013"},"animations":[],"compId":"data.content[1]","parentCompid":"free_vessel3","markColor":"","mode":0,"itemType":"text","itemParentType":"free-vessel","itemIndex":1,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10013\\\/page10013\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},{"type":"picture","style":"opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:67.96875rpx;width:63.28125rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:253.125rpx;top:39.84375rpx;","content":"http:\/\/img.weiye.me\/zcimgdir\/album\/file_594b29c3217da.png","customFeature":{"boxShadow":"('#000','0','0','5')","boxColor":"#000","boxX":"0","boxY":"0","boxR":"5","action":"inner-link","inner-page-link":"page10016"},"animations":[],"compId":"data.content[2]","parentCompid":"free_vessel3","itemType":"picture","itemParentType":"free-vessel","itemIndex":2,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10016\\\/page10016\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(76, 76, 76);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:243.75rpx;top:121.875rpx;margin-right:0;","content":"音乐会","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0","action":"inner-link","inner-page-link":"page10016"},"animations":[],"compId":"data.content[3]","parentCompid":"free_vessel3","markColor":"","mode":0,"itemType":"text","itemParentType":"free-vessel","itemIndex":3,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10016\\\/page10016\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},{"type":"picture","style":"opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:65.625rpx;width:86.71875rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:426.5625rpx;top:35.15625rpx;","content":"http:\/\/img.weiye.me\/zcimgdir\/album\/file_594b29e6d0da8.png","customFeature":{"boxShadow":"('#000','0','0','5')","boxColor":"#000","boxX":"0","boxY":"0","boxR":"5","action":"inner-link","inner-page-link":"page10017"},"animations":[],"compId":"data.content[4]","parentCompid":"free_vessel3","itemType":"picture","itemParentType":"free-vessel","itemIndex":4,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10017\\\/page10017\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(76, 76, 76);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:414.84375rpx;top:121.875rpx;margin-right:0;","content":"歌剧话剧","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0","action":"inner-link","inner-page-link":"page10017"},"animations":[],"compId":"data.content[5]","parentCompid":"free_vessel3","markColor":"","mode":0,"itemType":"text","itemParentType":"free-vessel","itemIndex":5,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10017\\\/page10017\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},{"type":"picture","style":"opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:70.3125rpx;width:70.3125rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:621.09375rpx;top:35.15625rpx;","content":"http:\/\/img.weiye.me\/zcimgdir\/album\/file_594b2a0954033.png","customFeature":{"boxShadow":"('#000','0','0','5')","boxColor":"#000","boxX":"0","boxY":"0","boxR":"5","action":"inner-link","inner-page-link":"page10018"},"animations":[],"compId":"data.content[6]","parentCompid":"free_vessel3","itemType":"picture","itemParentType":"free-vessel","itemIndex":6,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10018\\\/page10018\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(76, 76, 76);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:597.65625rpx;top:121.875rpx;margin-right:0;","content":"亲子剧场","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0","action":"inner-link","inner-page-link":"page10018"},"animations":[],"compId":"data.content[7]","parentCompid":"free_vessel3","markColor":"","mode":0,"itemType":"text","itemParentType":"free-vessel","itemIndex":7,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10018\\\/page10018\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},{"type":"picture","style":"opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:65.625rpx;width:86.71875rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:58.59375rpx;top:203.90625rpx;","content":"http:\/\/img.weiye.me\/zcimgdir\/album\/file_594b2a3873922.png","customFeature":{"boxShadow":"('#000','0','0','5')","boxColor":"#000","boxX":"0","boxY":"0","boxR":"5","action":"inner-link","inner-page-link":"page10021"},"animations":[],"compId":"data.content[8]","parentCompid":"free_vessel3","itemType":"picture","itemParentType":"free-vessel","itemIndex":8,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10021\\\/page10021\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(76, 76, 76);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:46.875rpx;top:283.59375rpx;margin-right:0;","content":"曲艺杂技","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0","action":"inner-link","inner-page-link":"page10021"},"animations":[],"compId":"data.content[9]","parentCompid":"free_vessel3","markColor":"","mode":0,"itemType":"text","itemParentType":"free-vessel","itemIndex":9,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10021\\\/page10021\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},{"type":"picture","style":"opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:70.3125rpx;width:53.90625rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:260.15625rpx;top:203.90625rpx;","content":"http:\/\/img.weiye.me\/zcimgdir\/album\/file_594b2a5e3ce0f.png","customFeature":{"boxShadow":"('#000','0','0','5')","boxColor":"#000","boxX":"0","boxY":"0","boxR":"5","action":"inner-link","inner-page-link":"page10022"},"animations":[],"compId":"data.content[10]","parentCompid":"free_vessel3","itemType":"picture","itemParentType":"free-vessel","itemIndex":10,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10022\\\/page10022\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(76, 76, 76);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:232.03125rpx;top:283.59375rpx;margin-right:0;","content":"芭蕾舞蹈","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0","action":"inner-link","inner-page-link":"page10022"},"animations":[],"compId":"data.content[11]","parentCompid":"free_vessel3","markColor":"","mode":0,"itemType":"text","itemParentType":"free-vessel","itemIndex":11,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10022\\\/page10022\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},{"type":"picture","style":"opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:65.625rpx;width:65.625rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:435.9375rpx;top:203.90625rpx;","content":"http:\/\/img.weiye.me\/zcimgdir\/album\/file_594b2abfb4b42.png","customFeature":{"boxShadow":"('#000','0','0','5')","boxColor":"#000","boxX":"0","boxY":"0","boxR":"5","action":"inner-link","inner-page-link":"page10023"},"animations":[],"compId":"data.content[12]","parentCompid":"free_vessel3","itemType":"picture","itemParentType":"free-vessel","itemIndex":12,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10023\\\/page10023\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(76, 76, 76);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:414.84375rpx;top:283.59375rpx;margin-right:0;","content":"体育赛事","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0","action":"inner-link","inner-page-link":"page10023"},"animations":[],"compId":"data.content[13]","parentCompid":"free_vessel3","markColor":"","mode":0,"itemType":"text","itemParentType":"free-vessel","itemIndex":13,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10023\\\/page10023\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},{"type":"picture","style":"opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:67.96875rpx;width:70.3125rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:621.09375rpx;top:201.5625rpx;","content":"http:\/\/img.weiye.me\/zcimgdir\/album\/file_594b2c2eaace5.png","customFeature":{"boxShadow":"('#000','0','0','5')","boxColor":"#000","boxX":"0","boxY":"0","boxR":"5","action":"inner-link","inner-page-link":"page10024"},"animations":[],"compId":"data.content[14]","parentCompid":"free_vessel3","itemType":"picture","itemParentType":"free-vessel","itemIndex":14,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10024\\\/page10024\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(76, 76, 76);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:597.65625rpx;top:283.59375rpx;margin-right:0;","content":"设计展览","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0","action":"inner-link","inner-page-link":"page10024"},"animations":[],"compId":"data.content[15]","parentCompid":"free_vessel3","markColor":"","mode":0,"itemType":"text","itemParentType":"free-vessel","itemIndex":15,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10024\\\/page10024\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"}],"customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":5,"boxStyle":false,"boxX":0,"boxY":0},"animations":[],"page_form":"","compId":"free_vessel3"},"suspension4":{"type":"suspension","style":"opacity:1;color:#fff;font-size:46.875rpx;margin-left:auto;","content":[{"customFeature":{"action":"call","width":"20px","height":"20px","phone-num":"0755-88888888"},"pic":"http:\/\/img.weiye.me\/zcimgdir\/album\/file_5934f5e15458a.png","title":"客服","content":"","parentCompid":"suspension4","style":"","itemType":null,"itemParentType":"suspension","itemIndex":0,"eventParams":"{\"phone_num\":\"0755-88888888\"}","eventHandler":"tapPhoneCallHandler"}],"customFeature":{"margin":1,"lineBackgroundColor":"rgba(0,0,0,0.5)","appendComponent":{"service":false,"myOrder":true,"shoppingCart":true,"top":false}},"animations":[],"page_form":"","compId":"suspension4","list_style":"margin-bottom:2.34375rpx;background-color:rgba(0,0,0,0.5);margin-left:auto;","suspension_bottom":70},"free_vessel5":{"type":"free-vessel","style":"width:750rpx;height:70.3125rpx;background-color:rgb(255, 255, 255);margin-bottom:auto;margin-right:auto;margin-top:2.34375rpx;opacity:1;margin-left:auto;","content":[{"type":"picture","style":"opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:32.8125rpx;width:142.96875rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:23.4375rpx;top:18.75rpx;","content":"http:\/\/img.weiye.me\/zcimgdir\/album\/file_594a3b71af65e.png","customFeature":{"boxShadow":"('#000','0','0','5')","boxColor":"#000","boxX":"0","boxY":"0","boxR":"5"},"animations":[],"compId":"data.content[0]","parentCompid":"free_vessel5"},{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(102, 102, 102);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:210.9375rpx;top:16.40625rpx;margin-right:0;","content":"摩登天空，让草莓音乐节来嗨翻你！","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0","action":"inner-link","inner-page-link":"page10025"},"animations":[],"compId":"data.content[1]","parentCompid":"free_vessel5","markColor":"","mode":0,"itemType":"text","itemParentType":"free-vessel","itemIndex":1,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10025\\\/page10025\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"}],"customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":5,"boxStyle":false,"boxX":0,"boxY":0},"animations":[],"page_form":"","compId":"free_vessel5"},"free_vessel6":{"type":"free-vessel","style":"width:750rpx;height:82.03125rpx;background-color:rgb(255, 255, 255);margin-bottom:auto;margin-right:auto;margin-top:11.71875rpx;opacity:1;margin-left:auto;","content":[{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(51, 51, 51);font-size:32.8125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:23.4375rpx;top:21.09375rpx;margin-right:0;","content":"超值福利","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0"},"animations":[],"compId":"data.content[0]","parentCompid":"free_vessel6","markColor":"","mode":0}],"customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":5,"boxStyle":false,"boxX":0,"boxY":0},"animations":[],"page_form":"","compId":"free_vessel6"},"free_vessel7":{"type":"free-vessel","style":"width:750rpx;height:232.03125rpx;background-color:rgb(255, 255, 255);margin-bottom:auto;margin-right:auto;margin-top:2.34375rpx;opacity:1;margin-left:auto;","content":[{"type":"picture","style":"opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:140.625rpx;width:227.34375rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:23.4375rpx;top:23.4375rpx;","content":"http:\/\/img.weiye.me\/zcimgdir\/album\/file_594a3d16601a8.png","customFeature":{"boxShadow":"('#000','0','0','5')","boxColor":"#000","boxX":"0","boxY":"0","boxR":"5","action":"inner-link","inner-page-link":"page10008"},"animations":[],"compId":"data.content[0]","parentCompid":"free_vessel7","itemType":"picture","itemParentType":"free-vessel","itemIndex":0,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10008\\\/page10008\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(102, 102, 102);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:63.28125rpx;top:173.4375rpx;margin-right:0;","content":"优惠券礼包","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0","action":"inner-link","inner-page-link":"page10008"},"animations":[],"compId":"data.content[1]","parentCompid":"free_vessel7","markColor":"","mode":0,"itemType":"text","itemParentType":"free-vessel","itemIndex":1,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10008\\\/page10008\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},{"type":"picture","style":"opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:140.625rpx;width:227.34375rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:262.5rpx;top:23.4375rpx;","content":"http:\/\/img.weiye.me\/zcimgdir\/album\/file_594a3d164e366.png","customFeature":{"boxShadow":"('#000','0','0','5')","boxColor":"#000","boxX":"0","boxY":"0","boxR":"5","action":"inner-link","inner-page-link":"page10012"},"animations":[],"compId":"data.content[2]","parentCompid":"free_vessel7","itemType":"picture","itemParentType":"free-vessel","itemIndex":2,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10012\\\/page10012\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},{"type":"picture","style":"opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:140.625rpx;width:227.34375rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:501.5625rpx;top:23.4375rpx;","content":"http:\/\/img.weiye.me\/zcimgdir\/album\/file_594a3c3a273f9.png","customFeature":{"boxShadow":"('#000','0','0','5')","boxColor":"#000","boxX":"0","boxY":"0","boxR":"5","action":"inner-link","inner-page-link":"page10011"},"animations":[],"compId":"data.content[3]","parentCompid":"free_vessel7","itemType":"picture","itemParentType":"free-vessel","itemIndex":3,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10011\\\/page10011\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(102, 102, 102);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:314.0625rpx;top:173.4375rpx;margin-right:0;","content":"特别推荐","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0","action":"inner-link","inner-page-link":"page10012"},"animations":[],"compId":"data.content[4]","parentCompid":"free_vessel7","markColor":"","mode":0,"itemType":"text","itemParentType":"free-vessel","itemIndex":4,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10012\\\/page10012\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(102, 102, 102);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:567.1875rpx;top:173.4375rpx;margin-right:0;","content":"抢折扣","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0","action":"inner-link","inner-page-link":"page10011"},"animations":[],"compId":"data.content[5]","parentCompid":"free_vessel7","markColor":"","mode":0,"itemType":"text","itemParentType":"free-vessel","itemIndex":5,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10011\\\/page10011\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"}],"customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":5,"boxStyle":false,"boxX":0,"boxY":0},"animations":[],"page_form":"","compId":"free_vessel7"},"free_vessel8":{"type":"free-vessel","style":"width:750rpx;height:82.03125rpx;background-color:rgb(255, 255, 255);margin-bottom:auto;margin-right:auto;margin-top:11.71875rpx;opacity:1;margin-left:auto;","content":[{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(51, 51, 51);font-size:32.8125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:23.4375rpx;top:21.09375rpx;margin-right:0;","content":"最热演唱会","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0"},"animations":[],"compId":"data.content[0]","parentCompid":"free_vessel8","markColor":"","mode":0}],"customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":5,"boxStyle":false,"boxX":0,"boxY":0},"animations":[],"page_form":"","compId":"free_vessel8"},"free_vessel9":{"type":"free-vessel","style":"width:750rpx;height:292.96875rpx;background-color:rgb(255, 255, 255);margin-bottom:auto;margin-right:auto;margin-top:2.34375rpx;opacity:1;margin-left:auto;","content":[{"type":"picture","style":"opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:199.21875rpx;width:703.125rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:23.4375rpx;top:23.4375rpx;","content":"http:\/\/img.weiye.me\/zcimgdir\/album\/file_594a40ac8a952.png","customFeature":{"boxShadow":"('#000','0','0','5')","boxColor":"#000","boxX":"0","boxY":"0","boxR":"5"},"animations":[],"compId":"data.content[0]","parentCompid":"free_vessel9"},{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(102, 102, 102);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:150rpx;top:234.375rpx;margin-right:0;right:auto;","content":"2017周杰伦「地表最强」演唱会 深圳场","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0"},"animations":[],"compId":"data.content[1]","parentCompid":"free_vessel9","markColor":"","mode":0}],"customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":5,"boxStyle":false,"boxX":0,"boxY":0,"action":"inner-link","inner-page-link":"page10019"},"animations":[],"page_form":"","compId":"free_vessel9","itemType":"free-vessel","itemParentType":null,"itemIndex":"free_vessel9","eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10019\\\/page10019\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},"free_vessel10":{"type":"free-vessel","style":"width:750rpx;height:82.03125rpx;background-color:rgb(255, 255, 255);margin-bottom:auto;margin-right:auto;margin-top:11.71875rpx;opacity:1;margin-left:auto;","content":[{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(51, 51, 51);font-size:32.8125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:23.4375rpx;top:21.09375rpx;margin-right:0;","content":"全城聚焦","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0"},"animations":[],"compId":"data.content[0]","parentCompid":"free_vessel10","markColor":"","mode":0}],"customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":5,"boxStyle":false,"boxX":0,"boxY":0},"animations":[],"page_form":"","compId":"free_vessel10"},"free_vessel11":{"type":"free-vessel","style":"width:750rpx;height:257.8125rpx;background-color:rgb(255, 255, 255);margin-bottom:auto;margin-right:auto;opacity:1;margin-left:auto;","content":[{"type":"picture","style":"opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:164.0625rpx;width:346.875rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:23.4375rpx;top:23.4375rpx;","content":"http:\/\/img.weiye.me\/zcimgdir\/album\/file_594c8795aa47d.png","customFeature":{"boxShadow":"('#000','0','0','5')","boxColor":"#000","boxX":"0","boxY":"0","boxR":"5","action":"inner-link","inner-page-link":"page10005"},"animations":[],"compId":"data.content[0]","parentCompid":"free_vessel11","itemType":"picture","itemParentType":"free-vessel","itemIndex":0,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10005\\\/page10005\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},{"type":"picture","style":"opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:164.0625rpx;width:346.875rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:379.6875rpx;top:23.4375rpx;","content":"http:\/\/img.weiye.me\/zcimgdir\/album\/file_594c8795a85d9.png","customFeature":{"boxShadow":"('#000','0','0','5')","boxColor":"#000","boxX":"0","boxY":"0","boxR":"5","action":"inner-link","inner-page-link":"page10020"},"animations":[],"compId":"data.content[1]","parentCompid":"free_vessel11","itemType":"picture","itemParentType":"free-vessel","itemIndex":1,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10020\\\/page10020\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(102, 102, 102);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:79.6875rpx;top:201.5625rpx;margin-right:0;","content":"深圳湾春茧体育中心","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0","action":"inner-link","inner-page-link":"page10005"},"animations":[],"compId":"data.content[2]","parentCompid":"free_vessel11","markColor":"","mode":0,"itemType":"text","itemParentType":"free-vessel","itemIndex":2,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10005\\\/page10005\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"},{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(102, 102, 102);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:431.25rpx;top:201.5625rpx;margin-right:0;","content":"深圳市大运体育中心","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0","action":"inner-link","inner-page-link":"page10020"},"animations":[],"compId":"data.content[3]","parentCompid":"free_vessel11","markColor":"","mode":0,"itemType":"text","itemParentType":"free-vessel","itemIndex":3,"eventParams":"{\"inner_page_link\":\"\\\/pages\\\/page10020\\\/page10020\",\"is_redirect\":0}","eventHandler":"tapInnerLinkHandler"}],"customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":5,"boxStyle":false,"boxX":0,"boxY":0},"animations":[],"page_form":"","compId":"free_vessel11"},"free_vessel12":{"type":"free-vessel","style":"width:750rpx;height:82.03125rpx;background-color:rgb(255, 255, 255);margin-bottom:auto;margin-right:auto;margin-top:11.71875rpx;opacity:1;margin-left:auto;","content":[{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(51, 51, 51);font-size:32.8125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:23.4375rpx;top:21.09375rpx;margin-right:0;","content":"猜你喜欢","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0"},"animations":[],"compId":"data.content[0]","parentCompid":"free_vessel12","markColor":"","mode":0}],"customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":5,"boxStyle":false,"boxX":0,"boxY":0},"animations":[],"page_form":"","compId":"free_vessel12"},"list_vessel13":{"type":"list-vessel","style":"margin-top:2.34375rpx;opacity:1;height:3093.75rpx;background-color:rgb(243, 243, 243);margin-left:auto;","content":[{"type":"free-vessel","style":"width:750rpx;height:304.6875rpx;background-color:rgb(255, 255, 255);margin-bottom:auto;margin-right:auto;opacity:1;margin-left:auto;","content":[{"type":"picture","style":"opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:257.8125rpx;width:203.90625rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:23.4375rpx;top:23.4375rpx;","content":"https:\/\/1251027630.cdn.myqcloud.com\/1251027630\/zhichi_frontend\/static\/webapp\/images\/default.png","customFeature":{"boxShadow":"('#000','0','0','5')","boxColor":"#000","boxX":"0","boxY":"0","boxR":"5","segment":"cover","ifMust":true},"animations":[],"compId":"data.content[0]","parentCompid":"data.content[0]"},{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(51, 51, 51);font-size:30.46875rpx;height:44.53125rpx;width:468.75rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:250.78125rpx;top:25.78125rpx;margin-right:0;","content":"我是文本","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0","segment":"title","ifMust":true},"animations":[],"compId":"data.content[1]","parentCompid":"data.content[0]","markColor":"","mode":0},{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(252, 24, 24);font-size:32.8125rpx;height:44.53125rpx;width:468.75rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:281.25rpx;top:243.75rpx;margin-right:0;","content":"我是文本","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0","segment":"price","ifMust":true},"animations":[],"compId":"data.content[2]","parentCompid":"data.content[0]","markColor":"","mode":0},{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(102, 102, 102);font-size:28.125rpx;height:44.53125rpx;width:468.75rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:337.5rpx;top:180.46875rpx;margin-right:0;","content":"库存：","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0","segment":"stock","ifMust":true},"animations":[],"compId":"data.content[3]","parentCompid":"data.content[0]","markColor":"","mode":0},{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(102, 102, 102);font-size:28.125rpx;height:44.53125rpx;width:405.46875rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:337.5rpx;top:124.21875rpx;margin-right:0;","content":"销量：","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0","segment":"sales","ifMust":false},"animations":[],"compId":"data.content[4]","parentCompid":"data.content[0]","markColor":"","mode":0},{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(102, 102, 102);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:250.78125rpx;top:124.21875rpx;margin-right:0;","content":"销量：","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0"},"animations":[],"compId":"data.content[5]","parentCompid":"data.content[0]","markColor":"","mode":0},{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(102, 102, 102);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:250.78125rpx;top:180.46875rpx;margin-right:0;","content":"库存：","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0"},"animations":[],"compId":"data.content[6]","parentCompid":"data.content[0]","markColor":"","mode":0},{"type":"text","style":"background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(252, 24, 24);font-size:32.8125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:250.78125rpx;top:243.75rpx;margin-right:0;","content":"¥","customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":"5","boxStyle":false,"boxX":"0","boxY":"0"},"animations":[],"compId":"data.content[7]","parentCompid":"data.content[0]","markColor":"","mode":0}],"customFeature":{"boxColor":"rgb(0, 0, 0)","boxR":5,"boxStyle":false,"boxX":0,"boxY":0},"animations":[],"parentCompid":"list_vessel13","compId":"data.content[0]"}],"customFeature":{"background-color":"rgb(243, 243, 243)","background-image":"","form":"goods","id":"list-648807281051","lineBackgroundColor":"rgb(255, 255, 255)","lineBackgroundImage":"","link":"goodsDetail","margin":"1","name":"列表","source":"47680","vesselAutoheight":0,"mode":0,"height":"1320px"},"animations":[],"page_form":"","compId":"list_vessel13","list_style":"margin-bottom:2.34375rpx;background-color:rgb(255, 255, 255);margin-left:auto;","customFeature_id":"list-648807281051","is_more":1,"param":"{\"id\":\"list-648807281051\",\"form\":\"goods\",\"page\":1,\"app_id\":\"GBx0maE3vC\",\"is_count\":0,\"idx_arr\":{\"idx\":\"category\",\"idx_value\":\"47680\"}}","form":"goods"},"has_tabbar":1},
-    need_login: false,
-    page_router: 'page10000',
-    page_form: 'none',
-      list_compids_params: [{"compid":"list_vessel13","param":{"id":"list-648807281051","form":"goods","page":1,"app_id":"GBx0maE3vC","is_count":0,"idx_arr":{"idx":"category","idx_value":"47680"}}}],
-      goods_compids_params: [],
-  prevPage:0,
-      carouselGroupidsParams: [{"compid":"carousel1","carouselgroupId":"1108"}],
-      relobj_auto: [],
-      bbsCompIds: [],
-      dynamicVesselComps: [],
-      communityComps: [],
-      franchiseeComps: [],
-      cityLocationComps: [],
-      onLoad: function (e) {
+var pageData = {
+  data: { "carousel1": { "type": "carousel", "style": "height:328.125rpx;margin-left:auto;margin-right:auto;margin-top:0;opacity:1;", "content": [{ "customFeature": [], "pic": "http:\/\/img.weiye.me\/zcimgdir\/album\/file_594a2feeefe32.png", "content": "", "parentCompid": "carousel1", "style": "" }, { "customFeature": [], "pic": "http:\/\/img.weiye.me\/zcimgdir\/album\/file_594a2fa277d42.png", "content": "", "parentCompid": "carousel1", "style": "" }, { "customFeature": [], "pic": "http:\/\/img.weiye.me\/zcimgdir\/album\/file_594a2fef09516.png", "content": "", "parentCompid": "carousel1", "style": "" }], "customFeature": { "autoplay": true, "interval": 2, "carouselgroupId": "1108" }, "animations": [], "page_form": "", "compId": "carousel1" }, "picture2": { "type": "picture", "style": "opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:58.59375rpx;width:670.3125rpx;margin-left:auto;margin-right:auto;margin-top:-309.375rpx;", "content": "http:\/\/img.weiye.me\/zcimgdir\/album\/file_594a33b0b812a.png", "customFeature": { "boxShadow": "('#000','0','0','5')", "boxColor": "#000", "boxX": "0", "boxY": "0", "boxR": "5", "action": "inner-link", "inner-page-link": "page10007" }, "animations": [], "page_form": "", "compId": "picture2", "parentCompid": "picture2", "itemType": "picture", "itemParentType": null, "itemIndex": "picture2", "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10007\\\/page10007\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, "free_vessel3": { "type": "free-vessel", "style": "width:750rpx;height:351.5625rpx;background-color:rgb(255, 255, 255);margin-bottom:auto;margin-right:auto;margin-top:253.125rpx;opacity:1;margin-left:auto;", "content": [{ "type": "picture", "style": "opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:75rpx;width:60.9375rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:75rpx;top:35.15625rpx;", "content": "http:\/\/img.weiye.me\/zcimgdir\/album\/file_594b29a0c0661.png", "customFeature": { "boxShadow": "('#000','0','0','5')", "boxColor": "#000", "boxX": "0", "boxY": "0", "boxR": "5", "action": "inner-link", "inner-page-link": "page10013" }, "animations": [], "compId": "data.content[0]", "parentCompid": "free_vessel3", "itemType": "picture", "itemParentType": "free-vessel", "itemIndex": 0, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10013\\\/page10013\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, { "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(76, 76, 76);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:60.9375rpx;top:121.875rpx;margin-right:0;", "content": "演唱会", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0", "action": "inner-link", "inner-page-link": "page10013" }, "animations": [], "compId": "data.content[1]", "parentCompid": "free_vessel3", "markColor": "", "mode": 0, "itemType": "text", "itemParentType": "free-vessel", "itemIndex": 1, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10013\\\/page10013\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, { "type": "picture", "style": "opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:67.96875rpx;width:63.28125rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:253.125rpx;top:39.84375rpx;", "content": "http:\/\/img.weiye.me\/zcimgdir\/album\/file_594b29c3217da.png", "customFeature": { "boxShadow": "('#000','0','0','5')", "boxColor": "#000", "boxX": "0", "boxY": "0", "boxR": "5", "action": "inner-link", "inner-page-link": "page10016" }, "animations": [], "compId": "data.content[2]", "parentCompid": "free_vessel3", "itemType": "picture", "itemParentType": "free-vessel", "itemIndex": 2, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10016\\\/page10016\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, { "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(76, 76, 76);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:243.75rpx;top:121.875rpx;margin-right:0;", "content": "音乐会", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0", "action": "inner-link", "inner-page-link": "page10016" }, "animations": [], "compId": "data.content[3]", "parentCompid": "free_vessel3", "markColor": "", "mode": 0, "itemType": "text", "itemParentType": "free-vessel", "itemIndex": 3, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10016\\\/page10016\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, { "type": "picture", "style": "opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:65.625rpx;width:86.71875rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:426.5625rpx;top:35.15625rpx;", "content": "http:\/\/img.weiye.me\/zcimgdir\/album\/file_594b29e6d0da8.png", "customFeature": { "boxShadow": "('#000','0','0','5')", "boxColor": "#000", "boxX": "0", "boxY": "0", "boxR": "5", "action": "inner-link", "inner-page-link": "page10017" }, "animations": [], "compId": "data.content[4]", "parentCompid": "free_vessel3", "itemType": "picture", "itemParentType": "free-vessel", "itemIndex": 4, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10017\\\/page10017\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, { "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(76, 76, 76);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:414.84375rpx;top:121.875rpx;margin-right:0;", "content": "歌剧话剧", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0", "action": "inner-link", "inner-page-link": "page10017" }, "animations": [], "compId": "data.content[5]", "parentCompid": "free_vessel3", "markColor": "", "mode": 0, "itemType": "text", "itemParentType": "free-vessel", "itemIndex": 5, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10017\\\/page10017\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, { "type": "picture", "style": "opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:70.3125rpx;width:70.3125rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:621.09375rpx;top:35.15625rpx;", "content": "http:\/\/img.weiye.me\/zcimgdir\/album\/file_594b2a0954033.png", "customFeature": { "boxShadow": "('#000','0','0','5')", "boxColor": "#000", "boxX": "0", "boxY": "0", "boxR": "5", "action": "inner-link", "inner-page-link": "page10018" }, "animations": [], "compId": "data.content[6]", "parentCompid": "free_vessel3", "itemType": "picture", "itemParentType": "free-vessel", "itemIndex": 6, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10018\\\/page10018\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, { "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(76, 76, 76);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:597.65625rpx;top:121.875rpx;margin-right:0;", "content": "亲子剧场", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0", "action": "inner-link", "inner-page-link": "page10018" }, "animations": [], "compId": "data.content[7]", "parentCompid": "free_vessel3", "markColor": "", "mode": 0, "itemType": "text", "itemParentType": "free-vessel", "itemIndex": 7, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10018\\\/page10018\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, { "type": "picture", "style": "opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:65.625rpx;width:86.71875rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:58.59375rpx;top:203.90625rpx;", "content": "http:\/\/img.weiye.me\/zcimgdir\/album\/file_594b2a3873922.png", "customFeature": { "boxShadow": "('#000','0','0','5')", "boxColor": "#000", "boxX": "0", "boxY": "0", "boxR": "5", "action": "inner-link", "inner-page-link": "page10021" }, "animations": [], "compId": "data.content[8]", "parentCompid": "free_vessel3", "itemType": "picture", "itemParentType": "free-vessel", "itemIndex": 8, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10021\\\/page10021\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, { "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(76, 76, 76);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:46.875rpx;top:283.59375rpx;margin-right:0;", "content": "曲艺杂技", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0", "action": "inner-link", "inner-page-link": "page10021" }, "animations": [], "compId": "data.content[9]", "parentCompid": "free_vessel3", "markColor": "", "mode": 0, "itemType": "text", "itemParentType": "free-vessel", "itemIndex": 9, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10021\\\/page10021\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, { "type": "picture", "style": "opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:70.3125rpx;width:53.90625rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:260.15625rpx;top:203.90625rpx;", "content": "http:\/\/img.weiye.me\/zcimgdir\/album\/file_594b2a5e3ce0f.png", "customFeature": { "boxShadow": "('#000','0','0','5')", "boxColor": "#000", "boxX": "0", "boxY": "0", "boxR": "5", "action": "inner-link", "inner-page-link": "page10022" }, "animations": [], "compId": "data.content[10]", "parentCompid": "free_vessel3", "itemType": "picture", "itemParentType": "free-vessel", "itemIndex": 10, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10022\\\/page10022\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, { "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(76, 76, 76);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:232.03125rpx;top:283.59375rpx;margin-right:0;", "content": "芭蕾舞蹈", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0", "action": "inner-link", "inner-page-link": "page10022" }, "animations": [], "compId": "data.content[11]", "parentCompid": "free_vessel3", "markColor": "", "mode": 0, "itemType": "text", "itemParentType": "free-vessel", "itemIndex": 11, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10022\\\/page10022\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, { "type": "picture", "style": "opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:65.625rpx;width:65.625rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:435.9375rpx;top:203.90625rpx;", "content": "http:\/\/img.weiye.me\/zcimgdir\/album\/file_594b2abfb4b42.png", "customFeature": { "boxShadow": "('#000','0','0','5')", "boxColor": "#000", "boxX": "0", "boxY": "0", "boxR": "5", "action": "inner-link", "inner-page-link": "page10023" }, "animations": [], "compId": "data.content[12]", "parentCompid": "free_vessel3", "itemType": "picture", "itemParentType": "free-vessel", "itemIndex": 12, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10023\\\/page10023\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, { "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(76, 76, 76);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:414.84375rpx;top:283.59375rpx;margin-right:0;", "content": "体育赛事", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0", "action": "inner-link", "inner-page-link": "page10023" }, "animations": [], "compId": "data.content[13]", "parentCompid": "free_vessel3", "markColor": "", "mode": 0, "itemType": "text", "itemParentType": "free-vessel", "itemIndex": 13, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10023\\\/page10023\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, { "type": "picture", "style": "opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:67.96875rpx;width:70.3125rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:621.09375rpx;top:201.5625rpx;", "content": "http:\/\/img.weiye.me\/zcimgdir\/album\/file_594b2c2eaace5.png", "customFeature": { "boxShadow": "('#000','0','0','5')", "boxColor": "#000", "boxX": "0", "boxY": "0", "boxR": "5", "action": "inner-link", "inner-page-link": "page10024" }, "animations": [], "compId": "data.content[14]", "parentCompid": "free_vessel3", "itemType": "picture", "itemParentType": "free-vessel", "itemIndex": 14, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10024\\\/page10024\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, { "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(76, 76, 76);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:597.65625rpx;top:283.59375rpx;margin-right:0;", "content": "设计展览", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0", "action": "inner-link", "inner-page-link": "page10024" }, "animations": [], "compId": "data.content[15]", "parentCompid": "free_vessel3", "markColor": "", "mode": 0, "itemType": "text", "itemParentType": "free-vessel", "itemIndex": 15, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10024\\\/page10024\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }], "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": 5, "boxStyle": false, "boxX": 0, "boxY": 0 }, "animations": [], "page_form": "", "compId": "free_vessel3" }, "suspension4": { "type": "suspension", "style": "opacity:1;color:#fff;font-size:46.875rpx;margin-left:auto;", "content": [{ "customFeature": { "action": "call", "width": "20px", "height": "20px", "phone-num": "0755-88888888" }, "pic": "http:\/\/img.weiye.me\/zcimgdir\/album\/file_5934f5e15458a.png", "title": "客服", "content": "", "parentCompid": "suspension4", "style": "", "itemType": null, "itemParentType": "suspension", "itemIndex": 0, "eventParams": "{\"phone_num\":\"0755-88888888\"}", "eventHandler": "tapPhoneCallHandler" }], "customFeature": { "margin": 1, "lineBackgroundColor": "rgba(0,0,0,0.5)", "appendComponent": { "service": false, "myOrder": true, "shoppingCart": true, "top": false } }, "animations": [], "page_form": "", "compId": "suspension4", "list_style": "margin-bottom:2.34375rpx;background-color:rgba(0,0,0,0.5);margin-left:auto;", "suspension_bottom": 70 }, "free_vessel5": { "type": "free-vessel", "style": "width:750rpx;height:70.3125rpx;background-color:rgb(255, 255, 255);margin-bottom:auto;margin-right:auto;margin-top:2.34375rpx;opacity:1;margin-left:auto;", "content": [{ "type": "picture", "style": "opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:32.8125rpx;width:142.96875rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:23.4375rpx;top:18.75rpx;", "content": "http:\/\/img.weiye.me\/zcimgdir\/album\/file_594a3b71af65e.png", "customFeature": { "boxShadow": "('#000','0','0','5')", "boxColor": "#000", "boxX": "0", "boxY": "0", "boxR": "5" }, "animations": [], "compId": "data.content[0]", "parentCompid": "free_vessel5" }, { "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(102, 102, 102);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:210.9375rpx;top:16.40625rpx;margin-right:0;", "content": "摩登天空，让草莓音乐节来嗨翻你！", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0", "action": "inner-link", "inner-page-link": "page10025" }, "animations": [], "compId": "data.content[1]", "parentCompid": "free_vessel5", "markColor": "", "mode": 0, "itemType": "text", "itemParentType": "free-vessel", "itemIndex": 1, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10025\\\/page10025\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }], "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": 5, "boxStyle": false, "boxX": 0, "boxY": 0 }, "animations": [], "page_form": "", "compId": "free_vessel5" }, "free_vessel6": { "type": "free-vessel", "style": "width:750rpx;height:82.03125rpx;background-color:rgb(255, 255, 255);margin-bottom:auto;margin-right:auto;margin-top:11.71875rpx;opacity:1;margin-left:auto;", "content": [{ "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(51, 51, 51);font-size:32.8125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:23.4375rpx;top:21.09375rpx;margin-right:0;", "content": "超值福利", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0" }, "animations": [], "compId": "data.content[0]", "parentCompid": "free_vessel6", "markColor": "", "mode": 0 }], "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": 5, "boxStyle": false, "boxX": 0, "boxY": 0 }, "animations": [], "page_form": "", "compId": "free_vessel6" }, "free_vessel7": { "type": "free-vessel", "style": "width:750rpx;height:232.03125rpx;background-color:rgb(255, 255, 255);margin-bottom:auto;margin-right:auto;margin-top:2.34375rpx;opacity:1;margin-left:auto;", "content": [{ "type": "picture", "style": "opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:140.625rpx;width:227.34375rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:23.4375rpx;top:23.4375rpx;", "content": "http:\/\/img.weiye.me\/zcimgdir\/album\/file_594a3d16601a8.png", "customFeature": { "boxShadow": "('#000','0','0','5')", "boxColor": "#000", "boxX": "0", "boxY": "0", "boxR": "5", "action": "inner-link", "inner-page-link": "page10008" }, "animations": [], "compId": "data.content[0]", "parentCompid": "free_vessel7", "itemType": "picture", "itemParentType": "free-vessel", "itemIndex": 0, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10008\\\/page10008\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, { "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(102, 102, 102);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:63.28125rpx;top:173.4375rpx;margin-right:0;", "content": "优惠券礼包", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0", "action": "inner-link", "inner-page-link": "page10008" }, "animations": [], "compId": "data.content[1]", "parentCompid": "free_vessel7", "markColor": "", "mode": 0, "itemType": "text", "itemParentType": "free-vessel", "itemIndex": 1, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10008\\\/page10008\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, { "type": "picture", "style": "opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:140.625rpx;width:227.34375rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:262.5rpx;top:23.4375rpx;", "content": "http:\/\/img.weiye.me\/zcimgdir\/album\/file_594a3d164e366.png", "customFeature": { "boxShadow": "('#000','0','0','5')", "boxColor": "#000", "boxX": "0", "boxY": "0", "boxR": "5", "action": "inner-link", "inner-page-link": "page10012" }, "animations": [], "compId": "data.content[2]", "parentCompid": "free_vessel7", "itemType": "picture", "itemParentType": "free-vessel", "itemIndex": 2, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10012\\\/page10012\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, { "type": "picture", "style": "opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:140.625rpx;width:227.34375rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:501.5625rpx;top:23.4375rpx;", "content": "http:\/\/img.weiye.me\/zcimgdir\/album\/file_594a3c3a273f9.png", "customFeature": { "boxShadow": "('#000','0','0','5')", "boxColor": "#000", "boxX": "0", "boxY": "0", "boxR": "5", "action": "inner-link", "inner-page-link": "page10011" }, "animations": [], "compId": "data.content[3]", "parentCompid": "free_vessel7", "itemType": "picture", "itemParentType": "free-vessel", "itemIndex": 3, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10011\\\/page10011\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, { "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(102, 102, 102);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:314.0625rpx;top:173.4375rpx;margin-right:0;", "content": "特别推荐", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0", "action": "inner-link", "inner-page-link": "page10012" }, "animations": [], "compId": "data.content[4]", "parentCompid": "free_vessel7", "markColor": "", "mode": 0, "itemType": "text", "itemParentType": "free-vessel", "itemIndex": 4, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10012\\\/page10012\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, { "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(102, 102, 102);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:567.1875rpx;top:173.4375rpx;margin-right:0;", "content": "抢折扣", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0", "action": "inner-link", "inner-page-link": "page10011" }, "animations": [], "compId": "data.content[5]", "parentCompid": "free_vessel7", "markColor": "", "mode": 0, "itemType": "text", "itemParentType": "free-vessel", "itemIndex": 5, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10011\\\/page10011\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }], "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": 5, "boxStyle": false, "boxX": 0, "boxY": 0 }, "animations": [], "page_form": "", "compId": "free_vessel7" }, "free_vessel8": { "type": "free-vessel", "style": "width:750rpx;height:82.03125rpx;background-color:rgb(255, 255, 255);margin-bottom:auto;margin-right:auto;margin-top:11.71875rpx;opacity:1;margin-left:auto;", "content": [{ "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(51, 51, 51);font-size:32.8125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:23.4375rpx;top:21.09375rpx;margin-right:0;", "content": "最热演唱会", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0" }, "animations": [], "compId": "data.content[0]", "parentCompid": "free_vessel8", "markColor": "", "mode": 0 }], "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": 5, "boxStyle": false, "boxX": 0, "boxY": 0 }, "animations": [], "page_form": "", "compId": "free_vessel8" }, "free_vessel9": { "type": "free-vessel", "style": "width:750rpx;height:292.96875rpx;background-color:rgb(255, 255, 255);margin-bottom:auto;margin-right:auto;margin-top:2.34375rpx;opacity:1;margin-left:auto;", "content": [{ "type": "picture", "style": "opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:199.21875rpx;width:703.125rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:23.4375rpx;top:23.4375rpx;", "content": "http:\/\/img.weiye.me\/zcimgdir\/album\/file_594a40ac8a952.png", "customFeature": { "boxShadow": "('#000','0','0','5')", "boxColor": "#000", "boxX": "0", "boxY": "0", "boxR": "5" }, "animations": [], "compId": "data.content[0]", "parentCompid": "free_vessel9" }, { "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(102, 102, 102);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:150rpx;top:234.375rpx;margin-right:0;right:auto;", "content": "2017周杰伦「地表最强」演唱会 深圳场", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0" }, "animations": [], "compId": "data.content[1]", "parentCompid": "free_vessel9", "markColor": "", "mode": 0 }], "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": 5, "boxStyle": false, "boxX": 0, "boxY": 0, "action": "inner-link", "inner-page-link": "page10019" }, "animations": [], "page_form": "", "compId": "free_vessel9", "itemType": "free-vessel", "itemParentType": null, "itemIndex": "free_vessel9", "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10019\\\/page10019\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, "free_vessel10": { "type": "free-vessel", "style": "width:750rpx;height:82.03125rpx;background-color:rgb(255, 255, 255);margin-bottom:auto;margin-right:auto;margin-top:11.71875rpx;opacity:1;margin-left:auto;", "content": [{ "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(51, 51, 51);font-size:32.8125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:23.4375rpx;top:21.09375rpx;margin-right:0;", "content": "全城聚焦", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0" }, "animations": [], "compId": "data.content[0]", "parentCompid": "free_vessel10", "markColor": "", "mode": 0 }], "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": 5, "boxStyle": false, "boxX": 0, "boxY": 0 }, "animations": [], "page_form": "", "compId": "free_vessel10" }, "free_vessel11": { "type": "free-vessel", "style": "width:750rpx;height:257.8125rpx;background-color:rgb(255, 255, 255);margin-bottom:auto;margin-right:auto;opacity:1;margin-left:auto;", "content": [{ "type": "picture", "style": "opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:164.0625rpx;width:346.875rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:23.4375rpx;top:23.4375rpx;", "content": "http:\/\/img.weiye.me\/zcimgdir\/album\/file_594c8795aa47d.png", "customFeature": { "boxShadow": "('#000','0','0','5')", "boxColor": "#000", "boxX": "0", "boxY": "0", "boxR": "5", "action": "inner-link", "inner-page-link": "page10005" }, "animations": [], "compId": "data.content[0]", "parentCompid": "free_vessel11", "itemType": "picture", "itemParentType": "free-vessel", "itemIndex": 0, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10005\\\/page10005\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, { "type": "picture", "style": "opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:164.0625rpx;width:346.875rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:379.6875rpx;top:23.4375rpx;", "content": "http:\/\/img.weiye.me\/zcimgdir\/album\/file_594c8795a85d9.png", "customFeature": { "boxShadow": "('#000','0','0','5')", "boxColor": "#000", "boxX": "0", "boxY": "0", "boxR": "5", "action": "inner-link", "inner-page-link": "page10020" }, "animations": [], "compId": "data.content[1]", "parentCompid": "free_vessel11", "itemType": "picture", "itemParentType": "free-vessel", "itemIndex": 1, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10020\\\/page10020\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, { "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(102, 102, 102);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:79.6875rpx;top:201.5625rpx;margin-right:0;", "content": "深圳湾春茧体育中心", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0", "action": "inner-link", "inner-page-link": "page10005" }, "animations": [], "compId": "data.content[2]", "parentCompid": "free_vessel11", "markColor": "", "mode": 0, "itemType": "text", "itemParentType": "free-vessel", "itemIndex": 2, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10005\\\/page10005\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }, { "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(102, 102, 102);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:431.25rpx;top:201.5625rpx;margin-right:0;", "content": "深圳市大运体育中心", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0", "action": "inner-link", "inner-page-link": "page10020" }, "animations": [], "compId": "data.content[3]", "parentCompid": "free_vessel11", "markColor": "", "mode": 0, "itemType": "text", "itemParentType": "free-vessel", "itemIndex": 3, "eventParams": "{\"inner_page_link\":\"\\\/pages\\\/page10020\\\/page10020\",\"is_redirect\":0}", "eventHandler": "tapInnerLinkHandler" }], "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": 5, "boxStyle": false, "boxX": 0, "boxY": 0 }, "animations": [], "page_form": "", "compId": "free_vessel11" }, "free_vessel12": { "type": "free-vessel", "style": "width:750rpx;height:82.03125rpx;background-color:rgb(255, 255, 255);margin-bottom:auto;margin-right:auto;margin-top:11.71875rpx;opacity:1;margin-left:auto;", "content": [{ "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(51, 51, 51);font-size:32.8125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:23.4375rpx;top:21.09375rpx;margin-right:0;", "content": "猜你喜欢", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0" }, "animations": [], "compId": "data.content[0]", "parentCompid": "free_vessel12", "markColor": "", "mode": 0 }], "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": 5, "boxStyle": false, "boxX": 0, "boxY": 0 }, "animations": [], "page_form": "", "compId": "free_vessel12" }, "list_vessel13": { "type": "list-vessel", "style": "margin-top:2.34375rpx;opacity:1;height:3093.75rpx;background-color:rgb(243, 243, 243);margin-left:auto;", "content": [{ "type": "free-vessel", "style": "width:750rpx;height:304.6875rpx;background-color:rgb(255, 255, 255);margin-bottom:auto;margin-right:auto;opacity:1;margin-left:auto;", "content": [{ "type": "picture", "style": "opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:257.8125rpx;width:203.90625rpx;margin-left:auto;margin-right:0;margin-top:0;position:absolute;left:23.4375rpx;top:23.4375rpx;", "content": "https:\/\/1251027630.cdn.myqcloud.com\/1251027630\/zhichi_frontend\/static\/webapp\/images\/default.png", "customFeature": { "boxShadow": "('#000','0','0','5')", "boxColor": "#000", "boxX": "0", "boxY": "0", "boxR": "5", "segment": "cover", "ifMust": true }, "animations": [], "compId": "data.content[0]", "parentCompid": "data.content[0]" }, { "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(51, 51, 51);font-size:30.46875rpx;height:44.53125rpx;width:468.75rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:250.78125rpx;top:25.78125rpx;margin-right:0;", "content": "我是文本", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0", "segment": "title", "ifMust": true }, "animations": [], "compId": "data.content[1]", "parentCompid": "data.content[0]", "markColor": "", "mode": 0 }, { "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(252, 24, 24);font-size:32.8125rpx;height:44.53125rpx;width:468.75rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:281.25rpx;top:243.75rpx;margin-right:0;", "content": "我是文本", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0", "segment": "price", "ifMust": true }, "animations": [], "compId": "data.content[2]", "parentCompid": "data.content[0]", "markColor": "", "mode": 0 }, { "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(102, 102, 102);font-size:28.125rpx;height:44.53125rpx;width:468.75rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:337.5rpx;top:180.46875rpx;margin-right:0;", "content": "库存：", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0", "segment": "stock", "ifMust": true }, "animations": [], "compId": "data.content[3]", "parentCompid": "data.content[0]", "markColor": "", "mode": 0 }, { "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(102, 102, 102);font-size:28.125rpx;height:44.53125rpx;width:405.46875rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:337.5rpx;top:124.21875rpx;margin-right:0;", "content": "销量：", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0", "segment": "sales", "ifMust": false }, "animations": [], "compId": "data.content[4]", "parentCompid": "data.content[0]", "markColor": "", "mode": 0 }, { "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(102, 102, 102);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:250.78125rpx;top:124.21875rpx;margin-right:0;", "content": "销量：", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0" }, "animations": [], "compId": "data.content[5]", "parentCompid": "data.content[0]", "markColor": "", "mode": 0 }, { "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(102, 102, 102);font-size:28.125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:250.78125rpx;top:180.46875rpx;margin-right:0;", "content": "库存：", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0" }, "animations": [], "compId": "data.content[6]", "parentCompid": "data.content[0]", "markColor": "", "mode": 0 }, { "type": "text", "style": "background-color:rgba(0, 0, 0, 0);border-color:rgb(34, 34, 34);border-style:none;border-width:4.6875rpx;color:rgb(252, 24, 24);font-size:32.8125rpx;height:44.53125rpx;line-height:44.53125rpx;margin-left:auto;margin-top:0;opacity:1;text-align:left;position:absolute;left:250.78125rpx;top:243.75rpx;margin-right:0;", "content": "¥", "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": "5", "boxStyle": false, "boxX": "0", "boxY": "0" }, "animations": [], "compId": "data.content[7]", "parentCompid": "data.content[0]", "markColor": "", "mode": 0 }], "customFeature": { "boxColor": "rgb(0, 0, 0)", "boxR": 5, "boxStyle": false, "boxX": 0, "boxY": 0 }, "animations": [], "parentCompid": "list_vessel13", "compId": "data.content[0]" }], "customFeature": { "background-color": "rgb(243, 243, 243)", "background-image": "", "form": "goods", "id": "list-648807281051", "lineBackgroundColor": "rgb(255, 255, 255)", "lineBackgroundImage": "", "link": "goodsDetail", "margin": "1", "name": "列表", "source": "47680", "vesselAutoheight": 0, "mode": 0, "height": "1320px" }, "animations": [], "page_form": "", "compId": "list_vessel13", "list_style": "margin-bottom:2.34375rpx;background-color:rgb(255, 255, 255);margin-left:auto;", "customFeature_id": "list-648807281051", "is_more": 1, "param": "{\"id\":\"list-648807281051\",\"form\":\"goods\",\"page\":1,\"app_id\":\"GBx0maE3vC\",\"is_count\":0,\"idx_arr\":{\"idx\":\"category\",\"idx_value\":\"47680\"}}", "form": "goods" }, "has_tabbar": 1 },
+  need_login: false,
+  page_router: 'page10000',
+  page_form: 'none',
+  list_compids_params: [{ "compid": "list_vessel13", "param": { "id": "list-648807281051", "form": "goods", "page": 1, "app_id": "GBx0maE3vC", "is_count": 0, "idx_arr": { "idx": "category", "idx_value": "47680" } } }],
+  goods_compids_params: [],
+  prevPage: 0,
+  carouselGroupidsParams: [{ "compid": "carousel1", "carouselgroupId": "1108" }],
+  relobj_auto: [],
+  bbsCompIds: [],
+  dynamicVesselComps: [],
+  communityComps: [],
+  franchiseeComps: [],
+  cityLocationComps: [],
+  onLoad: function (e) {
     this.setData({
       addShoppingCartShow: false,
-      addTostoreShoppingCartShow:false
+      addTostoreShoppingCartShow: false
     });
     appInstance.setPageUserInfo();
-    if(e.detail){
+    if (e.detail) {
       this.dataId = e.detail;
     }
     appInstance.checkLogin();
@@ -33,26 +33,26 @@ var pageData    = {
     appInstance.globalData.urlLocationId = e.location_id;
 
   },
-  dataInitial: function(){
+  dataInitial: function () {
     appInstance.dataInitial();
   },
-  onShareAppMessage: function(){
+  onShareAppMessage: function () {
     var pageRouter = this.page_router,
-        pagePath = '/pages/'+pageRouter+'/'+pageRouter;
+      pagePath = '/pages/' + pageRouter + '/' + pageRouter;
 
     // 统计用户分享APP
     appInstance.countUserShareApp();
 
-    pagePath += this.dataId ? '?detail='+this.dataId : '';
+    pagePath += this.dataId ? '?detail=' + this.dataId : '';
     return {
       title: appInstance.getAppTitle() || '即速应用',
       desc: appInstance.getAppDescription() || '即速应用，拖拽生成app，无需编辑代码，一键打包微信小程序',
       path: pagePath
     }
   },
-  onShow: function(){
+  onShow: function () {
     var that = this;
-    setTimeout(function(){
+    setTimeout(function () {
       appInstance.setPageUserInfo();
     });
 
@@ -61,49 +61,49 @@ var pageData    = {
       appInstance.turnToPage('/pages/bindCellphone/bindCellphone');
     }
   },
-  onReachBottom : function() {
-    for(let i in this.data){
-      if(/^bbs[\d]+$/.test(i)){
+  onReachBottom: function () {
+    for (let i in this.data) {
+      if (/^bbs[\d]+$/.test(i)) {
         appInstance.bbsScrollFuc(i);
       }
     }
   },
-  tapPrevewPictureHandler:function(e){
+  tapPrevewPictureHandler: function (e) {
     appInstance.tapPrevewPictureHandler(e);
   },
-  suspensionBottom: function(){
+  suspensionBottom: function () {
     for (let i in this.data) {
-      if(/suspension/.test(i)){
+      if (/suspension/.test(i)) {
         let suspension = this.data[i],
-            newdata = {};
+          newdata = {};
 
-        if(this.data.has_tabbar == 1){
-          newdata[i + '.suspension_bottom'] = (+suspension.suspension_bottom - 56)*2.34;
-        }else{
-          newdata[i + '.suspension_bottom'] = (+suspension.suspension_bottom)*2.34;
+        if (this.data.has_tabbar == 1) {
+          newdata[i + '.suspension_bottom'] = (+suspension.suspension_bottom - 56) * 2.34;
+        } else {
+          newdata[i + '.suspension_bottom'] = (+suspension.suspension_bottom) * 2.34;
         }
         this.setData(newdata);
       }
     }
   },
   pageScrollFunc: function (e) {
-    let compid  = e.target.dataset.compid;
-    let curpage = parseInt(e.target.dataset.curpage) + 1;
-      if (this.prevPage !== curpage) {
-          this.prevPage = curpage;
-          appInstance.pageScrollFunc(compid, curpage);
-      }
-  },
-  goodsScrollFunc: function (e) {
-    let compid  = e.target.dataset.compid;
+    let compid = e.target.dataset.compid;
     let curpage = parseInt(e.target.dataset.curpage) + 1;
     if (this.prevPage !== curpage) {
-        this.prevPage = curpage;
-        appInstance.goodsScrollFunc(compid, curpage);
+      this.prevPage = curpage;
+      appInstance.pageScrollFunc(compid, curpage);
+    }
+  },
+  goodsScrollFunc: function (e) {
+    let compid = e.target.dataset.compid;
+    let curpage = parseInt(e.target.dataset.curpage) + 1;
+    if (this.prevPage !== curpage) {
+      this.prevPage = curpage;
+      appInstance.goodsScrollFunc(compid, curpage);
     }
   },
   franchiseeScrollFunc: function (e) {
-    let compid  = e.target.dataset.compid;
+    let compid = e.target.dataset.compid;
     let curpage = parseInt(e.target.dataset.curpage) + 1;
     appInstance.franchiseeScrollFunc(compid, curpage);
   },
@@ -116,22 +116,22 @@ var pageData    = {
     let value = e.detail.value;
     appInstance.inputChange(dataset, value);
   },
-  bindDateChange: function(e) {
+  bindDateChange: function (e) {
     let dataset = e.currentTarget.dataset;
-    let value   = e.detail.value;
+    let value = e.detail.value;
     appInstance.bindDateChange(dataset, value);
   },
-  bindTimeChange: function(e) {
+  bindTimeChange: function (e) {
     let dataset = e.currentTarget.dataset;
-    let value   = e.detail.value;
+    let value = e.detail.value;
     appInstance.bindTimeChange(dataset, value);
   },
-  bindSelectChange: function(e) {
+  bindSelectChange: function (e) {
     let dataset = e.currentTarget.dataset;
     let value = e.detail.value;
     appInstance.bindSelectChange(dataset, value);
   },
-  bindScoreChange: function(e){
+  bindScoreChange: function (e) {
     let dataset = e.currentTarget.dataset;
     appInstance.bindScoreChange(dataset);
   },
@@ -151,7 +151,7 @@ var pageData    = {
     let dataset = e.currentTarget.dataset;
     appInstance.uploadFormImg(dataset);
   },
-  deleteUploadImg:function(e){
+  deleteUploadImg: function (e) {
     let dataset = e.currentTarget.dataset;
     appInstance.deleteUploadImg(dataset);
   },
@@ -162,211 +162,211 @@ var pageData    = {
   UserCenterTurnToPage: function (e) {
     let router = e.currentTarget.dataset.router;
     let openVerifyPhone = e.currentTarget.dataset.openVerifyPhone; // 是否开启短信验证
-    if(openVerifyPhone){
-      if(!appInstance.getUserInfo().phone) {
+    if (openVerifyPhone) {
+      if (!appInstance.getUserInfo().phone) {
         appInstance.turnToPage('/pages/bindCellphone/bindCellphone', true);
       } else {
-        appInstance.turnToPage('/pages/' + router + '/' + router +'?from=userCenterEle');
+        appInstance.turnToPage('/pages/' + router + '/' + router + '?from=userCenterEle');
       }
     } else {
-      appInstance.turnToPage('/pages/' + router + '/' + router +'?from=userCenterEle');
+      appInstance.turnToPage('/pages/' + router + '/' + router + '?from=userCenterEle');
     }
   },
   turnToGoodsDetail: function (e) {
     let id = e.currentTarget.dataset.id;
     let contact = e.currentTarget.dataset.contact;
     let goodsType = e.currentTarget.dataset.goodsType;
-    switch(+goodsType){
+    switch (+goodsType) {
       case 0:
-      case 1: appInstance.turnToPage('/pages/goodsDetail/goodsDetail?detail=' + id +'&contact=' + contact);
+      case 1: appInstance.turnToPage('/pages/goodsDetail/goodsDetail?detail=' + id + '&contact=' + contact);
         break;
       case 3: appInstance.turnToPage('/pages/toStoreDetail/toStoreDetail?detail=' + id);
         break;
     }
   },
-  turnToFranchiseeDetail: function(e){
+  turnToFranchiseeDetail: function (e) {
     let dataset = e.currentTarget.dataset,
-        id = dataset.id;
+      id = dataset.id;
     appInstance.turnToPage('/pages/franchiseeDetail/franchiseeDetail?detail=' + id);
   },
   sortListFunc: function (e) {
     let dataset = e.currentTarget.dataset;
     appInstance.sortListFunc(dataset);
   },
-  bbsInputComment: function(e){
+  bbsInputComment: function (e) {
     var dataset = e.target.dataset,
-        comment = e.detail.value;
+      comment = e.detail.value;
     appInstance.bbsInputComment(dataset, comment);
   },
-  bbsInputReply: function(e){
+  bbsInputReply: function (e) {
     var dataset = e.target.dataset,
-        comment = e.detail.value;
+      comment = e.detail.value;
     appInstance.bbsInputReply(dataset, comment);
   },
-  uploadBbsCommentImage: function(e){
+  uploadBbsCommentImage: function (e) {
     var dataset = e.currentTarget.dataset;
     appInstance.uploadBbsCommentImage(dataset);
   },
-  uploadBbsReplyImage: function(e){
+  uploadBbsReplyImage: function (e) {
     var dataset = e.currentTarget.dataset;
     appInstance.uploadBbsReplyImage(dataset);
   },
-  deleteCommentImage: function(e){
+  deleteCommentImage: function (e) {
     var dataset = e.currentTarget.dataset;
     appInstance.deleteCommentImage(dataset);
   },
-  deleteReplyImage: function(e){
+  deleteReplyImage: function (e) {
     var dataset = e.currentTarget.dataset;
     appInstance.deleteReplyImage(dataset);
   },
-  bbsPublishComment: function(e){
+  bbsPublishComment: function (e) {
     var dataset = e.currentTarget.dataset;
     appInstance.bbsPublishComment(dataset);
   },
-  clickBbsReplyBtn: function(e){
+  clickBbsReplyBtn: function (e) {
     var dataset = e.currentTarget.dataset;
     appInstance.clickBbsReplyBtn(dataset);
   },
-  bbsPublishReply: function(e){
+  bbsPublishReply: function (e) {
     var dataset = e.currentTarget.dataset;
     appInstance.bbsPublishReply(dataset);
   },
-  keywordList:{},
-  bindSearchTextChange : function(e){
+  keywordList: {},
+  bindSearchTextChange: function (e) {
     this.keywordList[e.currentTarget.dataset.compid] = e.detail.value;
   },
-  searchList:function(e){
+  searchList: function (e) {
     let dataset = e.currentTarget.dataset;
     appInstance.searchList(dataset);
   },
-  selectLocal:function(e){
+  selectLocal: function (e) {
     var that = this;
     let id = e.currentTarget.dataset.id,
-        newdata = this.data;
-    newdata[id].hidden = typeof(this.data[id].hidden) == undefined ? false : !this.data[id].hidden;
-    newdata[id].provinces = ['请选择'];  newdata[id].citys =['请选择']; newdata[id].districts = ['请选择']
-    newdata[id].provinces_ids =[null]; newdata[id].city_ids =[null]; newdata[id].district_ids = [null];
-    for(var i in newdata[id].areaList){
+      newdata = this.data;
+    newdata[id].hidden = typeof (this.data[id].hidden) == undefined ? false : !this.data[id].hidden;
+    newdata[id].provinces = ['请选择']; newdata[id].citys = ['请选择']; newdata[id].districts = ['请选择']
+    newdata[id].provinces_ids = [null]; newdata[id].city_ids = [null]; newdata[id].district_ids = [null];
+    for (var i in newdata[id].areaList) {
       newdata[id].provinces.push(newdata[id].areaList[i].name);
       newdata[id].provinces_ids.push(newdata[id].areaList[i].region_id);
     }
     newdata[id].newlocal = '';
     this.setData(newdata);
   },
-  cancelCity:function(e){
+  cancelCity: function (e) {
     var that = this;
     let id = e.currentTarget.dataset.id,
-        newdata = this.data;
+      newdata = this.data;
     newdata[id].hidden = !this.data[id].hidden;
     newdata[id].province = '';
     newdata[id].city = '';
     newdata[id].district = '';
     this.setData(newdata);
   },
-  bindCityChange:function(e){
+  bindCityChange: function (e) {
     const val = e.detail.value;
     let id = e.currentTarget.dataset.id,
-        newdata = this.data,
-        cityList = newdata[id].areaList;
-        if(!newdata[id].newlocal){
-          if(newdata[id].value[0] == val[0]){
-            newdata[id].province = this.data[id].provinces[val[0]] == '请选择' ? '' : this.data[id].provinces[val[0]];
-            newdata[id].citys = newdata[id].province == '' ? ['请选择'] : this.getCityList(cityList[val[0] - 1].cities);
-            newdata[id].city_ids = newdata[id].province == '' ? [null] : this.getCityList(cityList[val[0] - 1].cities, 1);
-            newdata[id].city = newdata[id].province == '' ? '' : newdata[id].citys[val[1]];
-            newdata[id].districts = newdata[id].city == '' ? ['请选择'] : this.getCityList(cityList[val[0] - 1].cities[val[1]].towns);
-            newdata[id].district_ids = newdata[id].city == '' ? [null] : this.getCityList(cityList[val[0] - 1].cities[val[1]].towns, 1);
-            newdata[id].region_id = newdata[id].district_ids[val[2]];
-            newdata[id].district = newdata[id].city == '' ? '' : newdata[id].districts[val[2]];
-            newdata[id].value = val;
-          }else{
-            newdata[id].province = this.data[id].provinces[val[0]] == '请选择' ? '' : this.data[id].provinces[val[0]];
-            newdata[id].citys = newdata[id].province == '' ? ['请选择'] : this.getCityList(cityList[val[0] - 1].cities);
-            newdata[id].city_ids = newdata[id].province == '' ? [null] : this.getCityList(cityList[val[0] - 1].cities, 1);
-            newdata[id].city = newdata[id].province == '' ? '' : newdata[id].citys[0];
-            newdata[id].districts = newdata[id].city == '' ? ['请选择'] : this.getCityList(cityList[val[0] - 1].cities[0].towns);
-            newdata[id].district_ids = newdata[id].city == '' ? [null] : this.getCityList(cityList[val[0] - 1].cities[0].towns, 1);
-            newdata[id].region_id = newdata[id].district_ids[val[2]];
-            newdata[id].district = newdata[id].city == '' ? '' : newdata[id].districts[val[2]];
-            newdata[id].value = val;
-          }          
-          // newdata[id].district = newdata[id].district == '请选择'? '' :newdata[id].district
-          this.setData(newdata)
+      newdata = this.data,
+      cityList = newdata[id].areaList;
+    if (!newdata[id].newlocal) {
+      if (newdata[id].value[0] == val[0]) {
+        newdata[id].province = this.data[id].provinces[val[0]] == '请选择' ? '' : this.data[id].provinces[val[0]];
+        newdata[id].citys = newdata[id].province == '' ? ['请选择'] : this.getCityList(cityList[val[0] - 1].cities);
+        newdata[id].city_ids = newdata[id].province == '' ? [null] : this.getCityList(cityList[val[0] - 1].cities, 1);
+        newdata[id].city = newdata[id].province == '' ? '' : newdata[id].citys[val[1]];
+        newdata[id].districts = newdata[id].city == '' ? ['请选择'] : this.getCityList(cityList[val[0] - 1].cities[val[1]].towns);
+        newdata[id].district_ids = newdata[id].city == '' ? [null] : this.getCityList(cityList[val[0] - 1].cities[val[1]].towns, 1);
+        newdata[id].region_id = newdata[id].district_ids[val[2]];
+        newdata[id].district = newdata[id].city == '' ? '' : newdata[id].districts[val[2]];
+        newdata[id].value = val;
+      } else {
+        newdata[id].province = this.data[id].provinces[val[0]] == '请选择' ? '' : this.data[id].provinces[val[0]];
+        newdata[id].citys = newdata[id].province == '' ? ['请选择'] : this.getCityList(cityList[val[0] - 1].cities);
+        newdata[id].city_ids = newdata[id].province == '' ? [null] : this.getCityList(cityList[val[0] - 1].cities, 1);
+        newdata[id].city = newdata[id].province == '' ? '' : newdata[id].citys[0];
+        newdata[id].districts = newdata[id].city == '' ? ['请选择'] : this.getCityList(cityList[val[0] - 1].cities[0].towns);
+        newdata[id].district_ids = newdata[id].city == '' ? [null] : this.getCityList(cityList[val[0] - 1].cities[0].towns, 1);
+        newdata[id].region_id = newdata[id].district_ids[val[2]];
+        newdata[id].district = newdata[id].city == '' ? '' : newdata[id].districts[val[2]];
+        newdata[id].value = val;
+      }
+      // newdata[id].district = newdata[id].district == '请选择'? '' :newdata[id].district
+      this.setData(newdata)
     }
   },
-  submitCity:function(e){
+  submitCity: function (e) {
     let id = e.currentTarget.dataset.id,
-        newdata = this.data;
-    if(!newdata[id].districts){
-      appInstance.showModal({content: '您未选择城市!'});
+      newdata = this.data;
+    if (!newdata[id].districts) {
+      appInstance.showModal({ content: '您未选择城市!' });
       newdata[id].province = '';
       newdata[id].city = '';
       newdata[id].district = '';
-    }else{
+    } else {
       newdata[id].hidden = !this.data[id].hidden;
-      newdata[id].newlocal = newdata[id].province + ' ' + newdata[id].city + ' ' +      newdata[id].district;
-      newdata[id].value = [0,0,0];
+      newdata[id].newlocal = newdata[id].province + ' ' + newdata[id].city + ' ' + newdata[id].district;
+      newdata[id].value = [0, 0, 0];
       appInstance.citylocationList(e.currentTarget.dataset, newdata[id].region_id);
     }
     this.setData(newdata);
   },
-  getCityList:function (province, id){
+  getCityList: function (province, id) {
     let cityList = [], cityList_id = [];
-    for(let i in province){
-      if(typeof(province[i]) == 'object'){
+    for (let i in province) {
+      if (typeof (province[i]) == 'object') {
         cityList.push(province[i].name)
         cityList_id.push(province[i].region_id);
-      }else{
+      } else {
         cityList[1] = province.name;
-        cityList_id[1]=province.region_id;
+        cityList_id[1] = province.region_id;
       }
     }
-    if(id){
+    if (id) {
       return cityList_id;
-    }else{
+    } else {
       return cityList;
     }
 
   },
-  
 
-  
-  
-  tapGoodsTradeHandler: function(event) {
+
+
+
+  tapGoodsTradeHandler: function (event) {
     appInstance.tapGoodsTradeHandler(event);
   },
-  tapInnerLinkHandler: function(event) {
+  tapInnerLinkHandler: function (event) {
     appInstance.tapInnerLinkHandler(event);
   },
-  tapPhoneCallHandler: function(event) {
+  tapPhoneCallHandler: function (event) {
     appInstance.tapPhoneCallHandler(event);
   },
-  tapRefreshListHandler: function(event) {
+  tapRefreshListHandler: function (event) {
     var _this = this;
     appInstance.tapRefreshListHandler(event, _this);
   },
-  tapGetCouponHandler: function(event) {
+  tapGetCouponHandler: function (event) {
     appInstance.tapGetCouponHandler(event);
   },
-  tapCommunityHandler: function(event) {
+  tapCommunityHandler: function (event) {
     appInstance.tapCommunityHandler(event);
   },
-  turnToCommunityPage: function(event){
+  turnToCommunityPage: function (event) {
     let id = event.currentTarget.dataset.id;
     appInstance.turnToPage('/pages/communityPage/communityPage?detail=' + id);
   },
-  tapToFranchiseeHandler: function(event){
+  tapToFranchiseeHandler: function (event) {
     appInstance.tapToFranchiseeHandler(event);
   },
-  tapToTransferPageHandler: function(event){
+  tapToTransferPageHandler: function (event) {
     appInstance.tapToTransferPageHandler(event);
   },
-  tapFranchiseeLocation: function(event){
+  tapFranchiseeLocation: function (event) {
     appInstance.tapFranchiseeLocation(event);
   },
-  showAddShoppingcart: function(event) {
+  showAddShoppingcart: function (event) {
     var that = this,
-        goods_id = event.currentTarget.dataset.id;
+      goods_id = event.currentTarget.dataset.id;
     appInstance.sendRequest({
       url: '/index.php?r=AppShop/getGoods',
       data: {
@@ -376,29 +376,29 @@ var pageData    = {
       success: function (res) {
         if (res.status == 0) {
           var goods = res.data[0].form_data,
-              defaultSelect = goods.model_items[0],
-              goodsModel = [],
-              selectModels = [],
-              goodprice = 0,
-              goodstock = 0,
-              goodid ;
-          if(goods.model_items.length){
+            defaultSelect = goods.model_items[0],
+            goodsModel = [],
+            selectModels = [],
+            goodprice = 0,
+            goodstock = 0,
+            goodid;
+          if (goods.model_items.length) {
             goodprice = defaultSelect.price;
             goodstock = defaultSelect.stock;
             goodid = defaultSelect.id;
-          }else{
+          } else {
             goodprice = goods.price;
             goodstock = goods.stock;
           }
-          for(let key in goods.model){
-            if(key){
+          for (let key in goods.model) {
+            if (key) {
               let model = goods.model[key];
               goodsModel.push(model);
               selectModels.push(model.subModelId[0]);
             }
           }
           goods.model = goodsModel;
-          if (goods.goods_type == 3){
+          if (goods.goods_type == 3) {
             var businesssTimeString = '';
             if (goods.business_time && goods.business_time.business_time) {
               var goodBusinesssTime = goods.business_time.business_time;
@@ -407,26 +407,26 @@ var pageData    = {
               }
               businesssTimeString = '出售时间：' + businesssTimeString.substring(0, businesssTimeString.length - 1);
               that.setData({
-                
+
               })
             }
-	  	      that.getCartList();
+            that.getCartList();
             that.setData({
               'addTostoreShoppingCartShow': true,
               businesssTimeString: businesssTimeString
             })
-          }else{
+          } else {
             that.setData({
               'addShoppingCartShow': true
             })
           }
           that.setData({
-            goodsInfo: goods ,
+            goodsInfo: goods,
             'selectGoodsModelInfo.price': goodprice,
             'selectGoodsModelInfo.stock': goodstock,
             'selectGoodsModelInfo.buyCount': 1,
             'selectGoodsModelInfo.buyTostoreCount': 0,
-            'selectGoodsModelInfo.cart_id':'',
+            'selectGoodsModelInfo.cart_id': '',
             'selectGoodsModelInfo.models': selectModels,
             'selectGoodsModelInfo.modelId': goodid
           });
@@ -434,30 +434,30 @@ var pageData    = {
       }
     });
   },
-  hiddeAddShoppingcart: function(){
+  hiddeAddShoppingcart: function () {
     this.setData({
       addShoppingCartShow: false,
-      addTostoreShoppingCartShow:false
+      addTostoreShoppingCartShow: false
     });
   },
-  selectGoodsSubModel: function(e){
+  selectGoodsSubModel: function (e) {
     let dataset = e.target.dataset,
-        modelIndex = dataset.modelIndex,
-        submodelIndex = dataset.submodelIndex,
-        data = {};
+      modelIndex = dataset.modelIndex,
+      submodelIndex = dataset.submodelIndex,
+      data = {};
 
-    data['selectGoodsModelInfo.models['+modelIndex+']'] = this.data.goodsInfo.model[modelIndex].subModelId[submodelIndex];
+    data['selectGoodsModelInfo.models[' + modelIndex + ']'] = this.data.goodsInfo.model[modelIndex].subModelId[submodelIndex];
     this.setData(data);
     this.resetSelectCountPrice();
   },
-  resetSelectCountPrice: function(){
+  resetSelectCountPrice: function () {
     let selectModelIds = this.data.selectGoodsModelInfo.models.join(','),
-        modelItems = this.data.goodsInfo.model_items,
-        data = {};
+      modelItems = this.data.goodsInfo.model_items,
+      data = {};
     data['selectGoodsModelInfo.buyCount'] = 1;
     data['selectGoodsModelInfo.buyTostoreCount'] = 0;
     for (let i = modelItems.length - 1; i >= 0; i--) {
-      if(modelItems[i].model == selectModelIds){
+      if (modelItems[i].model == selectModelIds) {
         data['selectGoodsModelInfo.stock'] = modelItems[i].stock;
         data['selectGoodsModelInfo.price'] = modelItems[i].price;
         data['selectGoodsModelInfo.modelId'] = modelItems[i].id;
@@ -467,44 +467,44 @@ var pageData    = {
     this.setData(data);
   },
   // 电商
-  clickGoodsMinusButton: function(e){
+  clickGoodsMinusButton: function (e) {
     var that = this;
     let count = this.data.selectGoodsModelInfo.buyCount;
-    if(count <= 1){
+    if (count <= 1) {
       return;
     }
     this.setData({
       'selectGoodsModelInfo.buyCount': count - 1
     });
   },
-  clickGoodsPlusButton: function(e){
+  clickGoodsPlusButton: function (e) {
     let selectGoodsModelInfo = this.data.selectGoodsModelInfo,
-        count = selectGoodsModelInfo.buyCount,
-        stock = selectGoodsModelInfo.stock;
+      count = selectGoodsModelInfo.buyCount,
+      stock = selectGoodsModelInfo.stock;
 
-    if(count >= stock) {
+    if (count >= stock) {
       return;
     }
     this.setData({
       'selectGoodsModelInfo.buyCount': count + 1
     });
   },
-  sureAddToShoppingCart: function(){
+  sureAddToShoppingCart: function () {
     var that = this,
-        param = {
-          goods_id: this.data.goodsInfo.id,
-          model_id: this.data.selectGoodsModelInfo.modelId || '',
-          num: this.data.selectGoodsModelInfo.buyCount,
-          sub_shop_app_id : ''
-        };
+      param = {
+        goods_id: this.data.goodsInfo.id,
+        model_id: this.data.selectGoodsModelInfo.modelId || '',
+        num: this.data.selectGoodsModelInfo.buyCount,
+        sub_shop_app_id: ''
+      };
 
     appInstance.sendRequest({
       url: '/index.php?r=AppShop/addCart',
       data: param,
-      success: function(res){
+      success: function (res) {
         appInstance.showToast({
-          title:'添加成功',
-          icon:'success'
+          title: '添加成功',
+          icon: 'success'
         })
         that.hiddeAddShoppingcart();
       }
@@ -565,21 +565,21 @@ var pageData    = {
   },
   sureAddTostoreShoppingCart: function (type) {
     var that = this,
-        goodsNum = this.data.selectGoodsModelInfo.buyTostoreCount;
-    if(type == 'plus'){
+      goodsNum = this.data.selectGoodsModelInfo.buyTostoreCount;
+    if (type == 'plus') {
       goodsNum = goodsNum + 1;
-    }else{
+    } else {
       goodsNum = goodsNum - 1;
     }
-     var param = {
-        _app_id: appInstance.getAppId(),
-        app_id: appInstance.getAppId(),
-        session_key: appInstance.getSessionKey(),
-        goods_id: this.data.goodsInfo.id,
-        model_id: this.data.selectGoodsModelInfo.modelId || '',
-        num: goodsNum,
-        sub_shop_app_id: ''
-      };
+    var param = {
+      _app_id: appInstance.getAppId(),
+      app_id: appInstance.getAppId(),
+      session_key: appInstance.getSessionKey(),
+      goods_id: this.data.goodsInfo.id,
+      model_id: this.data.selectGoodsModelInfo.modelId || '',
+      num: goodsNum,
+      sub_shop_app_id: ''
+    };
 
     // appInstance.sendRequest({
     //   url: '/index.php?r=AppShop/addCart',
@@ -605,10 +605,10 @@ var pageData    = {
           that.getCartList();
         } else {
           if (res.data.status == 401 || res.data.status == 2) {
-              // 未登录
-              app.login();
-              return;
-            }
+            // 未登录
+            app.login();
+            return;
+          }
           that.setData({
             'selectGoodsModelInfo.buyTostoreCount': 0
           });
@@ -626,7 +626,7 @@ var pageData    = {
     appInstance.turnToPage(pagePath);
     this.hiddeAddShoppingcart();
   },
-  getValidateTostore: function(){
+  getValidateTostore: function () {
     var that = this;
     wx.request({
       url: appInstance.getSiteBaseUrl() + '/index.php?r=AppShop/precheckShoppingCart',
@@ -638,24 +638,24 @@ var pageData    = {
         parent_shop_app_id: that.franchiseeId ? appInstance.getAppId() : ''
       },
       success: function (res) {
-        if (res.data.status == 0){
+        if (res.data.status == 0) {
           that.readyToPay();
         } else if (res.data.status == 401 || res.data.status == 2) {
-            // 未登录
-            appInstance.login();
-            return;
-        } else if (res.data.status == 1){
-            appInstance.showModal({
-              content: res.data.data,
-              confirm: function () {
-                that.goToShoppingCart();
-              }
-            })
-        }else{
+          // 未登录
+          appInstance.login();
+          return;
+        } else if (res.data.status == 1) {
+          appInstance.showModal({
+            content: res.data.data,
+            confirm: function () {
+              that.goToShoppingCart();
+            }
+          })
+        } else {
           appInstance.showModal({
             content: res.data.data
           })
-        }    
+        }
       }
     })
   },
@@ -672,7 +672,7 @@ var pageData    = {
       data: {
         page: 1,
         page_size: 100,
-        sub_shop_app_id: this.franchiseeId || '' 
+        sub_shop_app_id: this.franchiseeId || ''
       },
       success: function (res) {
         var price = 0,
@@ -702,11 +702,11 @@ var pageData    = {
       }
     })
   },
-  stopPropagation: function(){},
-  turnToSearchPage:function(e){
+  stopPropagation: function () { },
+  turnToSearchPage: function (e) {
     if (e.target.dataset.param) {
       appInstance.turnToPage('/pages/advanceSearch/advanceSearch?param=' + e.target.dataset.param);
-    }else{
+    } else {
       appInstance.turnToPage('/pages/advanceSearch/advanceSearch?form=' + e.target.dataset.form);
     }
   }

@@ -10,7 +10,7 @@
             <view class="myAddress-address">
               <label class="check-box-container" wx:if="{{ from != 'userCenterEle' }}" bindtap="selectAddress" data-id="{{ item.id }}">
                 <label class="check-box {{ item.id == selectAddressId ? 'checked' : '' }}">
-                  <image src="http://img.zhichiwangluo.com/zc_app_fontschecked.png"></image>
+                  <image src="http://www.wechat.dev/wx/zc_app_fontschecked.png"></image>
                 </label>
               </label>
               <view class="myAddress-address-top" bindtap="editAddress" data-id="{{ item.id }}">

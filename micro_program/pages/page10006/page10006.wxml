@@ -213,7 +213,7 @@
     <view class="lately-comment-p" wx:if="{{ data.customFeature.mode === 1 }}"><label style="background-color: {{data.customFeature.themeColor}};"></label>最近评论{{data.customFeature.mode === 1 ? '（' + (content.count || 0) + '）' : ''}}</view>
     <block wx:if="{{ content.count == 0 }}">
       <view class="empty-tip">
-        <image src="http://testfe.zhichiwangluo.com/static/webapp/images/none.png" mode="aspectFill" alt=""></image>
+        <image src="http://www.wechat.dev/wx/none.png" mode="aspectFill" alt=""></image>
         <text>快来抢沙发</text>
       </view>
     </block>
