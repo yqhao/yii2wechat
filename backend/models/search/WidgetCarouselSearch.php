@@ -19,7 +19,7 @@ class WidgetCarouselSearch extends WidgetCarousel
     {
         return [
             [['id', 'status'], 'integer'],
-            [['key'], 'safe'],
+            [['key', 'title'], 'safe'],
         ];
     }
 
@@ -53,7 +53,8 @@ class WidgetCarouselSearch extends WidgetCarousel
             'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'key', $this->key]);
+        $query->andFilterWhere(['like', 'key', $this->key])
+            ->andFilterWhere(['like', 'title', $this->title]);
 
         return $dataProvider;
     }

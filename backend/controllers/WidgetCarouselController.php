@@ -76,7 +76,7 @@ class WidgetCarouselController extends Controller
 
         $searchModel = new WidgetCarouselItemSearch();
         $carouselItemsProvider = $searchModel->search([]);
-        $carouselItemsProvider->query->andWhere(['carousel_id'=>$model->id]);
+        $carouselItemsProvider->query->andWhere(['carousel_id'=>$model->id])->orderBy(['order'=>SORT_ASC]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);

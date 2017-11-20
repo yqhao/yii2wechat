@@ -14,7 +14,9 @@ return [
 
         // Api
         ['class' => 'yii\rest\UrlRule', 'controller' => 'api/v1/carousel', 'only' => ['index', 'view', 'options']],
+        ['class' => 'yii\rest\UrlRule', 'controller' => 'api/v1/widget-carousel', 'only' => ['getIndexAd','index', 'view', 'options']],
         ['class' => 'yii\rest\UrlRule', 'controller' => 'api/v1/article', 'only' => ['index', 'view', 'options']],
-        ['class' => 'yii\rest\UrlRule', 'controller' => 'api/v1/user', 'only' => ['index', 'view', 'options']]
+        ['class' => 'yii\rest\UrlRule', 'controller' => 'api/v1/user', 'only' => ['index', 'view', 'options']],
+        'GET api/v1/widget-carousel/getAd' => 'api/v1/widget-carousel/getIndexAd',
     ]
 ];

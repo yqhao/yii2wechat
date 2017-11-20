@@ -103,7 +103,7 @@ class WidgetCarouselItem extends ActiveRecord
             'type' => Yii::t('common', 'File Type'),
             'url' => Yii::t('common', 'Url'),
             'caption' => Yii::t('common', 'Caption'),
-            'status' => Yii::t('common', 'Status'),
+            'status' => Yii::t('common', 'Active'),
             'order' => Yii::t('common', 'Order')
         ];
     }
@@ -123,4 +123,5 @@ class WidgetCarouselItem extends ActiveRecord
     {
         return rtrim($this->base_url, '/') . '/' . ltrim($this->path, '/');
     }
+    
 }

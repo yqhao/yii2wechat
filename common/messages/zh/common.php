@@ -32,7 +32,7 @@ return [
     'Base URL' => 'Base URL',
     'Base Url' => 'Base Url',
     'Body' => 'Body',
-    'Caption' => '标题',
+    'Caption' => '说明',
     'Carousel ID' => 'Carousel ID',
     'Category' => '分类',
     'Comment' => '评论',

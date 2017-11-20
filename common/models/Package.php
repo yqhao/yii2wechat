@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\query\PackageQuery;
 use Yii;
 
 /**
@@ -39,6 +40,7 @@ use Yii;
  */
 class Package extends \yii\db\ActiveRecord
 {
+    const STATUS_PUBLISHED = 1;
     /**
      * @inheritdoc
      */
@@ -96,7 +98,13 @@ class Package extends \yii\db\ActiveRecord
             'address' => Yii::t('common', 'Address'),
         ];
     }
-
+    /**
+     * @return PackageQuery
+     */
+    public static function find()
+    {
+        return new PackageQuery(get_called_class());
+    }
     /**
      * @return \yii\db\ActiveQuery
      */

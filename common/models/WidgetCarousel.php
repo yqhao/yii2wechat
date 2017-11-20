@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\behaviors\CacheInvalidateBehavior;
+use common\models\query\WidgetCarouselQuery;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -12,6 +13,7 @@ use yii\db\ActiveRecord;
  * @property integer $id
  * @property string $key
  * @property integer $status
+ * @property string $title
  *
  * @property WidgetCarouselItem[] $items
  */
@@ -58,7 +60,7 @@ class WidgetCarousel extends ActiveRecord
             [['key'], 'required'],
             [['key'], 'unique'],
             [['status'], 'integer'],
-            [['key'], 'string', 'max' => 255]
+            [['key','title'], 'string', 'max' => 255]
         ];
     }
 
@@ -71,6 +73,7 @@ class WidgetCarousel extends ActiveRecord
             'id' => Yii::t('common', 'ID'),
             'key' => Yii::t('common', 'Key'),
             'status' => Yii::t('common', 'Active'),
+            'title' => Yii::t('common', 'Title'),
         ];
     }
 
@@ -79,6 +82,17 @@ class WidgetCarousel extends ActiveRecord
      */
     public function getItems()
     {
-        return $this->hasMany(WidgetCarouselItem::className(), ['carousel_id' => 'id']);
+        return $this->hasMany(WidgetCarouselItem::className(), ['carousel_id' => 'id'])
+            ->select(["id","base_url","path","url"])
+            ->orderBy(['order'=>SORT_ASC]);
     }
+    /**
+     * @return WidgetCarouselQuery
+     */
+    public static function find()
+    {
+        return new WidgetCarouselQuery(get_called_class());
+    }
+    
+
 }
