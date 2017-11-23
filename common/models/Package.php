@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\models\query\PackageQuery;
 use Yii;
+use yii\data\ActiveDataProvider;
 
 /**
  * This is the model class for table "wx_package".
@@ -71,7 +72,7 @@ class Package extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('common', 'ID'),
             'app_id' => Yii::t('common', 'App ID'),
-            'category_id' => Yii::t('common', 'Category ID'),
+            'category_id' => Yii::t('common', 'Category'),
             'title' => Yii::t('common', 'Title'),
             'cover' => Yii::t('common', 'Cover'),
             'price' => Yii::t('common', 'Price'),
@@ -87,9 +88,9 @@ class Package extends \yii\db\ActiveRecord
             'is_seckill' => Yii::t('common', 'Is Seckill'),
             'seckill_status' => Yii::t('common', 'Seckill Status'),
             'is_group_buy' => Yii::t('common', 'Is Group Buy'),
-            'is_published' => Yii::t('common', 'Is Published'),
-            'create_at' => Yii::t('common', 'Create At'),
-            'update_at' => Yii::t('common', 'Update At'),
+            'is_published' => Yii::t('common', 'Status'),
+            'create_at' => Yii::t('common', 'Created At'),
+            'update_at' => Yii::t('common', 'Updated At'),
             'last_update' => Yii::t('common', 'Last Update'),
             'description' => Yii::t('common', 'Description'),
             'content' => Yii::t('common', 'Content'),
@@ -112,4 +113,18 @@ class Package extends \yii\db\ActiveRecord
     {
         return $this->hasMany(PackageItem::className(), ['package_id' => 'id']);
     }
+
+    public function getPackageCategory()
+    {
+        return $this->hasOne(PackageCategory::className(), ['id' => 'category_id']);
+    }
+    /**
+     * @return string
+     */
+    public function getImageUrl()
+    {
+//        return rtrim($this->base_url, '/') . '/' . ltrim($this->cover, '/');
+        return  ltrim($this->cover, '/');
+    }
+    
 }

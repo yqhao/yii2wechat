@@ -12,6 +12,7 @@ use common\models\Package;
  */
 class PackageSearch extends Package
 {
+    public $category_name;
     /**
      * @inheritdoc
      */
@@ -43,6 +44,7 @@ class PackageSearch extends Package
     public function search($params)
     {
         $query = Package::find();
+//        $query->joinWith(['packageCategory']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

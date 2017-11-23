@@ -75,4 +75,10 @@ return [
     'User ID' => '用户 ID',
     'Username' => '用户名',
     'Value' => '值',
+    'Yes' => '是',
+    'No' => '否',
+    'Cover' => '封面',
+    'Is Recommend' => '推荐',
+    'Price' => '价格',
+    'Sale Price' => '售价',
 ];

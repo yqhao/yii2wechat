@@ -2,9 +2,11 @@
 
 namespace backend\controllers;
 
+use common\models\PackageCategory;
 use Yii;
 use common\models\Package;
 use backend\models\search\PackageSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -61,12 +63,15 @@ class PackageController extends Controller
     public function actionCreate()
     {
         $model = new Package();
-
+        $categories = PackageCategory::find()->noParents()->all();
+        $categories = ArrayHelper::map($categories, 'id', 'title');
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'categories' => $categories,
             ]);
         }
     }
@@ -81,11 +86,15 @@ class PackageController extends Controller
     {
         $model = $this->findModel($id);
 
+        $categories = PackageCategory::find()->noParents()->all();
+        $categories = ArrayHelper::map($categories, 'id', 'title');
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'categories' => $categories,
             ]);
         }
     }

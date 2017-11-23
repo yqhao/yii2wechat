@@ -4,9 +4,9 @@
 /* @var $categories common\models\PackageCategory[] */
 
 $this->title = Yii::t('backend', 'Create {modelClass}', [
-    'modelClass' => 'Article Category',
+    'modelClass' => 'Package Category',
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Article Categories'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Package Categories'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="article-category-create">

@@ -39,6 +39,7 @@ class PackageController extends ApiController
                 'class' => 'yii\rest\OptionsAction'
             ]
         ];
+
     }
 
     /**
@@ -46,11 +47,13 @@ class PackageController extends ApiController
      */
     public function prepareDataProvider()
     {
+        $params = \Yii::$app->request->queryParams;
         return new ActiveDataProvider(array(
-            'query' => Package::find()->published(),
+            'query' => Package::find()->published()->filterCategory($params),
             //'pagination' => ['pageSize' => '2']
         ));
     }
+
 
     /**
      * @param $id

@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\search\PackageCategorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('backend', 'Article Categories');
+$this->title = Yii::t('backend', 'Package Categories');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="article-category-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?php echo Html::a(Yii::t('backend', 'Create {modelClass}', [
-            'modelClass' => 'Article Category',
+            'modelClass' => 'Package Category',
         ]), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 

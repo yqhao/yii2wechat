@@ -27,14 +27,43 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'app_id',
-            'category_id',
-            'title',
-            'cover',
-            // 'price',
-            // 'sale_price',
+//            'app_id',
+//            [
+//                'label' => '分类',
+//                'attribute' => 'category_name',
+//                'value' => 'packageCategory.title',
+//            ],
+            [
+                'attribute' => 'category_id',
+                'value' => function ($model) {
+                    return $model->packageCategory ? $model->packageCategory->title : null;
+                },
+                'filter' => \yii\helpers\ArrayHelper::map(\common\models\PackageCategory::find()->all(), 'id', 'title')
+            ],
+//            'title',
+            [
+                'attribute' => 'title',
+                'headerOptions' => ['width' => '240px'],
+            ],
+//            'cover',
+            [
+                'attribute' => 'cover',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model->cover ? Html::img($model->getImageUrl(), ['style'=>'width: 100%']) : null;
+                }
+            ],
+             'price',
+             'sale_price',
             // 'sales',
-            // 'is_recommend',
+            [
+                'class' => \common\grid\EnumColumn::className(),
+                'attribute' => 'is_recommend',
+                'enum' => [
+                    Yii::t('common', 'No'),
+                    Yii::t('common', 'Yes')
+                ]
+            ],
             // 'stock',
             // 'weight',
             // 'goods_type',
@@ -44,8 +73,15 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'is_seckill',
             // 'seckill_status',
             // 'is_group_buy',
-            // 'is_published',
-            // 'create_at',
+            [
+                'class' => \common\grid\EnumColumn::className(),
+                'attribute' => 'is_published',
+                'enum' => [
+                    Yii::t('backend', 'Not Published'),
+                    Yii::t('backend', 'Published')
+                ]
+            ],
+             'create_at:datetime',
             // 'update_at',
             // 'last_update',
             // 'description',
@@ -54,7 +90,12 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'images:ntext',
             // 'address',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'headerOptions' => ['width' => '100px'],
+                'buttonOptions' => ['style' => 'margin-right: 12px;'],
+                'template' => '{view} {update} {delete}'
+            ],
         ],
     ]); ?>
 
