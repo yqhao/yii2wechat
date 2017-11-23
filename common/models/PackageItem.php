@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\query\PackageItemQuery;
 use Yii;
 
 /**
@@ -42,7 +43,7 @@ class PackageItem extends \yii\db\ActiveRecord
     {
         return [
             [['package_id', 'sales', 'stock', 'weight', 'is_published', 'create_at', 'update_at', 'last_update'], 'integer'],
-            [['price', 'max_can_use_integral', 'integral'], 'number'],
+            [['price','sale_price','weekend_price','holiday_price', 'max_can_use_integral', 'integral'], 'number'],
             [['content'], 'string'],
             [['title', 'cover'], 'string', 'max' => 255],
             [['package_id'], 'exist', 'skipOnError' => true, 'targetClass' => Package::className(), 'targetAttribute' => ['package_id' => 'id']],
@@ -60,6 +61,9 @@ class PackageItem extends \yii\db\ActiveRecord
             'title' => Yii::t('common', 'Title'),
             'cover' => Yii::t('common', 'Cover'),
             'price' => Yii::t('common', 'Price'),
+            'sale_price' => Yii::t('common', 'Sale Price'),
+            'weekend_price' => Yii::t('common', 'Weekend Price'),
+            'holiday_price' => Yii::t('common', 'Holiday Price'),
             'sales' => Yii::t('common', 'Sales'),
             'stock' => Yii::t('common', 'Stock'),
             'weight' => Yii::t('common', 'Weight'),
@@ -72,12 +76,27 @@ class PackageItem extends \yii\db\ActiveRecord
             'content' => Yii::t('common', 'Content'),
         ];
     }
-
+    /**
+     * @return PackageItemQuery
+     */
+    public static function find()
+    {
+        return new PackageItemQuery(get_called_class());
+    }
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getPackage()
     {
         return $this->hasOne(Package::className(), ['id' => 'package_id']);
+    }
+
+    public $_weekend = [0,6];
+    public function getSalePriceByDate($time){
+        $price = $this->sale_price;
+        if(in_array(date('w',$time),$this->_weekend) && $this->weekend_price > 0){
+            $price = $this->weekend_price;
+        }
+        return ['date'=>date('m-d',$time),'price'=>$price];
     }
 }

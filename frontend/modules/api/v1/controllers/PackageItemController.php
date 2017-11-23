@@ -1,7 +1,7 @@
 <?php
 namespace frontend\modules\api\v1\controllers;
 
-use frontend\modules\api\v1\resources\Package;
+use frontend\modules\api\v1\resources\PackageItem;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
@@ -9,15 +9,15 @@ use yii\web\ForbiddenHttpException;
 use yii\web\HttpException;
 
 /**
- * Class PackageController
+ * Class PackageItemController
  * @author Eugene Terentev <eugene@terentev.net>
  */
-class PackageController extends ApiController
+class PackageItemController extends ApiController
 {
     /**
      * @var string
      */
-    public $modelClass = 'frontend\modules\api\v1\resources\Package';
+    public $modelClass = 'frontend\modules\api\v1\resources\PackageItem';
 
     /**
      * @inheritdoc
@@ -46,7 +46,7 @@ class PackageController extends ApiController
     {
         $params = \Yii::$app->request->queryParams;
         return new ActiveDataProvider(array(
-            'query' => Package::find()->published()->filterCategory($params),
+            'query' => PackageItem::find()->published()->filterPackage($params),
             //'pagination' => ['pageSize' => '2']
         ));
     }
@@ -59,7 +59,7 @@ class PackageController extends ApiController
      */
     public function findModel($id)
     {
-        $model = Package::find()
+        $model = PackageItem::find()
             ->published()
             ->andWhere(['id' => (int) $id])
             ->one();
