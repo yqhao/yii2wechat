@@ -21,7 +21,7 @@ class PackageSearch extends Package
         return [
             [['id', 'category_id', 'sales', 'is_recommend', 'stock', 'weight', 'goods_type', 'express_rule_id', 'is_seckill', 'seckill_status', 'is_group_buy', 'is_published', 'create_at', 'update_at', 'last_update'], 'integer'],
             [['app_id', 'title', 'cover', 'description', 'content', 'detail', 'images', 'address'], 'safe'],
-            [['price', 'sale_price', 'max_can_use_integral', 'integral'], 'number'],
+            [['price', 'market_price', 'max_can_use_integral', 'integral'], 'number'],
         ];
     }
 
@@ -58,7 +58,6 @@ class PackageSearch extends Package
             'id' => $this->id,
             'category_id' => $this->category_id,
             'price' => $this->price,
-            'sale_price' => $this->sale_price,
             'sales' => $this->sales,
             'is_recommend' => $this->is_recommend,
             'stock' => $this->stock,

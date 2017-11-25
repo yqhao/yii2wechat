@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
              'price',
-             'sale_price',
+             'market_price',
             // 'sales',
             [
                 'class' => \common\grid\EnumColumn::className(),

@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'cover',
             'price',
-            'sale_price',
+            'market_price',
             'sales',
             'is_recommend',
             'stock',

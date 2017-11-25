@@ -25,7 +25,7 @@ use yii\bootstrap\ActiveForm;
 
     <?php echo $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
 
-    <?php echo $form->field($model, 'sale_price')->textInput(['maxlength' => true]) ?>
+    <?php echo $form->field($model, 'market_price')->textInput(['maxlength' => true]) ?>
 
 <!--    --><?php //echo $form->field($model, 'sales')->textInput() ?>
 

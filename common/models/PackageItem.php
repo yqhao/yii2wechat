@@ -13,6 +13,7 @@ use Yii;
  * @property string $title
  * @property string $cover
  * @property string $price
+ * @property string $market_price
  * @property integer $sales
  * @property integer $stock
  * @property integer $weight
@@ -43,7 +44,7 @@ class PackageItem extends \yii\db\ActiveRecord
     {
         return [
             [['package_id', 'sales', 'stock', 'weight', 'is_published', 'create_at', 'update_at', 'last_update'], 'integer'],
-            [['price','sale_price','weekend_price','holiday_price', 'max_can_use_integral', 'integral'], 'number'],
+            [['price','market_price','weekend_price','holiday_price', 'max_can_use_integral', 'integral'], 'number'],
             [['content'], 'string'],
             [['title', 'cover'], 'string', 'max' => 255],
             [['package_id'], 'exist', 'skipOnError' => true, 'targetClass' => Package::className(), 'targetAttribute' => ['package_id' => 'id']],
@@ -61,7 +62,7 @@ class PackageItem extends \yii\db\ActiveRecord
             'title' => Yii::t('common', 'Title'),
             'cover' => Yii::t('common', 'Cover'),
             'price' => Yii::t('common', 'Price'),
-            'sale_price' => Yii::t('common', 'Sale Price'),
+            'market_price' => Yii::t('common', 'Market Price'),
             'weekend_price' => Yii::t('common', 'Weekend Price'),
             'holiday_price' => Yii::t('common', 'Holiday Price'),
             'sales' => Yii::t('common', 'Sales'),
@@ -91,9 +92,9 @@ class PackageItem extends \yii\db\ActiveRecord
         return $this->hasOne(Package::className(), ['id' => 'package_id']);
     }
 
-    public $_weekend = [0,6];
-    public function getSalePriceByDate($time){
-        $price = $this->sale_price;
+    public $_weekend = [1,6];
+    public function getPriceByDate($time){
+        $price = $this->price;
         if(in_array(date('w',$time),$this->_weekend) && $this->weekend_price > 0){
             $price = $this->weekend_price;
         }

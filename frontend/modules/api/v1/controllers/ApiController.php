@@ -19,27 +19,20 @@ class ApiController extends ActiveController
      * @var array
      */
     public $serializer = [
-        'class' => 'yii\rest\Serializer',
-//        'class' => 'frontend\modules\api\v1\components\ApiSerializer',
+//        'class' => 'yii\rest\Serializer',
+        'class' => 'frontend\modules\api\v1\components\ApiSerializer',
         'collectionEnvelope' => 'data'
     ];
 
     protected function serializeData($data)
     {
         $result = parent::serializeData($data);
-        if(!empty($result['data'])){
+        if(!empty($result[$this->serializer['collectionEnvelope']])){
             $this->response_status = 1;
         }
         $expend = [
             'status' => $this->response_status
         ];
-//        if(!empty($result['_meta'])){
-//            $expend['is_more'] = $result['_meta']['currentPage'] < $result['_meta']['pageCount'] ? 1 : 0;
-//            $expend['count'] = $result['_meta']['totalCount'];
-//            $expend['current_page'] = $result['_meta']['currentPage'];
-//            $expend['total_page'] = $result['_meta']['pageCount'];
-//            $expend['per_page'] = $result['_meta']['perPage'];
-//        }
 
         return array_merge($result, $expend);
     }

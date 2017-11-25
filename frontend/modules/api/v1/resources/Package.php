@@ -12,7 +12,7 @@ class Package extends \common\models\Package implements Linkable
 {
     public function fields()
     {
-        return ['id', 'category_id', 'title', 'description','cover', 'price', 'sale_price','sales','is_recommend','stock','content','detail','address'];
+        return ['id', 'category_id', 'title', 'description','cover', 'price', 'market_price','sales','is_recommend','stock','content','detail','address'];
     }
 
 

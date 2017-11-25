@@ -27,8 +27,6 @@ use yii\bootstrap\ActiveForm;
 
     <?php // echo $form->field($model, 'price') ?>
 
-    <?php // echo $form->field($model, 'sale_price') ?>
-
     <?php // echo $form->field($model, 'sales') ?>
 
     <?php // echo $form->field($model, 'is_recommend') ?>
