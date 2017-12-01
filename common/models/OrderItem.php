@@ -11,6 +11,7 @@ use Yii;
  * @property integer $order_id
  * @property integer $package_id
  * @property integer $package_item_id
+ * @property integer $package_item_title
  * @property string $price
  * @property string $sale_price
  * @property integer $quantity
@@ -34,6 +35,7 @@ class OrderItem extends \yii\db\ActiveRecord
             [['order_id', 'package_id', 'package_item_id', 'price', 'quantity'], 'required'],
             [['order_id', 'package_id', 'package_item_id', 'quantity'], 'integer'],
             [['price', 'sale_price'], 'number'],
+            [['package_item_title'], 'string'],
         ];
     }
 
@@ -47,6 +49,7 @@ class OrderItem extends \yii\db\ActiveRecord
             'order_id' => Yii::t('common', 'Order ID'),
             'package_id' => Yii::t('common', 'Package ID'),
             'package_item_id' => Yii::t('common', 'Package Item ID'),
+            'package_item_title' => Yii::t('common', 'Package Item Title'),
             'price' => Yii::t('common', 'Price'),
             'sale_price' => Yii::t('common', 'Sale Price'),
             'quantity' => Yii::t('common', 'Quantity'),

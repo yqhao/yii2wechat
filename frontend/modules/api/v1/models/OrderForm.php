@@ -97,6 +97,7 @@ class OrderForm extends Model
                 $model->package_id = $package->id;
                 
                 $model->code = Order::makeCode();
+                $model->package_title = $package->title;
                 $model->user_id = 1;
                 $model->total_quantity = $this->total_quantity;
                 $model->total_price = ($this->total_quantity * $packageItem->price);
@@ -144,6 +145,7 @@ class OrderForm extends Model
                 $orderItem->order_id = $model->id;
                 $orderItem->package_id = $model->package_id;
                 $orderItem->package_item_id = $packageItem->id;
+                $orderItem->package_item_title = $packageItem->title;
                 $orderItem->price = $packageItem->price;
                 $orderItem->quantity = $model->total_quantity;
                 if(!$orderItem->save()){

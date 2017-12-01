@@ -10,6 +10,7 @@ use Yii;
  *
  * @property integer $id
  * @property string $code
+ * @property string $package_title
  * @property integer $user_id
  * @property integer $package_id
  * @property integer $total_quantity
@@ -75,7 +76,7 @@ class Order extends \yii\db\ActiveRecord
             [['code', 'user_id', 'package_id', 'total_quantity', 'total_price', 'created_at'], 'required'],
             [['user_id', 'package_id', 'total_quantity', 'created_at', 'updated_at', 'status', 'payment_type', 'payment_status'], 'integer'],
             [['total_price','total_sale_price', 'payment_price', 'discount'], 'number'],
-            [['discount_info','remark'], 'string'],
+            [['discount_info','remark','package_title'], 'string'],
             [['code', 'coupon_code'], 'string', 'max' => 32],
             [['contact_name'], 'string', 'max' => 64],
             [['contact_mobile'], 'string', 'max' => 24],
@@ -90,6 +91,7 @@ class Order extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('common', 'ID'),
             'code' => Yii::t('common', 'Code'),
+            'package_title' => Yii::t('common', 'Package Title'),
             'user_id' => Yii::t('common', 'User ID'),
             'package_id' => Yii::t('common', 'Package ID'),
             'total_quantity' => Yii::t('common', 'Total Quantity'),
