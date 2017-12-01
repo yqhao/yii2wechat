@@ -26,13 +26,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-//            'app_id',
-//            [
-//                'label' => '分类',
-//                'attribute' => 'category_name',
-//                'value' => 'packageCategory.title',
-//            ],
+//            'id',
+            [
+                'attribute' => 'title',
+                'headerOptions' => ['width' => '240px'],
+            ],
             [
                 'attribute' => 'category_id',
                 'value' => function ($model) {
@@ -40,31 +38,25 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'filter' => \yii\helpers\ArrayHelper::map(\common\models\PackageCategory::find()->all(), 'id', 'title')
             ],
-//            'title',
-            [
-                'attribute' => 'title',
-                'headerOptions' => ['width' => '240px'],
-            ],
-//            'cover',
             [
                 'attribute' => 'cover',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return $model->cover ? Html::img($model->getImageUrl(), ['style'=>'width: 100%']) : null;
+                    return $model->cover ? Html::img($model->getCover(), ['style'=>'width: 100%']) : null;
                 }
             ],
              'price',
              'market_price',
-            // 'sales',
-            [
-                'class' => \common\grid\EnumColumn::className(),
-                'attribute' => 'is_recommend',
-                'enum' => [
-                    Yii::t('common', 'No'),
-                    Yii::t('common', 'Yes')
-                ]
-            ],
-            // 'stock',
+             'sales',
+//            [
+//                'class' => \common\grid\EnumColumn::className(),
+//                'attribute' => 'is_recommend',
+//                'enum' => [
+//                    Yii::t('common', 'No'),
+//                    Yii::t('common', 'Yes')
+//                ]
+//            ],
+             'stock',
             // 'weight',
             // 'goods_type',
             // 'max_can_use_integral',
@@ -81,15 +73,23 @@ $this->params['breadcrumbs'][] = $this->title;
                     Yii::t('backend', 'Published')
                 ]
             ],
-             'create_at:datetime',
-            // 'update_at',
+             'created_at:datetime',
+            // 'updated_at',
             // 'last_update',
             // 'description',
             // 'content:ntext',
             // 'detail:ntext',
             // 'images:ntext',
             // 'address',
-
+            [
+                'attribute' => 'id',
+                'label' => '门票',
+                'format' => 'raw',
+//                'headerOptions' => ['width' => '100px'],
+                'value' => function ($model) {
+                    return Html::a('管理',['/package-item','package_id'=>$model->id]);
+                }
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'headerOptions' => ['width' => '100px'],

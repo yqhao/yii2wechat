@@ -164,4 +164,13 @@ return [
     'i18n' => '国际化',
     'i18n Message' => '国际化信息',
     'i18n Source Message' => '国际化源信息',
+    'Package' => '主题',
+    'Packages' => '主题',
+    'Package Item' => '门票',
+    'Package Items' => '门票',
+    'Package Category' => '主题分类',
+    'Package Categorys' => '主题分类',
+    'Region' => '地区',
+    'Order' => '订单',
+    'Order Manage' => '订单管理',
 ];

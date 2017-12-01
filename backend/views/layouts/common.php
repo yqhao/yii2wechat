@@ -178,7 +178,7 @@ $bundle = BackendAsset::register($this);
                         'badgeBgClass' => 'label-success',
                     ],
                     [
-                        'label' => Yii::t('backend', 'PackageCategory'),
+                        'label' => Yii::t('backend', 'Package Category'),
                         'icon' => '<i class="fa fa-bar-chart-o"></i>',
                         'url' => ['/package-category/index'],
                         'badgeBgClass' => 'label-success',
@@ -187,6 +187,12 @@ $bundle = BackendAsset::register($this);
                         'label' => Yii::t('backend', 'Region'),
                         'icon' => '<i class="fa fa-bar-chart-o"></i>',
                         'url' => ['/region/index'],
+                        'badgeBgClass' => 'label-success',
+                    ],
+                    [
+                        'label' => Yii::t('backend', 'Order Manage'),
+                        'icon' => '<i class="fa fa-bar-chart-o"></i>',
+                        'url' => ['/order/index'],
                         'badgeBgClass' => 'label-success',
                     ],
                     [

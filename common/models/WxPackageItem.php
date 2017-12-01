@@ -2,10 +2,7 @@
 
 namespace common\models;
 
-use common\models\query\PackageItemQuery;
-use trntv\filekit\behaviors\UploadBehavior;
 use Yii;
-use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "wx_package_item".
@@ -26,8 +23,8 @@ use yii\behaviors\TimestampBehavior;
  * @property string $max_can_use_integral
  * @property string $integral
  * @property integer $is_published
- * @property integer $created_at
- * @property integer $updated_at
+ * @property integer $create_at
+ * @property integer $update_at
  * @property integer $last_update
  * @property string $content
  * @property string $detail
@@ -41,28 +38,14 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property WxPackage $package
  */
-class PackageItem extends \yii\db\ActiveRecord
+class WxPackageItem extends \yii\db\ActiveRecord
 {
-    public $coverUpload;
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
         return 'wx_package_item';
-    }
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::className(),
-            [
-                'class' => UploadBehavior::className(),
-                'attribute' => 'coverUpload',
-                'pathAttribute' => 'cover',
-                'baseUrlAttribute' => 'base_url',
-                'typeAttribute' => 'type'
-            ]
-        ];
     }
 
     /**
@@ -71,15 +54,14 @@ class PackageItem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['package_id', 'sales', 'stock', 'weight', 'is_published', 'created_at', 'updated_at', 'last_update'], 'integer'],
-            [['title','package_id','price'], 'required'],
-            [['price','market_price','weekend_price','holiday_price', 'max_can_use_integral', 'integral'], 'number'],
+            [['package_id', 'sales', 'stock', 'weight', 'is_published', 'create_at', 'update_at', 'last_update'], 'integer'],
+            [['title'], 'required'],
+            [['price', 'market_price', 'weekend_price', 'holiday_price', 'max_can_use_integral', 'integral'], 'number'],
             [['content', 'detail', 'special_description', 'unsubscribe_rules', 'change_rules', 'important_clause'], 'string'],
             [['title', 'cover', 'description', 'base_url'], 'string', 'max' => 255],
             [['price_rise_at_weekend', 'price_rise_at_holiday'], 'string', 'max' => 16],
             [['booking_advance'], 'string', 'max' => 8],
-            [['package_id'], 'exist', 'skipOnError' => true, 'targetClass' => Package::className(), 'targetAttribute' => ['package_id' => 'id']],
-            [['coverUpload'], 'safe']
+            [['package_id'], 'exist', 'skipOnError' => true, 'targetClass' => WxPackage::className(), 'targetAttribute' => ['package_id' => 'id']],
         ];
     }
 
@@ -105,8 +87,8 @@ class PackageItem extends \yii\db\ActiveRecord
             'max_can_use_integral' => Yii::t('common', 'Max Can Use Integral'),
             'integral' => Yii::t('common', 'Integral'),
             'is_published' => Yii::t('common', 'Is Published'),
-            'created_at' => Yii::t('common', 'Created At'),
-            'updated_at' => Yii::t('common', 'Updated At'),
+            'create_at' => Yii::t('common', 'Create At'),
+            'update_at' => Yii::t('common', 'Update At'),
             'last_update' => Yii::t('common', 'Last Update'),
             'content' => Yii::t('common', 'Content'),
             'detail' => Yii::t('common', 'Detail'),
@@ -117,37 +99,14 @@ class PackageItem extends \yii\db\ActiveRecord
             'description' => Yii::t('common', 'Description'),
             'booking_advance' => Yii::t('common', 'Booking Advance'),
             'base_url' => Yii::t('common', 'Base Url'),
-            'coverUpload' => Yii::t('common', 'Cover Upload'),
         ];
     }
-    /**
-     * @return PackageItemQuery
-     */
-    public static function find()
-    {
-        return new PackageItemQuery(get_called_class());
-    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getPackage()
     {
-        return $this->hasOne(Package::className(), ['id' => 'package_id']);
-    }
-
-    public $_weekend = [1,6];
-    public function getPriceByDate($time){
-        $price = $this->price;
-        if(in_array(date('w',$time),$this->_weekend) && $this->weekend_price > 0){
-            $price = $this->weekend_price;
-        }
-        return ['date'=>date('m-d',$time),'price'=>$price];
-    }
-    /**
-     * @return string
-     */
-    public function getCover()
-    {
-        return rtrim($this->base_url, '/') . '/' . ltrim($this->cover, '/');
+        return $this->hasOne(WxPackage::className(), ['id' => 'package_id']);
     }
 }

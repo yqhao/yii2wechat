@@ -3,18 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\PackageItem;
-use backend\models\search\PackageItemSearch;
-use yii\base\Exception;
+use common\models\PackageImage;
+use backend\models\search\PackageImageSearch;
 use yii\web\Controller;
-use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PackageItemController implements the CRUD actions for PackageItem model.
+ * PackageImageController implements the CRUD actions for PackageImage model.
  */
-class PackageItemController extends Controller
+class PackageImageController extends Controller
 {
     public function behaviors()
     {
@@ -29,29 +27,22 @@ class PackageItemController extends Controller
     }
 
     /**
-     * Lists all PackageItem models.
+     * Lists all PackageImage models.
      * @return mixed
-     * @throws Exception
      */
     public function actionIndex()
     {
-        $searchModel = new PackageItemSearch();
-        $params = Yii::$app->request->queryParams;
-        if(!isset($params['package_id']) || !$params['package_id']){
-            throw new HttpException('404','错误的访问');
-        }
-
-        $dataProvider = $searchModel->search($params);
+        $searchModel = new PackageImageSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'package_id' => (int)$params['package_id'],
         ]);
     }
 
     /**
-     * Displays a single PackageItem model.
+     * Displays a single PackageImage model.
      * @param integer $id
      * @return mixed
      */
@@ -63,22 +54,17 @@ class PackageItemController extends Controller
     }
 
     /**
-     * Creates a new PackageItem model.
+     * Creates a new PackageImage model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new PackageItem();
+        $model = new PackageImage();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            $params = Yii::$app->request->queryParams;
-            if(!isset($params['package_id']) || !$params['package_id']){
-                throw new HttpException('404','错误的访问');
-            }
-            $model->package_id = (int)$params['package_id'];
             return $this->render('create', [
                 'model' => $model,
             ]);
@@ -86,7 +72,7 @@ class PackageItemController extends Controller
     }
 
     /**
-     * Updates an existing PackageItem model.
+     * Updates an existing PackageImage model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -105,7 +91,7 @@ class PackageItemController extends Controller
     }
 
     /**
-     * Deletes an existing PackageItem model.
+     * Deletes an existing PackageImage model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -118,15 +104,15 @@ class PackageItemController extends Controller
     }
 
     /**
-     * Finds the PackageItem model based on its primary key value.
+     * Finds the PackageImage model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return PackageItem the loaded model
+     * @return PackageImage the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = PackageItem::findOne($id)) !== null) {
+        if (($model = PackageImage::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

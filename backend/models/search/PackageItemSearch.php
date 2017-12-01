@@ -18,7 +18,8 @@ class PackageItemSearch extends PackageItem
     public function rules()
     {
         return [
-            [['id', 'package_id', 'sales', 'stock', 'weight', 'is_published', 'create_at', 'update_at', 'last_update'], 'integer'],
+            [['package_id'], 'required'],
+            [['id', 'package_id', 'sales', 'stock', 'weight', 'is_published', 'created_at', 'updated_at', 'last_update'], 'integer'],
             [['title', 'cover', 'content'], 'safe'],
             [['price', 'max_can_use_integral', 'integral'], 'number'],
         ];
@@ -48,10 +49,9 @@ class PackageItemSearch extends PackageItem
             'query' => $query,
         ]);
 
-        if (!($this->load($params) && $this->validate())) {
+        if (!($this->load($params,'') && $this->validate())) {
             return $dataProvider;
         }
-
         $query->andFilterWhere([
             'id' => $this->id,
             'package_id' => $this->package_id,
@@ -62,8 +62,8 @@ class PackageItemSearch extends PackageItem
             'max_can_use_integral' => $this->max_can_use_integral,
             'integral' => $this->integral,
             'is_published' => $this->is_published,
-            'create_at' => $this->create_at,
-            'update_at' => $this->update_at,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
             'last_update' => $this->last_update,
         ]);
 

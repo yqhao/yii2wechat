@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?php echo Html::a(Yii::t('backend', 'Create {modelClass}', [
     'modelClass' => 'Package Item',
-]), ['create'], ['class' => 'btn btn-success']) ?>
+]), ['create','package_id'=>$package_id], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php echo GridView::widget([
@@ -26,11 +26,26 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'package_id',
+//            'id',
+//            'package_id',
             'title',
-            'cover',
+            [
+                'attribute' => 'cover',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model->cover ? Html::img($model->getCover(), ['style'=>'width: 100%']) : null;
+                }
+            ],
             'price',
+            'market_price',
+            'price_rise_at_weekend',
+            'price_rise_at_holiday',
+            'booking_advance',
+            'sales',
+            'stock',
+
+            'is_published',
+
             // 'sales',
             // 'stock',
             // 'weight',

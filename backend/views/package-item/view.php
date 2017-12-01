@@ -27,20 +27,43 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'package_id',
+            [
+                'attribute' => 'package_id',
+                'label' => '主题',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model->package_id ? $model->package->title : null;
+                }
+            ],
             'title',
-            'cover',
+            'description',
+            [
+                'attribute' => 'cover',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model->cover ? Html::img($model->getCover(), ['style'=>'width: 100%']) : null;
+                }
+            ],
             'price',
+            'market_price',
+            'price_rise_at_weekend',
+            'price_rise_at_holiday',
+            'weekend_price',
+            'holiday_price',
+            'booking_advance',
             'sales',
             'stock',
-            'weight',
-            'max_can_use_integral',
-            'integral',
+
             'is_published',
-            'create_at',
-            'update_at',
+
             'last_update',
-            'content:ntext',
+            'detail:ntext',
+            'special_description:ntext',
+            'unsubscribe_rules:ntext',
+            'change_rules:ntext',
+            'important_clause:ntext',
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 

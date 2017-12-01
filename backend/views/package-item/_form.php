@@ -14,33 +14,111 @@ use yii\bootstrap\ActiveForm;
 
     <?php echo $form->errorSummary($model); ?>
 
-    <?php echo $form->field($model, 'package_id')->textInput() ?>
+    <?php echo $form->field($model, 'package_id')->hiddenInput()->label(false); ?>
 
     <?php echo $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+    <?php echo $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
-    <?php echo $form->field($model, 'cover')->textInput(['maxlength' => true]) ?>
+    <?php echo $form->field($model, 'coverUpload')->widget(
+        \trntv\filekit\widget\Upload::className(),
+        [
+            'url'=>['/file-storage/upload'],
+        ]
+    ) ?>
 
     <?php echo $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
 
-    <?php echo $form->field($model, 'sales')->textInput() ?>
+    <?php echo $form->field($model, 'market_price')->textInput(['maxlength' => true]) ?>
+    <?php echo $form->field($model, 'price_rise_at_weekend')->textInput(['value'=>'+0']) ?>
+    <?php echo $form->field($model, 'price_rise_at_holiday')->textInput(['value'=>'+0']) ?>
+    <?php echo $form->field($model, 'booking_advance')->textInput(['value'=>'-1']) ?>
 
     <?php echo $form->field($model, 'stock')->textInput() ?>
 
-    <?php echo $form->field($model, 'weight')->textInput() ?>
 
-    <?php echo $form->field($model, 'max_can_use_integral')->textInput(['maxlength' => true]) ?>
+    <?php $model->is_published = ($model->is_published === null || $model->is_published ==='') ? 1 : $model->is_published ; ?>
+    <?php echo $form->field($model, 'is_published')->radioList(['0'=>'否','1'=>'是']) ?>
 
-    <?php echo $form->field($model, 'integral')->textInput(['maxlength' => true]) ?>
 
-    <?php echo $form->field($model, 'is_published')->textInput() ?>
+    <?php echo $form->field($model, 'detail')->widget(
+        \yii\imperavi\Widget::className(),
+        [
+            'plugins' => ['fullscreen', 'fontcolor', 'video'],
+            'options' => [
+                'lang' => 'zh_cn',
+                'minHeight' => 400,
+                'maxHeight' => 400,
+                'buttonSource' => true,
+                'convertDivs' => false,
+                'removeEmptyTags' => false,
+                'imageUpload' => Yii::$app->urlManager->createUrl(['/file-storage/upload-imperavi'])
+            ]
+        ]
+    ) ?>
+    <?php echo $form->field($model, 'special_description')->widget(
+        \yii\imperavi\Widget::className(),
+        [
+            'plugins' => ['fullscreen', 'fontcolor', 'video'],
+            'options' => [
+                'lang' => 'zh_cn',
+                'minHeight' => 200,
+                'maxHeight' => 400,
+                'buttonSource' => true,
+                'convertDivs' => false,
+                'removeEmptyTags' => false,
+                'imageUpload' => Yii::$app->urlManager->createUrl(['/file-storage/upload-imperavi'])
+            ]
+        ]
+    ) ?>
+    <?php echo $form->field($model, 'unsubscribe_rules')->widget(
+        \yii\imperavi\Widget::className(),
+        [
+            'plugins' => ['fullscreen', 'fontcolor', 'video'],
+            'options' => [
+                'lang' => 'zh_cn',
+                'minHeight' => 200,
+                'maxHeight' => 400,
+                'buttonSource' => true,
+                'convertDivs' => false,
+                'removeEmptyTags' => false,
+                'imageUpload' => Yii::$app->urlManager->createUrl(['/file-storage/upload-imperavi'])
+            ]
+        ]
+    ) ?>
 
-    <?php echo $form->field($model, 'create_at')->textInput() ?>
+    <?php echo $form->field($model, 'change_rules')->widget(
+        \yii\imperavi\Widget::className(),
+        [
+            'plugins' => ['fullscreen', 'fontcolor', 'video'],
+            'options' => [
+                'lang' => 'zh_cn',
+                'minHeight' => 200,
+                'maxHeight' => 400,
+                'buttonSource' => true,
+                'convertDivs' => false,
+                'removeEmptyTags' => false,
+                'imageUpload' => Yii::$app->urlManager->createUrl(['/file-storage/upload-imperavi'])
+            ]
+        ]
+    ) ?>
 
-    <?php echo $form->field($model, 'update_at')->textInput() ?>
 
-    <?php echo $form->field($model, 'last_update')->textInput() ?>
+    <?php echo $form->field($model, 'important_clause')->widget(
+        \yii\imperavi\Widget::className(),
+        [
+            'plugins' => ['fullscreen', 'fontcolor', 'video'],
+            'options' => [
+                'lang' => 'zh_cn',
+                'minHeight' => 200,
+                'maxHeight' => 400,
+                'buttonSource' => true,
+                'convertDivs' => false,
+                'removeEmptyTags' => false,
+                'imageUpload' => Yii::$app->urlManager->createUrl(['/file-storage/upload-imperavi'])
+            ]
+        ]
+    ) ?>
 
-    <?php echo $form->field($model, 'content')->textarea(['rows' => 6]) ?>
 
     <div class="form-group">
         <?php echo Html::submitButton($model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

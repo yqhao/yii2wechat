@@ -19,7 +19,7 @@ class PackageSearch extends Package
     public function rules()
     {
         return [
-            [['id', 'category_id', 'sales', 'is_recommend', 'stock', 'weight', 'goods_type', 'express_rule_id', 'is_seckill', 'seckill_status', 'is_group_buy', 'is_published', 'create_at', 'update_at', 'last_update'], 'integer'],
+            [['id', 'category_id', 'sales', 'is_recommend', 'stock', 'weight', 'goods_type', 'express_rule_id', 'is_seckill', 'seckill_status', 'is_group_buy', 'is_published', 'created_at', 'updated_at', 'last_update'], 'integer'],
             [['app_id', 'title', 'cover', 'description', 'content', 'detail', 'images', 'address'], 'safe'],
             [['price', 'market_price', 'max_can_use_integral', 'integral'], 'number'],
         ];
@@ -70,8 +70,8 @@ class PackageSearch extends Package
             'seckill_status' => $this->seckill_status,
             'is_group_buy' => $this->is_group_buy,
             'is_published' => $this->is_published,
-            'create_at' => $this->create_at,
-            'update_at' => $this->update_at,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
             'last_update' => $this->last_update,
         ]);
 

@@ -17,11 +17,23 @@ use yii\bootstrap\ActiveForm;
 
 <!--    --><?php //echo $form->field($model, 'app_id')->textInput(['maxlength' => true]) ?>
 
-    <?php echo $form->field($model, 'category_id')->dropDownList($categories, ['prompt'=>'']) ?>
-
     <?php echo $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-
-    <?php echo $form->field($model, 'cover')->textInput(['maxlength' => true]) ?>
+    <?php echo $form->field($model, 'category_id')->dropDownList($categories, ['prompt'=>'']) ?>
+    
+    <?php echo $form->field($model, 'coverUpload')->widget(
+        \trntv\filekit\widget\Upload::className(),
+        [
+            'url'=>['/file-storage/upload'],
+        ]
+    ) ?>
+    <?php echo $form->field($model, 'imagesUpload')->widget(
+        \trntv\filekit\widget\Upload::className(),
+        [
+            'url'=>['/file-storage/upload'],
+            'multiple' => true,
+            'maxNumberOfFiles' => 5
+        ]
+    ) ?>
 
     <?php echo $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
 
@@ -29,7 +41,7 @@ use yii\bootstrap\ActiveForm;
 
 <!--    --><?php //echo $form->field($model, 'sales')->textInput() ?>
 
-    <?php echo $form->field($model, 'is_recommend')->textInput() ?>
+<!--    --><?php //echo $form->field($model, 'is_recommend')->textInput() ?>
 
     <?php echo $form->field($model, 'stock')->textInput() ?>
 
@@ -58,14 +70,58 @@ use yii\bootstrap\ActiveForm;
 <!--    --><?php //echo $form->field($model, 'last_update')->textInput() ?>
 
     <?php echo $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
-
-    <?php echo $form->field($model, 'content')->textarea(['rows' => 6]) ?>
-
-    <?php echo $form->field($model, 'detail')->textarea(['rows' => 6]) ?>
-
-    <?php echo $form->field($model, 'images')->textarea(['rows' => 6]) ?>
-
+    <?php echo $form->field($model, 'province_id')->textInput() ?>
+    <?php echo $form->field($model, 'city_id')->textInput() ?>
+    <?php echo $form->field($model, 'county_id')->textInput() ?>
     <?php echo $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
+
+    <?php echo $form->field($model, 'detail')->widget(
+        \yii\imperavi\Widget::className(),
+        [
+            'plugins' => ['fullscreen', 'fontcolor', 'video'],
+            'options' => [
+                'lang' => 'zh_cn',
+                'minHeight' => 400,
+                'maxHeight' => 400,
+                'buttonSource' => true,
+                'convertDivs' => false,
+                'removeEmptyTags' => false,
+                'imageUpload' => Yii::$app->urlManager->createUrl(['/file-storage/upload-imperavi'])
+            ]
+        ]
+    ) ?>
+    <?php echo $form->field($model, 'purchase_notice')->widget(
+        \yii\imperavi\Widget::className(),
+        [
+            'plugins' => ['fullscreen', 'fontcolor', 'video'],
+            'options' => [
+                'lang' => 'zh_cn',
+                'minHeight' => 400,
+                'maxHeight' => 400,
+                'buttonSource' => true,
+                'convertDivs' => false,
+                'removeEmptyTags' => false,
+                'imageUpload' => Yii::$app->urlManager->createUrl(['/file-storage/upload-imperavi'])
+            ]
+        ]
+    ) ?>
+    <?php echo $form->field($model, 'traffic_guide')->widget(
+        \yii\imperavi\Widget::className(),
+        [
+            'plugins' => ['fullscreen', 'fontcolor', 'video'],
+            'options' => [
+                'lang' => 'zh_cn',
+                'minHeight' => 400,
+                'maxHeight' => 400,
+                'buttonSource' => true,
+                'convertDivs' => false,
+                'removeEmptyTags' => false,
+                'imageUpload' => Yii::$app->urlManager->createUrl(['/file-storage/upload-imperavi'])
+            ]
+        ]
+    ) ?>
+
+
 
     <div class="form-group">
         <?php echo Html::submitButton($model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

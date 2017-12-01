@@ -28,6 +28,7 @@ use Yii;
  * @property string $contact_name
  * @property string $contact_mobile
  * @property string $remark
+ * @property integer $after_sale_status
  */
 class Order extends \yii\db\ActiveRecord
 {
@@ -73,11 +74,12 @@ class Order extends \yii\db\ActiveRecord
 
         return [
             [[ 'package_id', 'total_quantity', 'coupon_code', 'contact_name', 'remark'], 'required','on' => 'add'],
-            [['code', 'user_id', 'package_id', 'total_quantity', 'total_price', 'created_at'], 'required'],
-            [['user_id', 'package_id', 'total_quantity', 'created_at', 'updated_at', 'status', 'payment_type', 'payment_status'], 'integer'],
+            [['code', 'package_title', 'user_id', 'package_id', 'total_quantity', 'total_price', 'created_at'], 'required'],
+            [['user_id', 'package_id', 'total_quantity', 'created_at', 'updated_at', 'status', 'payment_type', 'payment_status', 'after_sale_status'], 'integer'],
             [['total_price','total_sale_price', 'payment_price', 'discount'], 'number'],
             [['discount_info','remark','package_title'], 'string'],
             [['code', 'coupon_code'], 'string', 'max' => 32],
+            [['package_title', 'remark'], 'string', 'max' => 255],
             [['contact_name'], 'string', 'max' => 64],
             [['contact_mobile'], 'string', 'max' => 24],
         ];
@@ -109,6 +111,7 @@ class Order extends \yii\db\ActiveRecord
             'contact_name' => Yii::t('common', 'Contact Name'),
             'contact_mobile' => Yii::t('common', 'Contact Mobile'),
             'remark' => Yii::t('common', 'Remark'),
+            'after_sale_status' => Yii::t('common', 'After Sale Status'),
         ];
     }
     /**

@@ -33,11 +33,37 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => $model->packageCategory->title,
             ],
             'title',
-            'cover',
+            [
+                'attribute' => 'cover',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model->cover ? Html::img($model->getCover(), ['style'=>'width: 100%']) : null;
+                }
+            ],
+            [
+                'attribute' => 'images',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    if($model->packageImages){
+                        return Html::a('查看更多>>',['/package-image','package_id'=>$model->id]);
+                    }
+                }
+            ],
+//            'images:ntext',
             'price',
             'market_price',
+            [
+                'attribute' => 'id',
+                'label' => '门票',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    if($model->packageItems){
+                        return Html::a('查看更多>>',['/package-item','package_id'=>$model->id]);
+                    }
+                }
+            ],
             'sales',
-            'is_recommend',
+//            'is_recommend',
             'stock',
 //            'weight',
 //            'goods_type',
@@ -48,13 +74,17 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'seckill_status',
 //            'is_group_buy',
             'is_published',
-            'create_at',
-            'update_at',
+            'created_at:datetime',
+            'updated_at:datetime',
             'last_update',
             'description',
-            'content:ntext',
+
             'detail:ntext',
-            'images:ntext',
+            'purchase_notice:ntext',
+            'traffic_guide:ntext',
+            'province_id',
+            'city_id',
+            'county_id',
             'address',
         ],
     ]) ?>

@@ -11,10 +11,11 @@ use Yii;
  * @property integer $order_id
  * @property integer $package_id
  * @property integer $package_item_id
- * @property integer $package_item_title
+ * @property string $package_item_title
  * @property string $price
  * @property string $sale_price
  * @property integer $quantity
+ * @property string $use_date
  */
 class OrderItem extends \yii\db\ActiveRecord
 {
@@ -32,10 +33,11 @@ class OrderItem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_id', 'package_id', 'package_item_id', 'price', 'quantity'], 'required'],
+            [['order_id', 'package_id', 'package_item_id', 'package_item_title', 'price', 'quantity', 'use_date'], 'required'],
             [['order_id', 'package_id', 'package_item_id', 'quantity'], 'integer'],
             [['price', 'sale_price'], 'number'],
-            [['package_item_title'], 'string'],
+            [['use_date'], 'safe'],
+            [['package_item_title'], 'string', 'max' => 255],
         ];
     }
 
@@ -53,6 +55,7 @@ class OrderItem extends \yii\db\ActiveRecord
             'price' => Yii::t('common', 'Price'),
             'sale_price' => Yii::t('common', 'Sale Price'),
             'quantity' => Yii::t('common', 'Quantity'),
+            'use_date' => Yii::t('common', 'Use Date'),
         ];
     }
     
