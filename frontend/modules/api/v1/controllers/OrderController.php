@@ -4,6 +4,7 @@ namespace frontend\modules\api\v1\controllers;
 use common\models\Coupon;
 use common\models\OrderItem;
 use common\models\Package;
+use common\models\PackageItem;
 use frontend\modules\api\v1\models\OrderForm;
 use frontend\modules\api\v1\resources\Order;
 
@@ -238,6 +239,62 @@ class OrderController extends ApiController
             }
             return ['data'=>true];
 
+        }catch (Exception $e){
+            throw new HttpException(422,$e->getMessage());
+        }
+    }
+    
+
+
+    public function actionGetDate(){
+
+        try{
+
+            $pid = \Yii::$app->getRequest()->get('id');
+            $selectDate = \Yii::$app->getRequest()->get('selectDate',date("Y-m-d"));
+            $page = \Yii::$app->getRequest()->get('page',1);
+            if(!$pid){
+                throw new Exception('数据不存在');
+            }
+            $item = PackageItem::findOne(['id'=>$pid]);
+            if(empty($item)){
+                throw new Exception('数据不存在');
+            }
+            $price = $item->price;
+            $weekendPrice = PackageItem::getPriceByFormula($price,$item->price_rise_at_weekend);
+            $holidayPrice = PackageItem::getPriceByFormula($price,$item->price_rise_at_holiday);
+
+
+            $todayTime = strtotime(date("Y-m-d"));
+            $selectTime = strtotime($selectDate);
+
+            $firstDay = $page == 1 ? date('Y-m-01') : date('Y-m-01',strtotime('+1 month'));
+            $firstDayTime = strtotime($firstDay);
+            $firstDayDateInfo = getdate($firstDayTime);
+
+            $startTime = $firstDayTime;
+
+            if($firstDayDateInfo['wday']>0){
+                $startTime = $firstDayTime - ($firstDayDateInfo['wday']*24*3600);
+            }
+
+            $calendar = [];
+            $runTime = $startTime;
+            for($i=1;$i<=42;$i++){
+                $dateInfo = getdate($runTime);
+                $calendar[$i] = [
+                    'm' => $dateInfo['year'].'-'.$dateInfo['mon'],//month
+                    'w' => $dateInfo['wday'],//weekDay
+                    'd'=> $dateInfo['mday'],//day
+                    't'=> $dateInfo[0] == $selectTime ? 'select' : '',//isToday
+                    'a' => $dateInfo[0] >= $todayTime ? '' : 'not',//isAllowed
+                    'p' => in_array($dateInfo['wday'],[0,6]) ? $weekendPrice : $price//price
+                ];
+                $runTime += 24*3600;
+            }
+
+
+            return ['data'=>$calendar];
         }catch (Exception $e){
             throw new HttpException(422,$e->getMessage());
         }

@@ -150,4 +150,26 @@ class PackageItem extends \yii\db\ActiveRecord
     {
         return rtrim($this->base_url, '/') . '/' . ltrim($this->cover, '/');
     }
+
+    public static function getPriceByFormula($price,$formula){
+        $formula = trim($formula);
+        $operator = $formula[0];
+        $value = substr($formula,1);
+        $res = $price;
+        switch ($operator) {
+            case '+':
+                $res = $price + $value;
+                break;
+            case '-':
+                $res = $price - $value;
+                break;
+            case '*':
+                $res = $price * $value;
+                break;
+            case '/':
+                $res = $price / $value;
+                break;
+        }
+        return number_format(ceil($res*100)/100,2);
+    }
 }
