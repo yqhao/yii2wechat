@@ -66,6 +66,20 @@ class PackageController extends ApiController
         if (!$model) {
             throw new HttpException(404);
         }
+
+        return ["data"=>$model];
+    }
+    public function actionDetail($id)
+    {
+        $model = Package::find()
+            ->select('detail')
+            ->published()
+            ->andWhere(['id' => (int) $id])
+            ->scalar();
+        if (!$model) {
+            throw new HttpException(404);
+        }
+
         return ["data"=>$model];
     }
 }
