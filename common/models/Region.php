@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "region".
@@ -58,5 +59,17 @@ class Region extends \yii\db\ActiveRecord
             'type' => Yii::t('common', 'Type'),
             'depth' => Yii::t('common', 'Depth'),
         ];
+    }
+
+    public static function getCityList($pid)
+    {
+        $model = Region::findAll(array('parent_id'=>$pid));
+        return ArrayHelper::map($model, 'id', 'name');
+    }
+
+    public static function getName($id)
+    {
+        $model = Region::findOne(array('id'=>$id));
+        return $model->name;
     }
 }

@@ -10,6 +10,7 @@ use yii\bootstrap\ActiveForm;
 
 <div class="region-form">
 
+    <p><?php echo Html::a('< 返回', \backend\components\UrlHelper::getPreUrl(), ['class' => 'btn bg-purple']) ?></p>
     <?php $form = ActiveForm::begin(); ?>
 
     <?php echo $form->errorSummary($model); ?>

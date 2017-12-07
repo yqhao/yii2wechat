@@ -15,15 +15,15 @@ use yii\bootstrap\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?php echo $form->field($model, 'id') ?>
+    <?php // echo $form->field($model, 'id') ?>
 
     <?php echo $form->field($model, 'code') ?>
 
     <?php echo $form->field($model, 'package_title') ?>
 
-    <?php echo $form->field($model, 'user_id') ?>
+    <?php // echo $form->field($model, 'user_id') ?>
 
-    <?php echo $form->field($model, 'package_id') ?>
+    <?php // echo $form->field($model, 'package_id') ?>
 
     <?php // echo $form->field($model, 'total_quantity') ?>
 

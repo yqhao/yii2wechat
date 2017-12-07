@@ -12,7 +12,14 @@ class Package extends \common\models\Package implements Linkable
 {
     public function fields()
     {
-        return ['id', 'category_id', 'title', 'description','cover', 'price', 'market_price','sales','is_recommend','stock','content','detail','address'];
+        return ['id', 'category_id', 'title', 'description',
+            'cover'=> function($model){
+            return $model->getCover();
+        },
+            'price', 'market_price','sales','is_recommend','stock','detail','purchase_notice','traffic_guide',
+            'address'=> function($model){
+                return $model->getFullAddress();
+            }];
     }
 
 

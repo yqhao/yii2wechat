@@ -26,18 +26,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'parent_id',
+//            'id',
+//            'parent_id',
             'name',
             'province',
             'city',
-            // 'county',
+             'county',
             // 'Longitude',
             // 'latitude',
             // 'type',
             // 'depth',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'buttonOptions' => ['style' => 'margin-right: 12px;'],
+            ],
         ],
     ]); ?>
 

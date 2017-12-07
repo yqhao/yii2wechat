@@ -10,7 +10,7 @@ use yii\bootstrap\ActiveForm;
 ?>
 
 <div class="article-category-form">
-
+    <p><?php echo Html::a('< 返回', \backend\components\UrlHelper::getPreUrl(), ['class' => 'btn bg-purple']) ?></p>
     <?php $form = ActiveForm::begin(); ?>
 
     <?php echo $form->field($model, 'title')->textInput(['maxlength' => 512]) ?>

@@ -20,7 +20,7 @@ class PackageSearch extends Package
     {
         return [
             [['id', 'category_id', 'sales', 'is_recommend', 'stock', 'weight', 'goods_type', 'express_rule_id', 'is_seckill', 'seckill_status', 'is_group_buy', 'is_published', 'created_at', 'updated_at', 'last_update'], 'integer'],
-            [['app_id', 'title', 'cover', 'description', 'content', 'detail', 'images', 'address'], 'safe'],
+            [['app_id', 'title', 'cover', 'description', 'content', 'detail', 'images', 'address','province_id', 'city_id', 'county_id'], 'safe'],
             [['price', 'market_price', 'max_can_use_integral', 'integral'], 'number'],
         ];
     }
@@ -44,16 +44,14 @@ class PackageSearch extends Package
     public function search($params)
     {
         $query = Package::find();
-//        $query->joinWith(['packageCategory']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
-        if (!($this->load($params) && $this->validate())) {
+        if (!($this->load($params,'') && $this->validate())) {
             return $dataProvider;
         }
-
         $query->andFilterWhere([
             'id' => $this->id,
             'category_id' => $this->category_id,
@@ -73,6 +71,9 @@ class PackageSearch extends Package
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'last_update' => $this->last_update,
+            'province_id' => $this->province_id,
+            'city_id' => $this->city_id,
+            'county_id' => $this->county_id,
         ]);
 
         $query->andFilterWhere(['like', 'app_id', $this->app_id])

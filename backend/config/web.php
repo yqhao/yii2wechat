@@ -44,6 +44,18 @@ $config = [
         'class' => common\behaviors\GlobalAccessBehavior::class,
         'rules' => [
             [
+                'controllers' => ['order'],
+                'actions' => ['delete'],
+                'roles' => ['administrator'],
+                'allow' => true,
+            ],
+            [
+                'controllers' => ['order'],
+                'actions' => ['delete'],
+                'roles' => ['manager'],
+                'allow' => false,
+            ],
+            [
                 'controllers' => ['weibo-media'],
                 'allow' => true,
                 'roles' => ['?']
@@ -83,7 +95,7 @@ $config = [
             [
                 'allow' => true,
                 'roles' => ['manager'],
-            ]
+            ],
         ]
     ]
 ];

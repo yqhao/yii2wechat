@@ -14,16 +14,36 @@ use yii\bootstrap\ActiveForm;
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
+    <div class="form-group">
+    <?= $form->field($model,'province_id')->dropDownList(\common\models\Region::getCityList(0),
+        [
+            'prompt'=>'--请选择省--',
+            'onchange'=>'
+            $.post("'.Yii::$app->urlManager->createUrl('/region/change-list').'?depth=2&pid="+$(this).val(),function(data){
+                $("select#packagesearch-city_id").html(data);
+            });',
+        ]) ?>
 
-    <?php echo $form->field($model, 'id') ?>
+    <?= $form->field($model, 'city_id')->dropDownList(\common\models\Region::getCityList($model->province_id),
+        [
+            'prompt'=>'--请选择市--',
+            'onchange'=>'
+            $.post("'.yii::$app->urlManager->createUrl('/region/change-list').'?depth=3&pid="+$(this).val(),function(data){
+                $("select#packagesearch-county_id").html(data);
+            });',
+        ]) ?>
+    <?= $form->field($model, 'county_id')->dropDownList(\common\models\Region::getCityList($model->city_id),['prompt'=>'--请选择区--',]) ?>
+        </div>
 
-    <?php echo $form->field($model, 'app_id') ?>
-
-    <?php echo $form->field($model, 'category_id') ?>
-
-    <?php echo $form->field($model, 'title') ?>
-
-    <?php echo $form->field($model, 'cover') ?>
+<!--    --><?php //echo $form->field($model, 'id') ?>
+<!---->
+<!--    --><?php //echo $form->field($model, 'app_id') ?>
+<!---->
+<!--    --><?php //echo $form->field($model, 'category_id') ?>
+<!---->
+<!--    --><?php //echo $form->field($model, 'title') ?>
+<!---->
+<!--    --><?php //echo $form->field($model, 'cover') ?>
 
     <?php // echo $form->field($model, 'price') ?>
 

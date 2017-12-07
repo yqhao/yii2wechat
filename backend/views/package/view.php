@@ -13,6 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="package-view">
 
     <p>
+        <?php echo Html::a('< 返回', ['index'], ['class' => 'btn bg-purple']) ?>
         <?php echo Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?php echo Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
@@ -82,10 +83,27 @@ $this->params['breadcrumbs'][] = $this->title;
             'detail:ntext',
             'purchase_notice:ntext',
             'traffic_guide:ntext',
-            'province_id',
-            'city_id',
-            'county_id',
-            'address',
+            [
+                'label' => '地址',
+                'attribute' => 'province_id',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $address = '';
+                    if($model->province_id){
+                        $address .= \common\models\Region::getName(['id'=>$model->province_id]).' ';
+                    }
+                    if($model->city_id){
+                        $address .=  \common\models\Region::getName(['id'=>$model->city_id]).' ';
+                    }
+                    if($model->county_id){
+                        $address .=  \common\models\Region::getName(['id'=>$model->county_id]).' ';
+                    }
+                    if($model->address){
+                        $address .=  $model->address;
+                    }
+                    return $address;
+                }
+            ]
         ],
     ]) ?>
 

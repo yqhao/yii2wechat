@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\Region;
 use backend\models\search\RegionSearch;
+use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -116,6 +117,27 @@ class RegionController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionChangeList($pid, $depth = 1)
+    {
+//        $model = new Region();
+        $model = \common\models\Region::getCityList($pid);
+
+        if($depth == 1){
+            $label="--请选省份--";
+        }else if($depth == 2){
+            $label="--请选择市--";
+        }else if($depth == 3 && $model){
+            $label="--请选择区--";
+        }
+
+        echo Html::tag('option',$label, ['value'=>'empty']) ;
+
+        foreach($model as $value=>$name)
+        {
+            echo Html::tag('option',Html::encode($name),array('value'=>$value));
         }
     }
 }

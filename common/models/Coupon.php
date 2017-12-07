@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use backend\components\Tool;
 use Yii;
 use yii\base\Exception;
 
@@ -20,11 +21,15 @@ use yii\base\Exception;
  * @property integer $user_id
  * @property integer $created_by
  * @property integer $created_at
+ * @property integer $amount
+ * @property integer $batch
+ * @property integer $quantity
  */
 class Coupon extends \yii\db\ActiveRecord
 {
-    const TYPE_CUT_PRICE = 0;
-    const TYPE_PERCENT = 1;
+    const TYPE_CUT_PRICE = 1;
+    const TYPE_PERCENT = 2;
+    public $quantity;
     /**
      * @inheritdoc
      */
@@ -46,13 +51,16 @@ class Coupon extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['code', 'title'], 'required'],
-            [['type', 'is_used', 'order_id', 'user_id', 'created_by', 'created_at'], 'integer'],
+            [['title'], 'required'],
+            [['quantity', 'title','amount'], 'required','on'=>'batch'],
+            [['type', 'is_used', 'order_id', 'user_id', 'created_by', 'created_at','quantity'], 'integer'],
             [['rule'], 'string'],
             [['expiration_date'], 'safe'],
+            [['batch'], 'string', 'max' => 24],
             [['code'], 'string', 'max' => 32],
             [['title'], 'string', 'max' => 64],
             [['description'], 'string', 'max' => 255],
+            [['amount'], 'number'],
         ];
     }
 
@@ -74,16 +82,40 @@ class Coupon extends \yii\db\ActiveRecord
             'user_id' => Yii::t('common', 'User ID'),
             'created_by' => Yii::t('common', 'Created By'),
             'created_at' => Yii::t('common', 'Created At'),
+            'amount' => Yii::t('common', 'Amount'),
+            'batch' => Yii::t('common', 'Batch'),
+            'quantity' => Yii::t('common', 'Quantity'),
         ];
     }
 
-    public function getValidCoupon($order = null){
+    public function getValidCoupon(){
         if($this->is_used){
             throw new Exception("此优惠券已被使用");
         }
-        if($this->expiration_date < date('Y-m-d')){
+        if($this->expiration_date && $this->expiration_date < date('Y-m-d')){
             throw new Exception("此优惠券已过期");
         }
 
     }
+    public function getValidOrder($total_price=0,$total_quantity=1){
+        if($this->rule){
+            $rule = \GuzzleHttp\json_decode($this->rule);
+            if (isset($rule->minTotalAmount) && $rule->minTotalAmount > $total_price ) {
+                throw new Exception("订单金额不满足使用条件");
+            }
+            if (isset($rule->minQuantity) && $rule->minQuantity > $total_quantity) {
+                throw new Exception("订单商品数量不满足使用条件");
+            }
+        }
+    }
+
+    public static function makeBatch(){
+        return date('YmdH').Tool::random(4);
+    }
+
+    public static function makeCode($batch){
+        $prefix = strtoupper(substr(md5($batch),0,2));
+        return $prefix.Tool::random(6,'0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ');
+    }
+
 }

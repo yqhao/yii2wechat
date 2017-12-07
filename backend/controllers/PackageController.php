@@ -7,6 +7,7 @@ use Yii;
 use common\models\Package;
 use backend\models\search\PackageSearch;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -35,7 +36,29 @@ class PackageController extends Controller
     public function actionIndex()
     {
         $searchModel = new PackageSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $params = Yii::$app->request->queryParams;
+
+        if(isset($params['PackageSearch']) && !empty($params['PackageSearch'])){
+            if(isset($params['PackageSearch']['province_id'])){
+                if($params['PackageSearch']['province_id'] && $params['PackageSearch']['province_id'] != 'empty'){
+                    $params['province_id'] =(int)$params['PackageSearch']['province_id'];
+                }
+            }
+            if(isset($params['PackageSearch']['city_id'])){
+                if($params['PackageSearch']['city_id'] && $params['PackageSearch']['city_id'] != 'empty'){
+                    $params['city_id'] =(int)$params['PackageSearch']['city_id'];
+                }
+            }
+            if(isset($params['PackageSearch']['county_id'])){
+                if($params['PackageSearch']['county_id'] && $params['PackageSearch']['county_id'] != 'empty'){
+                    $params['county_id'] =(int)$params['PackageSearch']['county_id'];
+                }
+            }
+        }
+
+
+
+        $dataProvider = $searchModel->search($params);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -127,4 +150,5 @@ class PackageController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
 }

@@ -1,13 +1,16 @@
 <?php
 namespace frontend\modules\api\v1\controllers;
 
+use common\models\Coupon;
 use common\models\OrderItem;
+use common\models\Package;
 use frontend\modules\api\v1\models\OrderForm;
 use frontend\modules\api\v1\resources\Order;
 
 use Yii;
 use yii\base\Exception;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use yii\rest\ActiveController;
 use yii\web\ForbiddenHttpException;
 use yii\web\HttpException;
@@ -101,6 +104,142 @@ class OrderController extends ApiController
         } catch (Exception $e) {
             throw new HttpException(422,$e->getMessage());
 //            return ["status"=>0,"message"=>$e->getMessage(),'trace'=>$e->getTraceAsString()];
+        }
+    }
+
+    public function actionCheckCoupon(){
+        $post = \Yii::$app->getRequest()->getBodyParams();
+
+        if(!\Yii::$app->getRequest()->isPost || empty($post)){
+            throw new HttpException(422,'访问方式错误');
+        }
+//        $coupon = Coupon::findOne(['code'=>$post['code']]);
+
+//        if(empty($coupon)){
+//            throw new HttpException(422,'此优惠码不存在');
+//        }
+//        if($coupon['is_used']){
+//            throw new HttpException(422,'此优惠码已被使用');
+//        }
+//        if($coupon['expiration_date'] > date('Y-m-d')){
+//            throw new HttpException(422,'此优惠码已失效');
+//        }
+
+        try{
+            $coupon = Coupon::findOne(['code'=>$post['code']]);
+
+            if(empty($coupon)){
+                throw new Exception('此优惠码不存在');
+            }
+            $coupon->getValidCoupon();
+            $coupon->getValidOrder($post['total_price'],$post['total_quantity']);
+        }catch (Exception $e){
+            throw new HttpException(422,$e->getMessage());
+        }
+
+
+
+
+        return ["data"=>[
+            "code"=>$coupon['code'],
+            "title"=>$coupon['title'],
+            "amount"=>$coupon['amount'],
+            "type"=>$coupon['type']
+        ]];
+    }
+
+    public function actionPay(){
+        $post = \Yii::$app->getRequest()->getBodyParams();
+
+        if(!\Yii::$app->getRequest()->isPost || empty($post)){
+            throw new HttpException(422,'访问方式错误');
+        }
+        try{
+            $order = Order::findOne(['id'=>$post['id']]);
+            if(empty($order)){
+                throw new Exception('此订单不存在');
+            }
+            if($order->payment_status == Order::PAYMENT_STATUS_YES){
+                throw new Exception('此订单已支付,请不要重复支付!');
+            }
+//            $orderItems = $order->getOrderItems()->all();
+            $orderItems = OrderItem::find()
+                ->andWhere(['order_id'=>(int) $post['id']])
+                ->select('package_id,package_item_id,package_item_title,price,quantity,use_date')->all();
+            if(empty($orderItems)){
+                throw new Exception('此订单数据异常!');
+            }
+            foreach ($orderItems as $value){
+                if($value['use_date'] < date('Y-m-d')){
+                    throw new Exception('订单超期不能支付!');
+                }
+            }
+            // 优惠券抵消金额
+            if($order->coupon_code){
+                $coupon = Coupon::find()->andWhere(['order_id'=>(int) $post['id']])
+                    ->select('code')->scalar();
+                if(!empty($coupon) && $order->payment_price == 0){
+                    $order->payment_type = \common\models\Order::PAYMENT_TYPE_DEFAULT;
+                    $order->payment_status = \common\models\Order::PAYMENT_STATUS_YES;
+                    if($order->save()){
+                        return ['data'=>true];
+                    }
+                }
+
+            }
+
+//            return ['data'=>false];
+            throw new Exception('支付失败,暂未开通在线支付功能');
+
+        }catch (Exception $e){
+            throw new HttpException(422,$e->getMessage());
+        }
+    }
+
+    public function actionDetail($id){
+
+        $model = Order::find()
+            ->andWhere(['id' => (int) $id])
+            ->one();
+        if (!$model) {
+            throw new HttpException(404);
+        }
+
+//        $orderItems = OrderItem::find()
+//            ->andWhere(['order_id'=>(int) $id])
+//            ->select('package_id,package_item_id,package_item_title,price,quantity,use_date')->one();
+        $coupon = Coupon::find()->andWhere(['order_id'=>(int) $id])
+            ->select('code,title,type,amount')->one();
+
+        $cover = Package::find()->andWhere(['id'=>$model->package_id])->select('cover,base_url')->one();
+//        $order = $model->toArray();
+//        $order['payment_status_label'] = $model->payment_status == 1 ? '已支付' : '未支付';
+//        $order['created_at'] = date('Y-m-d H:i:s',$model->created_at) ;
+        return ["data"=>['cover'=>$cover->getCover(),'order'=>$model,
+//            'item'=>$orderItems,
+            'coupon'=>$coupon]];
+    }
+
+    public function actionCancel(){
+
+        try{
+            if(!\Yii::$app->getRequest()->isPost){
+                throw new Exception('访问方式错误');
+            }
+//            throw new Exception('订单不存在');
+            $id = \Yii::$app->getRequest()->post('id');
+            $model = Order::findOne(['id' => (int) $id]);
+            if (!$model) {
+                throw new Exception('订单不存在');
+            }
+            $model->status = \common\models\Order::STATUS_CANCEL;
+            if(!$model->save()){
+                throw new Exception('操作失败');
+            }
+            return ['data'=>true];
+
+        }catch (Exception $e){
+            throw new HttpException(422,$e->getMessage());
         }
     }
 }

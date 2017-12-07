@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
+        <?php echo Html::a('< 返回', Yii::$app->request->referrer, ['class' => 'btn bg-purple']) ?>
         <?php echo Html::a(Yii::t('backend', 'Create {modelClass}', [
     'modelClass' => 'Package Image',
 ]), ['create'], ['class' => 'btn btn-success']) ?>

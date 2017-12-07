@@ -172,4 +172,22 @@ class Package extends \yii\db\ActiveRecord
     {
         return rtrim($this->base_url, '/') . '/' . ltrim($this->cover, '/');
     }
+    public function getFullAddress()
+    {
+        $prefix = '';
+        if($this->county_id){
+            $region = Region::findOne(['id'=>$this->county_id]);
+            if(!empty($region)){
+                $prefix = $region->province.$region->city.$region->county;
+            }
+        }
+
+        return $prefix.$this->address;
+    }
+
+//    public function getCityList($pid)
+//    {
+//        $model = Region::findAll(array('parent_id'=>$pid));
+//        return ArrayHelper::map($model, 'id', 'name');
+//    }
 }

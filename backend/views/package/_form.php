@@ -10,6 +10,7 @@ use yii\bootstrap\ActiveForm;
 ?>
 
 <div class="package-form">
+    <p><?php echo Html::a('< 返回', \backend\components\UrlHelper::getPreUrl(), ['class' => 'btn bg-purple']) ?></p>
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -70,9 +71,29 @@ use yii\bootstrap\ActiveForm;
 <!--    --><?php //echo $form->field($model, 'last_update')->textInput() ?>
 
     <?php echo $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
-    <?php echo $form->field($model, 'province_id')->textInput() ?>
-    <?php echo $form->field($model, 'city_id')->textInput() ?>
-    <?php echo $form->field($model, 'county_id')->textInput() ?>
+    
+
+    <?= $form->field($model,'province_id')->dropDownList(\common\models\Region::getCityList(0),
+        [
+            'prompt'=>'--请选择省--',
+            'onchange'=>'
+            $(".form-group.field-member-area").hide();
+            $.post("'.Yii::$app->urlManager->createUrl('/region/change-list').'?depth=2&pid="+$(this).val(),function(data){
+                $("select#package-city_id").html(data);
+            });',
+        ]) ?>
+
+    <?= $form->field($model, 'city_id')->dropDownList(\common\models\Region::getCityList($model->province_id),
+        [
+            'prompt'=>'--请选择市--',
+            'onchange'=>'
+            $(".form-group.field-member-area").show();
+            $.post("'.yii::$app->urlManager->createUrl('/region/change-list').'?depth=3&pid="+$(this).val(),function(data){
+                $("select#package-county_id").html(data);
+            });',
+        ]) ?>
+    <?= $form->field($model, 'county_id')->dropDownList(\common\models\Region::getCityList($model->city_id),['prompt'=>'--请选择区--',]) ?>
+
     <?php echo $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
 
     <?php echo $form->field($model, 'detail')->widget(

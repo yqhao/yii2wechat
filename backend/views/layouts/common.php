@@ -151,26 +151,26 @@ $bundle = BackendAsset::register($this);
                         'icon' => '<i class="fa fa-edit"></i>',
                         'options' => ['class' => 'treeview'],
                         'items' => [
-                            ['label' => Yii::t('backend', 'Static pages'), 'url' => ['/page/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
-                            ['label' => Yii::t('backend', 'Articles'), 'url' => ['/article/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
-                            ['label' => Yii::t('backend', 'Article Categories'), 'url' => ['/article-category/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
-                            ['label' => Yii::t('backend', 'Text Widgets'), 'url' => ['/widget-text/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
-                            ['label' => Yii::t('backend', 'Menu Widgets'), 'url' => ['/widget-menu/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
+//                            ['label' => Yii::t('backend', 'Static pages'), 'url' => ['/page/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
+//                            ['label' => Yii::t('backend', 'Articles'), 'url' => ['/article/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
+//                            ['label' => Yii::t('backend', 'Article Categories'), 'url' => ['/article-category/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
+//                            ['label' => Yii::t('backend', 'Text Widgets'), 'url' => ['/widget-text/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
+//                            ['label' => Yii::t('backend', 'Menu Widgets'), 'url' => ['/widget-menu/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
                             ['label' => Yii::t('backend', 'Carousel Widgets'), 'url' => ['/widget-carousel/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
                         ]
                     ],
-                    [
-                        'label' => '微博解析',
-                        'icon' => '<i class="fa fa-bar-chart-o"></i>',
-                        'url' => ['/weibo-media/create'],
-                        'badgeBgClass' => 'label-success',
-                    ],
-                    [
-                        'label' => Yii::t('backend', 'Machine'),
-                        'icon' => '<i class="fa fa-bar-chart-o"></i>',
-                        'url' => ['/machine/index'],
-                        'badgeBgClass' => 'label-success',
-                    ],
+//                    [
+//                        'label' => '微博解析',
+//                        'icon' => '<i class="fa fa-bar-chart-o"></i>',
+//                        'url' => ['/weibo-media/create'],
+//                        'badgeBgClass' => 'label-success',
+//                    ],
+//                    [
+//                        'label' => Yii::t('backend', 'Machine'),
+//                        'icon' => '<i class="fa fa-bar-chart-o"></i>',
+//                        'url' => ['/machine/index'],
+//                        'badgeBgClass' => 'label-success',
+//                    ],
                     [
                         'label' => Yii::t('backend', 'Package'),
                         'icon' => '<i class="fa fa-bar-chart-o"></i>',
@@ -181,6 +181,12 @@ $bundle = BackendAsset::register($this);
                         'label' => Yii::t('backend', 'Package Category'),
                         'icon' => '<i class="fa fa-bar-chart-o"></i>',
                         'url' => ['/package-category/index'],
+                        'badgeBgClass' => 'label-success',
+                    ],
+                    [
+                        'label' => Yii::t('backend', 'Coupon'),
+                        'icon' => '<i class="fa fa-bar-chart-o"></i>',
+                        'url' => ['/coupon/index'],
                         'badgeBgClass' => 'label-success',
                     ],
                     [

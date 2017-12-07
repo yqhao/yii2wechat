@@ -9,7 +9,7 @@ use yii\bootstrap\ActiveForm;
 ?>
 
 <div class="package-item-form">
-
+    <p><?php echo Html::a('< 返回', ['index','package_id'=>$model->package_id], ['class' => 'btn bg-purple']) ?></p>
     <?php $form = ActiveForm::begin(); ?>
 
     <?php echo $form->errorSummary($model); ?>

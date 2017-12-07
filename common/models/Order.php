@@ -32,7 +32,9 @@ use Yii;
  */
 class Order extends \yii\db\ActiveRecord
 {
-    const STATUS_CREATED = 0;
+    const STATUS_CANCEL = 0;
+    const STATUS_CREATED = 1;
+    const PAYMENT_TYPE_DEFAULT = 0;//默认
     const PAYMENT_STATUS_NO = 0;
     const PAYMENT_STATUS_YES = 1;
 
@@ -136,44 +138,17 @@ class Order extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Coupon::className(), ['id' => 'order_id']);
     }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPackage()
+    {
+        return $this->hasOne(Package::className(), ['package_id' => 'id']);
+    }
 
     public static function makeCode(){
 
         return date('ymdHi').str_pad(mt_rand(0,9999),4,'0',STR_PAD_LEFT);
     }
 
-//    public function addOrder($data){
-//
-//
-//        $insertOrder = [
-//            'code' => self::makeCode(),
-//            'user_id' => $data['user_id'],
-//            'package_id' => $data['package_id'],
-//            'total_quantity' => $data['total_quantity'],
-//            'total_price' => $data['total_price'],
-//            'discount' => $data['discount'],
-//            'discount_info' => $data['discount_info'],
-//            'created_at' => time(),
-//            'status' => 0,
-//            'coupon_code' => $data['coupon_code'],
-//        ];
-//        $insertOrderItem = [
-//            'order_id' => $data['order_id'],
-//            'package_id' => $data['package_id'],
-//            'package_item_id' => $data['package_item_id'],
-//            'price' => $data['price'],
-//            'sale_price' => $data['sale_price'],
-//            'amount' => $data['amount']
-//        ];
-//        $transaction = Yii::$app->db->beginTransaction();
-//        try {
-//            $transaction->createCommand($sql,$insertOrder)->execute();
-//            $transaction->getLastInsertID();
-//            $transaction->createCommand($sql2)->execute();
-//            // ... executing other SQL statements ...
-//            $transaction->commit();
-//        } catch (Exception $e) {
-//            $transaction->rollBack();
-//        }
-//    }
 }

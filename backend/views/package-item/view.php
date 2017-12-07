@@ -13,6 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="package-item-view">
 
     <p>
+        <?php echo Html::a('< 返回', Yii::$app->request->referrer, ['class' => 'btn bg-purple']) ?>
         <?php echo Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?php echo Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',

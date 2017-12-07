@@ -13,7 +13,12 @@ class PackageItem extends \common\models\PackageItem implements Linkable
     public function fields()
     {
         return [
-            'id', 'package_id', 'title','cover', 'price','market_price','weekend_price','holiday_price', 'sales','stock','content',
+            'id', 'package_id', 'title','cover', 'price','market_price','weekend_price','holiday_price', 'sales','stock',
+            'detail',
+            'special_description',
+            'unsubscribe_rules',
+            'change_rules',
+            'important_clause',
             'theDayAfterTomorrow' => function($model){
                 return $model->getPriceByDate(strtotime('+2 day'));
             },

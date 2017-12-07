@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
+        <?php echo Html::a('< 返回', ['package/index'], ['class' => 'btn bg-purple']) ?>
         <?php echo Html::a(Yii::t('backend', 'Create {modelClass}', [
     'modelClass' => 'Package Item',
 ]), ['create','package_id'=>$package_id], ['class' => 'btn btn-success']) ?>

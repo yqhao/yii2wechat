@@ -18,6 +18,7 @@ class OrderQuery extends ActiveQuery
 //        return $this;
 //    }
     public function filterParams($params){
+        $this->andWhere(['status' => Order::STATUS_CREATED]);
         if(isset($params['code']) && $params['code']){
             $this->andWhere(['code' => (int)$params['code']]);
         }

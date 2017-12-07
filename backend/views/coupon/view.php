@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Region */
+/* @var $model common\models\Coupon */
 
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Regions'), 'url' => ['index']];
+$this->title = $model->title;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Coupons'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="region-view">
+<div class="coupon-view">
 
     <p>
         <?php echo Html::a('< 返回', Yii::$app->request->referrer, ['class' => 'btn bg-purple']) ?>
@@ -28,15 +28,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'parent_id',
-            'name',
-            'province',
-            'city',
-            'county',
-            'Longitude',
-            'latitude',
+            'code',
+            'amount',
+            'title',
+            'description',
             'type',
-            'depth',
+            'rule:ntext',
+            'expiration_date',
+            'is_used',
+            'order_id',
+            'user_id',
+            'created_by',
+            'created_at:datetime',
         ],
     ]) ?>
 

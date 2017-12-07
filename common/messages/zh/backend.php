@@ -165,6 +165,7 @@ return [
     'i18n Message' => '国际化信息',
     'i18n Source Message' => '国际化源信息',
     'Package' => '主题',
+
     'Packages' => '主题',
     'Package Item' => '门票',
     'Package Items' => '门票',
@@ -173,4 +174,8 @@ return [
     'Region' => '地区',
     'Order' => '订单',
     'Order Manage' => '订单管理',
+    'Coupon' => '优惠券',
+    'Quantity' => '数量',
+    'Amount' => '金额',
+
 ];

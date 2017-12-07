@@ -141,7 +141,7 @@ class PackageItem extends \yii\db\ActiveRecord
         if(in_array(date('w',$time),$this->_weekend) && $this->weekend_price > 0){
             $price = $this->weekend_price;
         }
-        return ['date'=>date('m-d',$time),'price'=>$price];
+        return ['full_date'=>date('Y-m-d',$time),'date'=>date('m-d',$time),'price'=>$price];
     }
     /**
      * @return string
