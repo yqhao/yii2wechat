@@ -66,7 +66,7 @@ class PackageItemController extends ApiController
         if (!$model) {
             throw new HttpException(404);
         }
-        $model->select_date = \Yii::$app->getRequest()->get('select_date',date("Y-m-d"));
+        $model->select_date = \Yii::$app->getRequest()->get('select_date',date("Y-m-d ",strtotime(' +1 day')));
         return ["data"=>$model];
     }
 }

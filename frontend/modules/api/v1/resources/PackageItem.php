@@ -20,10 +20,10 @@ class PackageItem extends \common\models\PackageItem implements Linkable
             'change_rules',
             'important_clause',
             'theDayAfterTomorrow' => function($model){
-                return $model->getPriceByDate(strtotime($model->select_date.' +2 day'));
+                return $model->getPriceByDate(strtotime($model->select_date.' +1 day'));
             },
             'tomorrow' => function($model){
-                return $model->getPriceByDate(strtotime($model->select_date.' +1 day'));
+                return $model->getPriceByDate(strtotime($model->select_date));
             },
             'select_date'
         ];
