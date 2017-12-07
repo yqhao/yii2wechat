@@ -44,6 +44,7 @@ use yii\behaviors\TimestampBehavior;
 class PackageItem extends \yii\db\ActiveRecord
 {
     public $coverUpload;
+    public $select_date;
     /**
      * @inheritdoc
      */
@@ -135,11 +136,11 @@ class PackageItem extends \yii\db\ActiveRecord
         return $this->hasOne(Package::className(), ['id' => 'package_id']);
     }
 
-    public $_weekend = [1,6];
+    public $_weekend = [0,6];
     public function getPriceByDate($time){
         $price = $this->price;
-        if(in_array(date('w',$time),$this->_weekend) && $this->weekend_price > 0){
-            $price = $this->weekend_price;
+        if(in_array(date('w',$time),$this->_weekend) && $this->price_rise_at_weekend){
+            $price = PackageItem::getPriceByFormula($price,$this->price_rise_at_weekend);
         }
         return ['full_date'=>date('Y-m-d',$time),'date'=>date('m-d',$time),'price'=>$price];
     }

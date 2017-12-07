@@ -253,6 +253,8 @@ class OrderController extends ApiController
             $pid = \Yii::$app->getRequest()->get('id');
             $selectDate = \Yii::$app->getRequest()->get('selectDate',date("Y-m-d"));
             $page = \Yii::$app->getRequest()->get('page',1);
+
+            //return ['date'=>[$selectDate]];
             if(!$pid){
                 throw new Exception('数据不存在');
             }
@@ -283,7 +285,8 @@ class OrderController extends ApiController
             for($i=1;$i<=42;$i++){
                 $dateInfo = getdate($runTime);
                 $calendar[$i] = [
-                    'm' => $dateInfo['year'].'-'.$dateInfo['mon'],//month
+                    'y' => $dateInfo['year'],//year
+                    'm' => $dateInfo['mon'],//month
                     'w' => $dateInfo['wday'],//weekDay
                     'd'=> $dateInfo['mday'],//day
                     't'=> $dateInfo[0] == $selectTime ? 'select' : '',//isToday
@@ -294,7 +297,12 @@ class OrderController extends ApiController
             }
 
 
-            return ['data'=>$calendar];
+            return ['data'=>[
+                'lastPage'=> $page > 1 ? '1' : '0',
+                'nextPage'=> $page > 1 ? '0' : '1',
+                'title'=>$firstDayDateInfo['year'].$firstDayDateInfo['mon'],
+                'calendar'=>$calendar
+            ]];
         }catch (Exception $e){
             throw new HttpException(422,$e->getMessage());
         }
