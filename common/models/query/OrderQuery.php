@@ -7,17 +7,14 @@ use yii\db\ActiveQuery;
 
 class OrderQuery extends ActiveQuery
 {
-//    public function payed()
-//    {
-//        $this->andWhere(['payment_status' => Order::PAYMENT_STATUS_NO]);
-//        return $this;
-//    }
-//    public function unPayed()
-//    {
-//        $this->andWhere(['payment_status' => Order::PAYMENT_STATUS_YES]);
-//        return $this;
-//    }
-    public function filterParams($params){
+    public function mySelf()
+    {
+        $this->andWhere(['user_id' => \Yii::$app->user->identity->getUserId()]);
+        return $this;
+    }
+
+    public function filterParams($params)
+    {
         $this->andWhere(['status' => Order::STATUS_CREATED]);
         if(isset($params['code']) && $params['code']){
             $this->andWhere(['code' => (int)$params['code']]);

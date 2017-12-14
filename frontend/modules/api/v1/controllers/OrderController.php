@@ -5,6 +5,7 @@ use common\models\Coupon;
 use common\models\OrderItem;
 use common\models\Package;
 use common\models\PackageItem;
+use frontend\modules\api\v1\filters\BearerAuth;
 use frontend\modules\api\v1\models\OrderForm;
 use frontend\modules\api\v1\resources\Order;
 
@@ -27,6 +28,20 @@ class OrderController extends ApiController
      */
     public $modelClass = 'frontend\modules\api\v1\resources\Order';
 
+    /**
+     * @return array
+     */
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+
+        $behaviors['authenticator'] = [
+            'class' => BearerAuth::className(),
+//            'realm' => 'auth_key'
+        ];
+
+        return $behaviors;
+    }
     /**
      * @inheritdoc
      */
@@ -60,7 +75,7 @@ class OrderController extends ApiController
     {
         $params = \Yii::$app->request->queryParams;
         return new ActiveDataProvider(array(
-            'query' => Order::find()->filterParams($params),
+            'query' => Order::find()->mySelf()->filterParams($params),
             //'pagination' => ['pageSize' => '2']
         ));
     }
@@ -74,6 +89,7 @@ class OrderController extends ApiController
     public function findModel($id)
     {
         $model = Order::find()
+            ->mySelf()
             ->andWhere(['id' => (int) $id])
             ->one();
         if (!$model) {
@@ -103,6 +119,7 @@ class OrderController extends ApiController
 
             return ["data"=>$model];
         } catch (Exception $e) {
+            $transaction->rollBack();
             throw new HttpException(422,$e->getMessage());
 //            return ["status"=>0,"message"=>$e->getMessage(),'trace'=>$e->getTraceAsString()];
         }
@@ -156,7 +173,7 @@ class OrderController extends ApiController
             throw new HttpException(422,'访问方式错误');
         }
         try{
-            $order = Order::findOne(['id'=>$post['id']]);
+            $order = Order::findOne(['id'=>$post['id'],'user_id'=>\Yii::$app->user->identity->getUserId()]);
             if(empty($order)){
                 throw new Exception('此订单不存在');
             }
@@ -200,6 +217,7 @@ class OrderController extends ApiController
     public function actionDetail($id){
 
         $model = Order::find()
+            ->mySelf()
             ->andWhere(['id' => (int) $id])
             ->one();
         if (!$model) {
@@ -229,7 +247,7 @@ class OrderController extends ApiController
             }
 //            throw new Exception('订单不存在');
             $id = \Yii::$app->getRequest()->post('id');
-            $model = Order::findOne(['id' => (int) $id]);
+            $model = Order::findOne(['id' => (int) $id,'user_id'=>\Yii::$app->user->identity->getUserId()]);
             if (!$model) {
                 throw new Exception('订单不存在');
             }

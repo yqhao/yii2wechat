@@ -129,7 +129,13 @@ class User extends ActiveRecord implements IdentityInterface
             'logged_at' => Yii::t('common', 'Last login'),
         ];
     }
-
+    /**
+     * 生成access_token
+     */
+    public function generateAccessToken()
+    {
+        $this->access_token = Yii::$app->getSecurity()->generateRandomString(40);
+    }
     /**
      * @return \yii\db\ActiveQuery
      */

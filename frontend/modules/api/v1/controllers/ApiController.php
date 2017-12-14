@@ -14,7 +14,7 @@ use yii\web\HttpException;
  */
 class ApiController extends ActiveController
 {
-    public $response_status = 0;
+    public $response_status = null;
     /**
      * @var array
      */
@@ -26,12 +26,16 @@ class ApiController extends ActiveController
 
     protected function serializeData($data)
     {
+        $status = 0;
         $result = parent::serializeData($data);
         if(!empty($result[$this->serializer['collectionEnvelope']])){
-            $this->response_status = 1;
+            $status = 1;
+        }
+        if($this->response_status !== null){
+            $status = $this->response_status;
         }
         $expend = [
-            'status' => $this->response_status
+            'status' => $status
         ];
 
         return array_merge($result, $expend);
