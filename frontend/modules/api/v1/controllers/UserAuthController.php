@@ -54,7 +54,6 @@ class UserAuthController extends ApiController
      * 微信登录
      */
     public function actionSendCode(){
-//        return ['data'=>sha1('x4lOoOCDY1lqFg3laqmZOFtQNwvj19klyGwtLqM7'.'lqxK9bvAo78OFxXWpLLttCKMUFEtmwGd')];
         /*
          *
          * 1.code2session
@@ -64,9 +63,6 @@ class UserAuthController extends ApiController
          * 5.返回 token
          *
          */
-        file_put_contents('/access.log',"\r\n========================================\r\n",FILE_APPEND);
-        file_put_contents('/access.log',$_SERVER,FILE_APPEND);
-        file_put_contents('/access.log',$_POST,FILE_APPEND);
         $transaction = \Yii::$app->db->beginTransaction();
         try{
             $code = \Yii::$app->request->post('code',false);

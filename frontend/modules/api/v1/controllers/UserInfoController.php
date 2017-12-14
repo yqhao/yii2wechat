@@ -53,9 +53,6 @@ class UserInfoController extends ActiveController
      * 保存用户信息
      */
     public function actionSave(){
-        file_put_contents('/access-save.log',"\r\n========================================\r\n",FILE_APPEND);
-        file_put_contents('/access-save.log',var_export($_SERVER,true).PHP_EOL,FILE_APPEND);
-        file_put_contents('/access-save.log',var_export($_POST,true).PHP_EOL,FILE_APPEND);
         $transaction = \Yii::$app->db->beginTransaction();
         try{
             $user_info = \Yii::$app->request->post('user_info',null);
