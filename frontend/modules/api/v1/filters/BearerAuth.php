@@ -46,13 +46,13 @@ class BearerAuth extends AuthMethod
         if ($authHeader !== null && $authKey !== null && preg_match('/^Bearer\s+(.*?)$/', $authHeader, $matches)) {
             $identity = $user->loginByAccessToken($matches[1], get_class($this));
             if ($identity === null) {
-                throw new UnauthorizedHttpException('Your request was made with invalid credentials.');
+                throw new UnauthorizedHttpException('请登录!');
             }
             if($identity->validateAuthKey($authKey)){
-                throw new UnauthorizedHttpException('Your Auth-Key is invalid.');
+                throw new UnauthorizedHttpException('您的Auth-Key错误,请重新登录!');
             }
             if(!$identity->validateExpire()){
-                throw new UnauthorizedHttpException('Your Token is timeout.');
+                throw new UnauthorizedHttpException('登录超时,请重新登录!');
             }
 
             return $identity;
