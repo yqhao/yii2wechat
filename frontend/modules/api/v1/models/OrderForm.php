@@ -100,7 +100,7 @@ class OrderForm extends Model
                 
                 $model->code = Order::makeCode();
                 $model->package_title = $package->title;
-                $model->user_id = 1;
+                $model->user_id = \Yii::$app->user->identity->getUserId();
                 $model->total_quantity = $this->total_quantity;
                 $model->total_price = ($this->total_quantity * $packageItem->price);
                 $model->created_at = time();
