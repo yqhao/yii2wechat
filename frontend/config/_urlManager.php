@@ -17,7 +17,7 @@ return [
         ['class' => 'yii\rest\UrlRule', 'controller' => 'api/v1/widget-carousel', 'only' => ['getIndexAd','index', 'view', 'options']],
         ['class' => 'yii\rest\UrlRule', 'controller' => 'api/v1/article', 'only' => ['index', 'view', 'options']],
         ['class' => 'yii\rest\UrlRule', 'controller' => 'api/v1/user', 'only' => ['index', 'view', 'options']],
-        ['class' => 'yii\rest\UrlRule', 'controller' => 'api/v1/package', 'only' => ['index', 'view','detail']],
+        ['class' => 'yii\rest\UrlRule', 'controller' => 'api/v1/package', 'only' => ['index', 'view','detail','images']],
         ['class' => 'yii\rest\UrlRule', 'controller' => 'api/v1/package-item', 'only' => ['index', 'view']],
         ['class' => 'yii\rest\UrlRule', 'controller' => 'api/v1/user-auth', 'only' => ['send-code','check-login']],
         ['class' => 'yii\rest\UrlRule', 'controller' => 'api/v1/order', 'only' => ['index', 'view', 'create','add','check-coupon','pay','detail','cancel']],

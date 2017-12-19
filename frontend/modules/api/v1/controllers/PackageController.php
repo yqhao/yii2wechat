@@ -1,6 +1,7 @@
 <?php
 namespace frontend\modules\api\v1\controllers;
 
+use common\models\PackageImage;
 use frontend\modules\api\v1\resources\Package;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -81,5 +82,19 @@ class PackageController extends ApiController
         }
 
         return ["data"=>$model];
+    }
+    public function actionImages($id)
+    {
+        $model = PackageImage::find()
+            ->select('base_url,path')
+            ->andWhere(['package_id'=>$id])->all();
+        if (!$model) {
+            throw new HttpException(404,'页面不存在');
+        }
+        $list = [];
+        foreach ($model as $value){
+            $list[] = $value['base_url'].'/'.$value['path'];
+        }
+        return ["data"=>$list];
     }
 }
