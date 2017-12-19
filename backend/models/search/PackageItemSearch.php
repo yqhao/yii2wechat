@@ -56,20 +56,20 @@ class PackageItemSearch extends PackageItem
             'id' => $this->id,
             'package_id' => $this->package_id,
             'price' => $this->price,
-            'sales' => $this->sales,
-            'stock' => $this->stock,
-            'weight' => $this->weight,
-            'max_can_use_integral' => $this->max_can_use_integral,
-            'integral' => $this->integral,
+//            'sales' => $this->sales,
+//            'stock' => $this->stock,
+//            'weight' => $this->weight,
+//            'max_can_use_integral' => $this->max_can_use_integral,
+//            'integral' => $this->integral,
             'is_published' => $this->is_published,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'last_update' => $this->last_update,
+//            'created_at' => $this->created_at,
+//            'updated_at' => $this->updated_at,
+//            'last_update' => $this->last_update,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'cover', $this->cover])
-            ->andFilterWhere(['like', 'content', $this->content]);
+        $query->andFilterWhere(['like', 'title', $this->title]);
+//            ->andFilterWhere(['like', 'cover', $this->cover])
+//            ->andFilterWhere(['like', 'content', $this->content]);
 
         return $dataProvider;
     }

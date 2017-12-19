@@ -14,11 +14,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php  // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?php echo Html::a(Yii::t('backend', 'Create {modelClass}', [
-    'modelClass' => 'Order',
-]), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+<!--    <p>-->
+<!--        --><?php //echo Html::a(Yii::t('backend', 'Create {modelClass}', [
+//    'modelClass' => 'Order',
+//]), ['create'], ['class' => 'btn btn-success']) ?>
+<!--    </p>-->
 
     <?php echo GridView::widget([
         'dataProvider' => $dataProvider,
@@ -28,6 +28,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
 //            'id',
             'code',
+            [
+                'label' => '微信用户',
+                'attribute' => 'user_id',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $userWechat = $model->userWechat;
+                    return !empty($userWechat) ? $userWechat->nickname : null;
+                }
+            ],
             [
                 'attribute' => 'package_title',
                 'headerOptions' => ['width' => '180px'],
@@ -46,7 +55,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $string;
                 }
             ],
-            'user_id',
 //            'package_id',
              'total_quantity',
              'total_price',
@@ -56,9 +64,21 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'discount_info:ntext',
              'created_at:datetime',
             // 'updated_at',
-            // 'status',
-             'payment_type',
-             'payment_status',
+            [
+                'class' => \common\grid\EnumColumn::className(),
+                'attribute' => 'status',
+                'enum' => \common\models\Order::status()
+            ],
+            [
+                'class' => \common\grid\EnumColumn::className(),
+                'attribute' => 'payment_type',
+                'enum' => \common\models\Order::paymentTypes()
+            ],
+            [
+                'class' => \common\grid\EnumColumn::className(),
+                'attribute' => 'payment_status',
+                'enum' => \common\models\Order::paymentStatus()
+            ],
              'coupon_code',
             // 'contact_name',
             // 'contact_mobile',

@@ -55,7 +55,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'sales',
             'stock',
 
-            'is_published',
+            [
+                'attribute' => 'is_published',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model->is_published == 1 ? '已发布' : '未发布';
+                }
+            ],
 
             'last_update',
             'detail:ntext',

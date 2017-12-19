@@ -31,7 +31,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php echo $form->field($model, 'rule')->widget(
             trntv\aceeditor\AceEditor::className(),
             [
-                'mode' => 'json'
+                'mode' => 'json',
+                'containerOptions' => [
+                    'style' => 'width: 100%; min-height: 100px'
+                ]
             ]
         ) ?>
 

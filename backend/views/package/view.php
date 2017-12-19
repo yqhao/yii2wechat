@@ -27,7 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php echo DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+            [
+                'attribute' => 'id',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model->id." - ( 小程序页面地址: '/page/pages/productDetail/productDetail?id={$model->id}' )";
+                }
+            ],
 //            'app_id',
             [
                 'attribute' => 'category_id',
@@ -74,7 +80,13 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'is_seckill',
 //            'seckill_status',
 //            'is_group_buy',
-            'is_published',
+            [
+                'attribute' => 'is_published',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model->is_published == 1 ? '已发布' : '未发布';
+                }
+            ],
             'created_at:datetime',
             'updated_at:datetime',
             'last_update',

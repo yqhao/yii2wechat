@@ -30,7 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'slug',
             'title',
             'parent.title',
-            'status',
+            [
+                'attribute' => 'status',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model->status == 1 ? '已发布' : '未发布';
+                }
+            ],
         ],
     ]) ?>
 

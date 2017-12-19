@@ -37,7 +37,6 @@ use yii\bootstrap\ActiveForm;
 
 
     <?php $model->is_published = ($model->is_published === null || $model->is_published ==='') ? 1 : $model->is_published ; ?>
-    <?php echo $form->field($model, 'is_published')->radioList(['0'=>'否','1'=>'是']) ?>
 
 
     <?php echo $form->field($model, 'detail')->widget(
@@ -119,7 +118,8 @@ use yii\bootstrap\ActiveForm;
         ]
     ) ?>
 
-
+    <!--    --><?php //echo $form->field($model, 'is_published')->radioList(['0'=>'否','1'=>'是']) ?>
+    <?php echo $form->field($model, 'is_published')->checkbox(['label'=>'发布']) ?>
     <div class="form-group">
         <?php echo Html::submitButton($model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

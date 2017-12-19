@@ -21,9 +21,9 @@ use yii\bootstrap\ActiveForm;
 
     <?php echo $form->field($model, 'title') ?>
 
-    <?php echo $form->field($model, 'cover') ?>
-
-    <?php echo $form->field($model, 'price') ?>
+<!--    --><?php //echo $form->field($model, 'cover') ?>
+<!---->
+<!--    --><?php //echo $form->field($model, 'price') ?>
 
     <?php // echo $form->field($model, 'sales') ?>
 

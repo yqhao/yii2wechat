@@ -21,7 +21,7 @@ use yii\bootstrap\ActiveForm;
 
     <?php echo $form->field($model, 'parent_id')->dropDownList($categories, ['prompt'=>'']) ?>
 
-    <?php echo $form->field($model, 'status')->checkbox() ?>
+    <?php echo $form->field($model, 'status')->checkbox(['label'=>'发布']) ?>
 
     <div class="form-group">
         <?php echo Html::submitButton($model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

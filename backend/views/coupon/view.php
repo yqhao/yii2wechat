@@ -32,10 +32,22 @@ $this->params['breadcrumbs'][] = $this->title;
             'amount',
             'title',
             'description',
-            'type',
+            [
+                'attribute' => 'type',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \common\models\Coupon::types($model->type);
+                }
+            ],
             'rule:ntext',
             'expiration_date',
-            'is_used',
+            [
+                'attribute' => 'is_used',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model->is_used == 1 ? '已使用' : '未使用';
+                }
+            ],
             'order_id',
             'user_id',
             'created_by',

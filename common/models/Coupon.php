@@ -27,8 +27,8 @@ use yii\base\Exception;
  */
 class Coupon extends \yii\db\ActiveRecord
 {
-    const TYPE_CUT_PRICE = 1;
-    const TYPE_PERCENT = 2;
+    const TYPE_CUT_PRICE = 1;//满减
+    const TYPE_PERCENT = 2;//打折
     public $quantity;
     /**
      * @inheritdoc
@@ -118,4 +118,11 @@ class Coupon extends \yii\db\ActiveRecord
         return $prefix.Tool::random(6,'0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ');
     }
 
+    public static function types($type=null){
+        $ary = [
+            static::TYPE_CUT_PRICE => '满减',
+            static::TYPE_PERCENT=>'打折'
+        ];
+        return $type !== null ? (isset($ary[$type]) ? $ary[$type] : null) : $ary;
+    }
 }

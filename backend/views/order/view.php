@@ -29,6 +29,27 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
 //            'id',
             'code',
+            [
+                'label' => '微信用户',
+                'attribute' => 'user_id',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $userWechat = $model->userWechat;
+                    //return !empty($userWechat) ? $userWechat->nickname : null;
+
+                    $string = null;
+                    if(!empty($userWechat)){
+                        if($userWechat->user_info){
+                            $userInfo = \GuzzleHttp\json_decode($userWechat->user_info);
+                            $string = '<table>';
+                            $string .= '<tr><td width="80px;"><img style="width: 60px;height: 60px;" src="'.$userInfo->avatarUrl.'"></td><td width="120px;">'.$userInfo->nickName.'</td><td width="180px;">'.$userInfo->province.' / '.$userInfo->city.'</td></tr>';
+                            $string .= '</table>';
+                        }
+                    }
+
+                    return $string;
+                }
+            ],
             'package_title',
             [
                 'label' => '门票',
@@ -59,9 +80,27 @@ $this->params['breadcrumbs'][] = $this->title;
             'discount_info:ntext',
             'created_at:datetime',
             'updated_at:datetime',
-            'status',
-            'payment_type',
-            'payment_status',
+            [
+                'attribute' => 'payment_type',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \common\models\Order::paymentTypes($model->payment_type);
+                }
+            ],
+            [
+                'attribute' => 'payment_status',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \common\models\Order::paymentStatus($model->payment_status);
+                }
+            ],
+            [
+                'attribute' => 'status',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \common\models\Order::status($model->status);
+                }
+            ],
             'coupon_code',
             'after_sale_status',
         ],

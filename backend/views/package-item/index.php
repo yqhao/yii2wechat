@@ -45,7 +45,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'sales',
             'stock',
 
-            'is_published',
+            [
+                'class' => \common\grid\EnumColumn::className(),
+                'attribute' => 'is_published',
+                'enum' => [
+                    Yii::t('backend', 'Not Published'),
+                    Yii::t('backend', 'Published')
+                ]
+            ],
 
             // 'sales',
             // 'stock',
@@ -58,7 +65,12 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'last_update',
             // 'content:ntext',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'headerOptions' => ['width' => '100px'],
+                'buttonOptions' => ['style' => 'margin-right: 12px;'],
+                'template' => '{view} {update} {delete}'
+            ],
         ],
     ]); ?>
 

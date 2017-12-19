@@ -32,11 +32,13 @@ use Yii;
  */
 class Order extends \yii\db\ActiveRecord
 {
-    const STATUS_CANCEL = 0;
-    const STATUS_CREATED = 1;
+    const STATUS_CANCEL = 0;//已取消
+    const STATUS_CREATED = 1;//新订单
+
     const PAYMENT_TYPE_DEFAULT = 0;//默认
-    const PAYMENT_STATUS_NO = 0;
-    const PAYMENT_STATUS_YES = 1;
+    const PAYMENT_TYPE_WX = 1;//微信支付
+    const PAYMENT_STATUS_NO = 0; //未支付
+    const PAYMENT_STATUS_YES = 1; //已支付
 
     /**
      * @inheritdoc
@@ -145,10 +147,37 @@ class Order extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Package::className(), ['package_id' => 'id']);
     }
-
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['user_id' => 'id']);
+    }
+    public function getUserWechat()
+    {
+        return $this->hasOne(UserWechat::className(), ['user_id' => 'user_id']);
+    }
     public static function makeCode(){
 
         return date('ymdHi').str_pad(mt_rand(0,9999),4,'0',STR_PAD_LEFT);
     }
-
+    public static function status($key=null){
+        $ary = [
+            static::STATUS_CANCEL => '已取消',
+            static::STATUS_CREATED=>'已下单'
+        ];
+        return $key !== null ? (isset($ary[$key]) ? $ary[$key] : null) : $ary;
+    }
+    public static function paymentStatus($key=null){
+        $ary = [
+            static::PAYMENT_STATUS_NO => '未付款',
+            static::PAYMENT_STATUS_YES=>'已付款'
+        ];
+        return $key !== null ? (isset($ary[$key]) ? $ary[$key] : null) : $ary;
+    }
+    public static function paymentTypes($key=null){
+        $ary = [
+            static::PAYMENT_TYPE_DEFAULT => '默认',
+            static::PAYMENT_TYPE_WX=>'微信支付'
+        ];
+        return $key !== null ? (isset($ary[$key]) ? $ary[$key] : null) : $ary;
+    }
 }

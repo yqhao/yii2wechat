@@ -31,11 +31,22 @@ $this->params['breadcrumbs'][] = $this->title;
             'amount',
             'title',
 //            'description',
-            'type',
+            [
+                'class' => \common\grid\EnumColumn::className(),
+                'attribute' => 'type',
+                'enum' => \common\models\Coupon::types()
+            ],
 
             // 'rule:ntext',
              'expiration_date',
-             'is_used',
+            [
+                'class' => \common\grid\EnumColumn::className(),
+                'attribute' => 'is_used',
+                'enum' => [
+                    '未使用',
+                    '已使用'
+                ]
+            ],
             // 'order_id',
             // 'user_id',
             // 'created_by',
