@@ -92,6 +92,7 @@ class UserAuthController extends ApiController
 
             $model->refreshToken();
             $model->auth_key = \Yii::$app->getSecurity()->generateRandomString(32);
+            $model->status = UserWechat::STATUS_ACTIVE;
             if(!$model->save()){
                 throw new Exception($model->getErrors());
             }

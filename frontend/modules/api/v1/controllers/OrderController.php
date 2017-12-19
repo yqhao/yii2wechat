@@ -1,6 +1,7 @@
 <?php
 namespace frontend\modules\api\v1\controllers;
 
+use common\commands\AddToTimelineCommand;
 use common\models\Coupon;
 use common\models\OrderItem;
 use common\models\Package;
@@ -200,6 +201,15 @@ class OrderController extends ApiController
                     $order->payment_type = \common\models\Order::PAYMENT_TYPE_DEFAULT;
                     $order->payment_status = \common\models\Order::PAYMENT_STATUS_YES;
                     if($order->save()){
+                        Yii::$app->commandBus->handle(new AddToTimelineCommand([
+                            'category' => 'order',
+                            'event' => 'pay',
+                            'data' => [
+                                'order_id' => $order->id,
+                                'package_title' => $order->package_title,
+                                'created_at' => $order->created_at
+                            ]
+                        ]));
                         return ['data'=>true];
                     }
                 }

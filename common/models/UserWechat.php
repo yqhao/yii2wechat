@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\commands\AddToTimelineCommand;
 use frontend\modules\api\v1\components\Wechat;
 use Yii;
 use yii\base\Exception;
@@ -225,7 +226,14 @@ class UserWechat extends \yii\db\ActiveRecord implements IdentityInterface
             throw new Exception("User couldn't be  saved");
         };
         $user->afterSignup();
-
+        Yii::$app->commandBus->handle(new AddToTimelineCommand([
+            'category' => 'user',
+            'event' => 'signup',
+            'data' => [
+                'openid' => $this->getId(),
+                'created_at' => $this->created_at
+            ]
+        ]));
         return $user;
 
     }

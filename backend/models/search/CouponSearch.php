@@ -46,6 +46,7 @@ class CouponSearch extends Coupon
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder'=>['id'=>SORT_DESC]]
         ]);
 
         if (!($this->load($params) && $this->validate())) {

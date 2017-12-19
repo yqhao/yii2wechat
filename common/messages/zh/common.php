@@ -20,7 +20,6 @@ return [
     'API access token' => '',
     'Email' => '',
     'Expire At' => '',
-    'Not Active' => '',
     'Password' => '',
     'Roles' => '',
     'Token' => '',
@@ -130,4 +129,6 @@ return [
     'Latitude' => '纬度',
     'Purchase Notice' => '购买须知',
     'Traffic Guide' => '交通指引',
+    'Not Active' => '禁用',
+    'Logged At' => '登录时间'
 ];

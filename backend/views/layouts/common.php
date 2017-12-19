@@ -173,32 +173,38 @@ $bundle = BackendAsset::register($this);
 //                    ],
                     [
                         'label' => Yii::t('backend', 'Package'),
-                        'icon' => '<i class="fa fa-bar-chart-o"></i>',
+                        'icon' => '<i class="fa fa-institution"></i>',
                         'url' => ['/package/index'],
                         'badgeBgClass' => 'label-success',
                     ],
                     [
                         'label' => Yii::t('backend', 'Package Category'),
-                        'icon' => '<i class="fa fa-bar-chart-o"></i>',
+                        'icon' => '<i class="fa fa-bookmark"></i>',
                         'url' => ['/package-category/index'],
                         'badgeBgClass' => 'label-success',
                     ],
                     [
                         'label' => Yii::t('backend', 'Coupon'),
-                        'icon' => '<i class="fa fa-bar-chart-o"></i>',
+                        'icon' => '<i class="fa fa-money"></i>',
                         'url' => ['/coupon/index'],
                         'badgeBgClass' => 'label-success',
                     ],
                     [
                         'label' => Yii::t('backend', 'Region'),
-                        'icon' => '<i class="fa fa-bar-chart-o"></i>',
+                        'icon' => '<i class="fa fa-location-arrow"></i>',
                         'url' => ['/region/index'],
                         'badgeBgClass' => 'label-success',
                     ],
                     [
                         'label' => Yii::t('backend', 'Order Manage'),
-                        'icon' => '<i class="fa fa-bar-chart-o"></i>',
+                        'icon' => '<i class="fa fa-barcode"></i>',
                         'url' => ['/order/index'],
+                        'badgeBgClass' => 'label-success',
+                    ],
+                    [
+                        'label' => '微信用户',
+                        'icon' => '<i class="fa fa-user-plus"></i>',
+                        'url' => ['/user-wechat/index'],
                         'badgeBgClass' => 'label-success',
                     ],
                     [

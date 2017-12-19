@@ -177,5 +177,6 @@ return [
     'Coupon' => '优惠券',
     'Quantity' => '数量',
     'Amount' => '金额',
-
+    'Not Active' => '禁用',
+    'Logged At' => '登录时间'
 ];
