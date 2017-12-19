@@ -87,7 +87,9 @@ class PackageController extends ApiController
     {
         $model = PackageImage::find()
             ->select('base_url,path')
-            ->andWhere(['package_id'=>$id])->all();
+            ->andWhere(['package_id'=>$id])
+            ->orderBy('id ASC')
+            ->all();
         if (!$model) {
             throw new HttpException(404,'页面不存在');
         }

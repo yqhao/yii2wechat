@@ -73,7 +73,7 @@ class CouponController extends Controller
                 Yii::$app->db->createCommand()->insert(Coupon::tableName(),$data)->execute();
             }
 
-//            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect('index');
         } else {
             return $this->render('create', [
                 'model' => $model,

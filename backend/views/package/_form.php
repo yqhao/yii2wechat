@@ -62,7 +62,8 @@ use yii\bootstrap\ActiveForm;
 
 <!--    --><?php //echo $form->field($model, 'is_group_buy')->textInput() ?>
 
-    <?php echo $form->field($model, 'is_published')->textInput() ?>
+<!--    --><?php //echo $form->field($model, 'is_published')->textInput() ?>
+
 
 <!--    --><?php //echo $form->field($model, 'create_at')->textInput() ?>
 
@@ -141,7 +142,7 @@ use yii\bootstrap\ActiveForm;
             ]
         ]
     ) ?>
-
+    <?php echo $form->field($model, 'is_published')->checkbox(['label'=>'发布']) ?>
 
 
     <div class="form-group">
