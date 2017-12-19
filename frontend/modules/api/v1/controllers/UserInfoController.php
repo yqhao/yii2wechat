@@ -72,6 +72,11 @@ class UserInfoController extends ActiveController
             }
 //            $model->user_info = $user_info;
             $model->setAttribute('user_info', $user_info);
+            if($user_info){
+                $userInfo = \GuzzleHttp\json_decode($user_info);
+                if(!empty($userInfo))
+                    $model->setAttribute('nickname', $userInfo->nickName);
+            }
             if(!$model->validate(['user_info']) || !$model->save()){
 
                 throw new Exception(var_export($model->getErrors(),true));
