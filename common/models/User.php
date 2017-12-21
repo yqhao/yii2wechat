@@ -261,7 +261,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function afterSignup(array $profileData = [])
     {
         $this->refresh();
-        if($this->is_wechat){
+        if(!$this->is_wechat){
             Yii::$app->commandBus->handle(new AddToTimelineCommand([
                 'category' => 'user',
                 'event' => 'signup',

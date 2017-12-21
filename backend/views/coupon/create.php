@@ -26,7 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?php echo $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
-        <?php echo $form->field($model, 'type')->textInput(['value'=>'1']) ?>
+<!--        --><?php //echo $form->field($model, 'type')->textInput(['value'=>'1']) ?>
+        <?php echo $form->field($model, 'type')->radioList(\common\models\Coupon::types(),['value'=>1]) ?>
 
         <?php echo $form->field($model, 'rule')->widget(
             trntv\aceeditor\AceEditor::className(),
