@@ -19,6 +19,8 @@ class Yii extends \yii\BaseYii
  *
  * @property trntv\filekit\Storage $fileStorage
  * @property common\components\keyStorage\KeyStorage $keyStorage
+ * @property common\components\queryCache\QueryCache $queryCache
+ * @property yii\caching\ApcCache $apcuCache
  * @property yii\web\UrlManager $urlManagerFrontend UrlManager for frontend application.
  * @property yii\web\UrlManager $urlManagerBackend UrlManager for backend application.
  * @property yii\web\UrlManager $urlManagerStorage UrlManager for storage application.

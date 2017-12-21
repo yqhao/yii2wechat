@@ -219,11 +219,12 @@ class UserWechat extends \yii\db\ActiveRecord implements IdentityInterface
         $username = 'wx_'.substr(md5(date('ymd')),0,2).(Yii::$app->getSecurity()->generateRandomString(6));
         $user = new User();
         $user->username = $username;
-        $user->email = 'default';
+        $user->email = $username.'@ausnowtravel.shop';
+        $user->is_wechat = 1;
         $user->status = User::STATUS_ACTIVE;
         $user->setPassword($password);
         if(!$user->save()) {
-            throw new Exception("User couldn't be  saved");
+            throw new Exception("User couldn't be  saved".var_export($user->getErrors(),true));
         };
         $user->afterSignup();
         Yii::$app->commandBus->handle(new AddToTimelineCommand([

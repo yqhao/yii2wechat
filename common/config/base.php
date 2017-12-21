@@ -17,8 +17,14 @@ $config = [
         ],
 
         'cache' => [
-            'class' => 'yii\caching\FileCache',
-            'cachePath' => '@common/runtime/cache'
+//            'class' => 'yii\caching\FileCache',
+//            'cachePath' => '@common/runtime/cache',
+            'class' => 'yii\caching\ApcCache',
+            'keyPrefix' => 'common_',
+            'useApcu' => true,
+            'defaultDuration' => 7200,
+//            'serializer' => ['json_encode','json_decode']
+//            'serializer' => ['serialize','unserialize']
         ],
 
         'commandBus' => [
@@ -144,6 +150,15 @@ $config = [
         'keyStorage' => [
             'class' => 'common\components\keyStorage\KeyStorage'
         ],
+        'apcCache' => [
+            'class' => 'yii\caching\ApcCache',
+            'keyPrefix' => 'apcu_',
+            'useApcu' => true,
+            'defaultDuration' => 7200,
+        ],
+        'queryCache' => [
+            'class' => 'common\components\queryCache\QueryCache'
+        ],
 
         'urlManagerBackend' => \yii\helpers\ArrayHelper::merge(
             [
@@ -197,9 +212,9 @@ if (YII_ENV_DEV) {
         'class'=>'yii\gii\Module'
     ];
 
-    $config['components']['cache'] = [
-        'class' => 'yii\caching\DummyCache'
-    ];
+//    $config['components']['cache'] = [
+//        'class' => 'yii\caching\DummyCache',
+//    ];
     $config['components']['mailer']['transport'] = [
         'class' => 'Swift_SmtpTransport',
         'host' => env('SMTP_HOST'),

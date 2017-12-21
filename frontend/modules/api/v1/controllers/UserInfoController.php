@@ -65,7 +65,7 @@ class UserInfoController extends ActiveController
             }
 
 
-            $model = UserWechat::find(['openid'=>\Yii::$app->user->id])->one();
+            $model = UserWechat::find()->andWhere(['openid'=>\Yii::$app->user->id])->one();
             if(empty($model)){
                 throw new Exception('用户不存在');
 

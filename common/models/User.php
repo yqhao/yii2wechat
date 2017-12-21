@@ -26,6 +26,7 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $logged_at
+ * @property integer $is_wechat
  * @property string $password write-only password
  *
  * @property \common\models\UserProfile $userProfile
@@ -127,6 +128,7 @@ class User extends ActiveRecord implements IdentityInterface
             'created_at' => Yii::t('common', 'Created at'),
             'updated_at' => Yii::t('common', 'Updated at'),
             'logged_at' => Yii::t('common', 'Last login'),
+            'is_wechat' => Yii::t('common', 'Is Wechat'),
         ];
     }
     /**
@@ -259,7 +261,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function afterSignup(array $profileData = [])
     {
         $this->refresh();
-        if($this->email != 'default'){
+        if($this->is_wechat){
             Yii::$app->commandBus->handle(new AddToTimelineCommand([
                 'category' => 'user',
                 'event' => 'signup',

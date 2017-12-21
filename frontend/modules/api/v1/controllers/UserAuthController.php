@@ -74,10 +74,13 @@ class UserAuthController extends ApiController
             if(empty($sessionInfo)){
                 throw new Exception('请求code错误');
             }
-            $model = UserWechat::find(['openid'=>$sessionInfo->openid])->one();
+
+            $model = UserWechat::find()->andWhere(['openid'=>$sessionInfo->openid])->one();
+
             if(empty($model)){
                 $model = new UserWechat();
                 $model->setScenario('code2session');
+                $model->setIsNewRecord(true);
                 $model->openid = $sessionInfo->openid;
                 // insert user
                 $password = \Yii::$app->getSecurity()->generateRandomString(8);
