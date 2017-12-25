@@ -68,6 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'contact_name',
+            'contact_id_number',
             'contact_mobile',
             'remark:ntext',
             'user_id',

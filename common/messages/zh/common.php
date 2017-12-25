@@ -114,6 +114,7 @@ return [
     'Payment Status' => '支付状态',
     'Coupon Code' => '优惠码',
     'Contact Name' => '联系人',
+    'Contact Id Number' => '联系人身份证号',
     'Contact Mobile' => '联系人电话',
     'Remark' => '备注',
     'After Sale Status' => '售后状态',

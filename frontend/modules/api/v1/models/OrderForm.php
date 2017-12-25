@@ -25,6 +25,7 @@ class OrderForm extends Model
     public $use_date;
     public $total_quantity = 1;
     public $coupon_code;
+    public $contact_id_number;
     public $contact_name;
     public $contact_mobile;
     public $remark;
@@ -38,7 +39,7 @@ class OrderForm extends Model
     {
         return [
             [[ 'package_id', 'total_quantity', 'package_item_id','contact_name','contact_mobile','use_date'], 'required', 'on' => 'create'],
-            [[ 'coupon_code','order_code','use_date'], 'string', 'max' => 32],
+            [[ 'coupon_code','order_code','use_date','contact_id_number'], 'string', 'max' => 32],
             [[ 'contact_name'], 'string', 'max' => 64],
 //            [[ 'contact_mobile'], 'string', 'max' => 16],
             [[ 'remark'], 'string', 'max' => 255],
@@ -60,6 +61,7 @@ class OrderForm extends Model
             'total_quantity' => Yii::t('common', 'Total Quantity'),
             'use_date' => Yii::t('common', 'Use Date'),
             'coupon_code' => Yii::t('common', 'Coupon Code'),
+            'contact_id_number' => Yii::t('common', 'Contact ID Number'),
             'contact_name' => Yii::t('common', 'Contact Name'),
             'contact_mobile' => Yii::t('common', 'Contact Mobile'),
             'remark' => Yii::t('common', 'Remark'),
@@ -106,6 +108,7 @@ class OrderForm extends Model
                 $model->created_at = time();
                 $model->status = Order::STATUS_CREATED;
                 
+                $model->contact_id_number = $this->contact_id_number;
                 $model->contact_name = $this->contact_name;
                 $model->contact_mobile = $this->contact_mobile;
                 $model->remark = $this->remark;

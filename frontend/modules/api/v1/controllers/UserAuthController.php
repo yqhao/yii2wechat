@@ -88,6 +88,8 @@ class UserAuthController extends ApiController
                 $model->user_id = $user->id;
                 $model->remark = $password;
 
+            }elseif($model->status != UserWechat::STATUS_ACTIVE){
+                throw new Exception('账号异常或被禁用');
             }
             $model->code = $code;
             $model->session_key = $sessionInfo->session_key;

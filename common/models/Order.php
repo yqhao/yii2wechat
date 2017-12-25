@@ -25,6 +25,7 @@ use Yii;
  * @property integer $payment_type
  * @property integer $payment_status
  * @property string $coupon_code
+ * @property string $contact_id_number
  * @property string $contact_name
  * @property string $contact_mobile
  * @property string $remark
@@ -82,7 +83,7 @@ class Order extends \yii\db\ActiveRecord
             [['user_id', 'package_id', 'total_quantity', 'created_at', 'updated_at', 'status', 'payment_type', 'payment_status', 'after_sale_status'], 'integer'],
             [['total_price','total_sale_price', 'payment_price', 'discount'], 'number'],
             [['discount_info','remark','package_title'], 'string'],
-            [['code', 'coupon_code'], 'string', 'max' => 32],
+            [['code', 'coupon_code','contact_id_number'], 'string', 'max' => 32],
             [['package_title', 'remark'], 'string', 'max' => 255],
             [['contact_name'], 'string', 'max' => 64],
             [['contact_mobile'], 'string', 'max' => 24],
@@ -112,6 +113,7 @@ class Order extends \yii\db\ActiveRecord
             'payment_type' => Yii::t('common', 'Payment Type'),
             'payment_status' => Yii::t('common', 'Payment Status'),
             'coupon_code' => Yii::t('common', 'Coupon Code'),
+            'contact_id_number' => Yii::t('common', 'Contact Id Number'),
             'contact_name' => Yii::t('common', 'Contact Name'),
             'contact_mobile' => Yii::t('common', 'Contact Mobile'),
             'remark' => Yii::t('common', 'Remark'),
