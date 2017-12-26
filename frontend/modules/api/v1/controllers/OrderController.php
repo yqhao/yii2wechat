@@ -193,6 +193,15 @@ class OrderController extends ApiController
                     throw new Exception('订单超期不能支付!');
                 }
             }
+
+//            $packageItem = PackageItem::findOne(['id'=>$orderItems['package_item_id']]);
+//            if(empty($packageItem) || !$packageItem->is_published){
+//                throw new Exception('产品已下架,此订单不能付款!');
+//            }
+//            if($packageItem->stock < $orderItems['stock']){
+//                throw new Exception('产品存储不足,此订单不能付款!');
+//            }
+
             // 优惠券抵消金额
             if($order->coupon_code){
                 $coupon = Coupon::find()->andWhere(['order_id'=>(int) $post['id']])

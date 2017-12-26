@@ -92,19 +92,36 @@ class OrderForm extends Model
                 if(empty($package)){
                     throw new Exception('数据不存在');
                 }
+                $total_quantity = (int)$this->total_quantity;
+                if($package->stock < $total_quantity){
+                    throw new Exception('库存不足,下单失败');
+                }
+                $package->stock -= $total_quantity;
+                $package->sales += $total_quantity;
+                if(!$package->save()){
+                    throw new Exception('下单失败.');
+                }
+
                 $packageItem = PackageItem::findOne(['id'=>$this->package_item_id,'is_published'=>Package::STATUS_PUBLISHED]);
                 if(empty($packageItem)){
                     throw new Exception('数据不存在');
                 }
-
+                if($packageItem->stock < $total_quantity){
+                    throw new Exception('库存不足,下单失败');
+                }
+                $packageItem->stock -= $total_quantity;
+                $packageItem->sales += $total_quantity;
+                if(!$packageItem->save()){
+                    throw new Exception('下单失败..');
+                }
 
                 $model->package_id = $package->id;
                 
                 $model->code = Order::makeCode();
                 $model->package_title = $package->title;
                 $model->user_id = \Yii::$app->user->identity->getUserId();
-                $model->total_quantity = $this->total_quantity;
-                $model->total_price = ($this->total_quantity * $packageItem->price);
+                $model->total_quantity = $total_quantity;
+                $model->total_price = ($total_quantity * $packageItem->price);
                 $model->created_at = time();
                 $model->status = Order::STATUS_CREATED;
                 
@@ -164,6 +181,8 @@ class OrderForm extends Model
                 }
                 $this->order_id = $model->id;
                 $this->order_code = $model->code;
+
+
             }
 
             return !$model->hasErrors() && !$orderItem->hasErrors();
