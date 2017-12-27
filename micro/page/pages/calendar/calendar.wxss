@@ -1,0 +1,79 @@
+/* page/pages/calendar/calendar.wxss */
+.index-bd{
+  font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+  background-color: white;
+}
+.calendar{
+  margin-top: 12rpx;
+  padding: 24rpx 0;
+}
+.calendar-item{
+ margin: 0 auto;
+ width: 730rpx;
+ /* background-color: goldenrod; */
+ display: flex;
+ justify-content: flex-start;
+ flex-wrap: wrap;
+}
+.calendar-nav-both{
+  width: 180rpx;
+  height: 100rpx;
+  flex-shrink: 0;
+  text-align: center;
+   border: 1px solid #dadada; 
+  background-color: #dadada;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calendar-nav-center{
+  width: 355rpx;
+  height: 100rpx;
+  flex-shrink: 0;
+  text-align: center;
+   border: 1px solid #dadada; 
+  background-color: #dadada;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.calendar-title{
+  width: 100rpx;
+  height: 60rpx;
+  flex-shrink: 0;
+  text-align: center;
+  border: 1px solid #dadada;
+  background-color: #dadada;
+}
+.calendar-day{
+  width: 100rpx;
+  height: 100rpx;
+  flex-shrink: 0;
+  text-align: center;
+  border: 1px solid #dadada;
+      display: flex;
+      flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.day{
+font-size: 12px;
+}
+.price{
+    font-size: 9px;
+}
+.active{
+  background-color: #f5b041;
+  border: 1px solid #f5b041;
+}
+.select{
+  background-color: #f5b041;
+  border: 2px solid white;
+  width: 96rpx;
+  height: 96rpx;
+  color: white;
+}
+.not{
+  color: #dadada;
+}

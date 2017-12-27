@@ -1,0 +1,84 @@
+<!--page/pages/orderList/orderList.wxml-->
+<view class='index'>
+
+  <!-- <view class='top-nav'>
+    <navigator>
+      待付款
+    </navigator>
+    <navigator>
+      退改
+    </navigator>
+    <navigator>
+      全部
+    </navigator>
+  </view>
+  <view class='light-grep'></view> -->
+
+  <view class='index-bd'>
+    <view class='v-item'>
+
+      <block wx:if="{{orderList}}">
+        <!-- 订单 -->
+        <scroll-view data-compid="orderList" data-payment-status="{{paymentStatus}}" scroll-y="true" lower-threshold="10" data-curpage="{{orderListPageInfo.currentPage}}" bindscrolltolower="pageScrollFunc" style='height:1200rpx;'>
+          <block wx:for="{{orderList}}" wx:key="orderList">
+            <view class='v-item-sub'>
+              <view class='order-item'>
+                <view class='order-item-first'>
+                  <view class='order-item-code'>
+                    <!-- <text>订单:</text>\t -->
+                    <text>{{item.package_title}}</text>
+                  </view>
+                  <view class='order-item-time'>
+                    <text>{{item.created_at}}</text>
+                  </view>
+                </view>
+
+                <view class='order-item-detail'>
+                  <view class='order-item-detail-left'>
+                    <block wx:for="{{item.items}}" wx:key="orderItems" wx:for-item="orderItem">
+                    <view class='order-item-detail-title'>
+                      <view class='order-item-detail-ticket'>
+                        <text>{{orderItem.package_item_title}}</text>
+                      </view>
+                      <view class='order-item-detail-num'>
+                        <text>x{{orderItem.quantity}}</text>
+                      </view>
+                    </view>
+                    </block>
+                    <view class='order-item-detail-value'>
+                      <view>
+
+                        <text>总额: </text>
+                        <text class='price'>¥{{item.total_price}}</text>
+                      </view>
+                      <view>
+                        <text>状态: </text>
+                        <text>{{item.payment_status_label}}</text>
+                      </view>
+                    </view>
+                  </view>
+
+                  <view class='order-item-detail-right'>
+                    <navigator open-type='navigate' url="/page/pages/orderDetail/orderDetail?id={{item.id}}">详情
+                      <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </navigator>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </block>
+        </scroll-view>
+        <!-- 订单 -->
+
+      </block>
+      <block wx:else>
+      <view class='no-data'>
+        <text>暂时没有数据</text>
+        </view>
+      </block>
+
+    </view>
+    <!-- 列表 -->
+  </view>
+
+</view>

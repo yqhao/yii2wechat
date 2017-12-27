@@ -1,0 +1,57 @@
+<import src="/vendor/feedBack/showToast.wxml" />  
+<template is="showToast" data="{{showToast: showToast}}" />  
+<view class="index">
+  <view class='index-swiper'>
+    <swiper indicator-dots="true" autoplay="true" interval="3000" duration="1000" style="margin-left:auto;margin-right:auto;margin-top:0;opacity:1;">
+    <!-- <swiper indicator-dots="true" autoplay="true" interval="3000" duration="1000" style="height:320rpx;margin-left:auto;margin-right:auto;margin-top:0;opacity:1;"> -->
+      <block wx:key="indexAds" wx:for="{{indexAds}}">
+        <swiper-item>
+          <image lazy-load="true" bindtap="turnToProductDetailPage" class="swiper-item" src="{{item.base_url}}/{{item.path}}" data-url="{{item.url}}" mode='aspectFill' />
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+
+  <view class='index-bd'>
+    <view class="recommand-list">
+    <view class="recommand-title"><text space="emsp">// 热门推荐 //</text></view>
+    <view class="light-grep"></view>
+  <scroll-view
+              data-compid="packageList"
+               scroll-y="true"
+               lower-threshold="10"
+               data-curpage="{{packageListPageInfo.currentPage}}"
+               bindscrolltolower="pageScrollFunc" style='height:1050rpx;'
+  >
+<block wx:if="{{packageList}}">
+        <block wx:key="packageList" wx:for="{{packageList}}">
+          <view class="recommand-item" bindtap='tapToPackageDetail' data-package-id='{{item.id}}'>
+            <view class="recommand-item-left">
+              <image class="swiper-item" src='{{item.cover}}' mode='aspectFill' />
+            </view>
+            <view class="recommand-item-right">
+              <view class='recommand-item-title'>
+                <text>{{item.title}}</text>
+              </view>
+              <view class='recommand-item-saleout'>
+                <text>已售\t {{item.sales}}</text>
+              </view>
+              <view>
+                <text class='recommand-item-price'>¥{{item.price}}</text>
+                <text>\t起\t</text>
+                <text>{{item.market_price}}</text>
+              </view>
+            </view>
+            
+          </view>
+        </block>
+      </block>
+    
+    </scroll-view>
+
+
+
+    </view>
+
+  </view>
+</view>

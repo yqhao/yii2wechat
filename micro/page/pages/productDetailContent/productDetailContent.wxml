@@ -1,0 +1,10 @@
+<!--page/pages/productDetailContent/productDetailContent.wxml-->
+<view class='index'>
+<view class='index-bd'>
+<view class='index-content'>
+
+<import src="../../../vendor/wxParse/wxParse.wxml" />
+<template is="wxParse" data="{{wxParseData:packageInfoDetail.nodes}}" />
+</view>
+</view>
+</view>

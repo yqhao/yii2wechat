@@ -1,0 +1,122 @@
+<view class='index'>
+  <block wx:if='{{packageInfo.cover}}'>
+    <view class='index-swiper'>
+      <image bindtap='tapImage' src='{{packageInfo.cover}}' mode='aspectFill'></image>
+    </view>
+  </block>
+  <view class='index-bd'>
+
+    <view class='v-item'>
+      <view class='v-item-sub'>
+        <text class='title'>{{packageInfo.title}}</text>
+        <block wx:if="{{packageInfo.description}}">
+          <text class='title'>\t\t-\t\t</text>
+          <text class='description'>{{packageInfo.description}}</text>
+        </block>
+      </view>
+    </view>
+
+    <block wx:if="{{packageInfo.address}}">
+      <view class='v-item'>
+        <view class='v-item-sub'>
+          <view class='address'>
+            <image class='address-img' src='/image/map.png' />\t
+            <text class='address-text'>{{packageInfo.address}}</text>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 列表 -->
+    <view class='v-item'>
+      <view class='v-item-sub'>
+
+        <!-- item -->
+        <block wx:if="{{packageItems}}">
+          <block wx:for="{{packageItems}}" wx:key="packageItems">
+            <view class='ticket-item'>
+
+              <view class='ticket-item-title'>
+                <text class='title'>{{item.title}}</text>
+              </view>
+
+              <view class='ticket-item-sub'>
+
+                <view class='ticket-item-info'>
+                  <text class='ticket-price'>¥{{item.price}}</text>\t\t
+                  <text>起</text>
+                  <text class='ticket-description'>套餐说明</text>
+                  <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </view>
+
+                <view class='ticket-item-order'>
+                <block wx:if="{{item.stock>0}}">
+                  <navigator url="/page/pages/orderConfirm/orderConfirm?id={{item.id}}" open-type="navigate" class="btn-order">预订</navigator>
+                
+                </block>
+                <block wx:else>
+                  <view class="btn-order-unactive">售罄</view>
+                </block>
+                </view>
+
+              </view>
+
+            </view>
+
+            <block wx:if="{{index!=packageItems.length-1?true:false}}">
+              <view class="light-grep"></view>
+            </block>
+          </block>
+        </block>
+        <!-- item end -->
+
+
+
+      </view>
+    </view>
+    <block wx:if="{{packageInfo.has_detail == 1}}">
+    <view class='v-item'>
+      <view class='v-item-sub'>
+        <view class='detail' bindtap='tapTurnToDetail'>
+          <view class='detail-left'>
+            <text>详情</text>
+          </view>
+          <view class='detail-right'>
+            <i class='fa fa-angle-right'></i>
+          </view>
+        </view>
+      </view>
+    </view>
+    </block>
+
+    <block wx:if="{{purchaseNotice}}">
+      <view class='v-item'>
+        <view class='v-item-sub'>
+          <view class='content-title'>
+            <i class="fa fa-info-circle light-blue" aria-hidden="true"></i>
+            <text>购买须知</text>
+          </view>
+          <view class='content'>
+            <import src="../../../vendor/wxParse/wxParse.wxml" />
+            <template is="wxParse" data="{{wxParseData:purchaseNotice.nodes}}" />
+          </view>
+        </view>
+      </view>
+    </block>
+        <block wx:if="{{trafficGuide}}">
+      <view class='v-item'>
+        <view class='v-item-sub'>
+          <view class='content-title'>
+            <i class="fa fa-info-circle light-blue" aria-hidden="true"></i>
+            <text>交通指引</text>
+          </view>
+          <view class='content'>
+            <import src="../../../vendor/wxParse/wxParse.wxml" />
+            <template is="wxParse" data="{{wxParseData:trafficGuide.nodes}}" />
+          </view>
+        </view>
+      </view>
+    </block>
+
+  </view>
+</view>

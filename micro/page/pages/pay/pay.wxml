@@ -1,0 +1,17 @@
+<!--page/pages/pay/pay.wxml-->
+
+<block wx:if="{{failMessage}}">
+<view class='index'>
+  <view class='index-bd'>
+  <view class='tips'>
+   <icon type="cancel" size="60"/>
+   <view>
+   <text>{{failMessage}}</text>
+   <navigator open-type="reLaunch"  url='/page/pages/userCenter/userCenter'>立即返回</navigator>
+   </view>
+  </view>
+
+
+</view>
+</view>
+</block>

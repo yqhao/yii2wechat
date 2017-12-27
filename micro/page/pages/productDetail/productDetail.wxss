@@ -1,0 +1,144 @@
+/* page/pages/productDetail/productDetail.wxss */
+.light-grep{
+  width: 100%;
+  border-bottom: 1px solid #F2F2F2; 
+}
+.index-swiper {
+    height: 312.5rpx;
+}
+
+.index-swiper image {
+  width: 100%;
+  height: 100%;
+}
+
+.index-bd {
+  font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+  /* background-color: white; */
+}
+
+.v-item {
+  background-color: white;
+  padding: 8px 0;
+  margin-bottom: 4px;
+}
+
+.v-item-sub {
+  width: 710rpx;
+  margin: 0 auto;
+}
+
+.title {
+  /* font-size: 14px; */
+  font-weight: 600;
+}
+
+.address {
+  /* height: 20px; */
+  /* text-align: center;
+  margin:0 auto; *//* line-height: 18px; */
+}
+
+.address-img {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.address-text {
+  font-size: 12px;
+}
+
+.ticket-item {
+  width: 710rpx;
+  padding: 8px 0;
+}
+
+.ticket-item-sub {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  height: 38px;
+}
+
+.ticket-item-info {
+  width: 65%;
+  font-size: 12px;
+  color: #888;
+}
+
+.ticket-item-order {
+  width: 35%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.ticket-item-order button {
+  margin-right: 0;
+}
+
+.ticket-price {
+  font-size: 18px;
+  /* color: #ffbf00; */
+  color: #de5800;
+}
+
+.ticket-description {
+  margin-left: 12px;
+}
+.detail{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.detail-left{
+  width: 70%;
+}
+.detail-right{
+  width: 30%; 
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 0;
+  font-size: 16px;
+}
+.light-blue{
+  color: #00BFFF;
+  margin: 0 12px;
+  font-size: 15px;
+}
+.content-title{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 16px;
+  margin-top: 12px;
+}
+.btn-order {
+  color: black;
+  /* background-color: rgb( 245, 176, 65 ); */
+  background-color: #ffc730;
+  width: 60px;
+  height:30px; 
+  border-radius:5px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 30px;
+}
+.btn-order-unactive {
+  color: black;
+  background-color: #F2F2F2;
+  width: 60px;
+  height:30px; 
+  border-radius:5px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 30px;
+}

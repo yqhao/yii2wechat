@@ -1,0 +1,161 @@
+<!--page/pages/orderConfirm/orderConfirm.wxml-->
+<form bindsubmit="formSubmit">
+  <view class='index'>
+    <view class='index-bd'>
+
+      <view class='v-item'>
+        <view class='v-item-sub'>
+          <view>
+            <text class='title'>{{packageItems.title}}</text>
+          </view>
+          <view>
+            <text class='order-price'>¥{{packageItems.price}}</text>
+            <text>\t起</text>
+          </view>
+        </view>
+      </view>
+
+      <view class='v-item'>
+        <view class='v-item-sub'>
+          <view class='order-date'>
+            <view class='order-date-title'>
+              <text>出行日期</text>
+            </view>
+            <view class='order-date-first order-data-{{tomorrow_active_class}}' bindtap='tapToSelectDate' data-booking-date='{{packageItems.tomorrow.date}}' data-booking-full-date='{{packageItems.tomorrow.full_date}}' data-booking-price='{{packageItems.tomorrow.price}}'
+              data-id="tomorrow">
+              <view>
+                <!-- <text>明天</text> -->
+                <text>{{packageItems.tomorrow.date}}</text>
+              </view>
+              <view>
+                <text>¥{{packageItems.tomorrow.price}}</text>
+              </view>
+            </view>
+            <view class='order-date-second order-data-{{theDayAfterTomorrow_active_class}}' bindtap='tapToSelectDate' data-booking-date='{{packageItems.theDayAfterTomorrow.date}}' data-booking-full-date='{{packageItems.theDayAfterTomorrow.full_date}}' data-booking-price='{{packageItems.theDayAfterTomorrow.price}}'
+              data-id="theDayAfterTomorrow">
+              <view>
+                <text>{{packageItems.theDayAfterTomorrow.date}}</text>
+              </view>
+              <view>
+                <text>¥{{packageItems.theDayAfterTomorrow.price}}</text>
+              </view>
+            </view>
+
+            <view class='order-date-more'>
+              <view bindtap='tapMoreDate'>
+                <text>更多</text>\n
+                <text>日期</text>
+              </view>
+            </view>
+          </view>
+          <view class="light-grep"></view>
+          <view class='order-num'>
+            <view>
+              <label>门票数量</label>
+            </view>
+            <view class='order-num-ct'>
+              <i bindtap="tapQuantitySub" class="fa fa-minus-square fa-2x order-num-{{btnQuantitySub_class}}" aria-hidden="true"></i>
+              <input type='number' maxlength="2" value='{{bookingTotalQuantity}}' />
+              <i bindtap="tapQuantityAdd" class="fa fa-plus-square fa-2x order-num-{{btnQuantityAdd_class}}" aria-hidden="true"></i>
+            </view>
+          </view>
+
+          <view class="light-grep"></view>
+
+          <view class='user-info'>
+            <view class='user-info-item'>
+              <label for='user-name'>优惠码</label>
+              <input class='input-text' id='coupon' name="coupon" type='text' bindblur="tapCheckCoupon" focus="{{focusCoupon}}" />
+            </view>
+          </view>
+          <block wx:if="{{discount}}">
+          <view class='discount'>
+            <view class='discount-info'>
+              <text>优惠信息： -¥{{discount.amount}} 【{{discount.title}}】</text>
+            </view>
+          </view>
+          </block>
+
+        </view>
+      </view>
+
+
+      <view class='v-item'>
+        <view class='v-item-sub'>
+
+
+          <view class='title'>
+            <label>联系人信息</label>
+          </view>
+          <view class='user-info'>
+            <view class='user-info-item'>
+              <label for='user-name'>联系人 *</label>
+              <input class='input-text' id='user-name' name="contactName" type='text' focus="{{focusName}}" />
+            </view>
+            <view class="light-grep"></view>
+            <view class='user-info-item'>
+              <label for='user-mobile'>手机号码 *</label>
+              <input class='input-text' id='user-mobile' type='text' name="contactMobile" focus="{{focusMobile}}" />
+            </view>
+            <view class="light-grep"></view>
+            <view class='user-info-item'>
+              <label for='user-id'>身份证号 *</label>
+              <input class='input-text' id='user-id' type='text' name="contactIdNumber" focus="{{focusIdNumber}}" />
+            </view>
+            <view class="light-grep"></view>
+            <view class='user-info-item'>
+              <label for='user-remark'>备注</label>
+              <input class='input-text' id='user-remark' type='text' name="remark" />
+            </view>
+          </view>
+
+
+        </view>
+      </view>
+
+      <view class='v-item'>
+        <view class='v-item-sub'>
+        <view class='explain-body'>
+
+          <view class='explain'>
+            <view>
+              <text class='title'>说明</text>
+            </view>
+
+            <view class='explain-more' bindtap='tapExplain' data-show-status='{{showExplain}}'>
+              <text>点击查看</text>\t
+              <block wx:if="{{showExplain}}">
+                <i class="fa fa-caret-down" aria-hidden="true"></i>
+              </block>
+              <block wx:else>
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+              </block>
+            </view>
+          </view>
+
+          <view class='explain-content-{{showExplain}}'>
+            <import src="../../../vendor/wxParse/wxParse.wxml" />
+            <template is="wxParse" data="{{wxParseData:specialDescription.nodes}}" />
+            <template is="wxParse" data="{{wxParseData:unsubscribeRules.nodes}}" />
+            <template is="wxParse" data="{{wxParseData:changeRules.nodes}}" />
+            <template is="wxParse" data="{{wxParseData:importantClause.nodes}}" />
+          </view>
+
+
+        </view>
+        </view>
+      </view>
+
+    </view>
+  </view>
+  <view class='v-buttom'>
+    <view class='payment-info'>
+      <label>应付总额</label>
+      <text class='order-price' style='margin-left:20rpx;'>¥{{payAmount}}</text>
+    </view>
+    <view class='payment-button'>
+      <button formType="submit" class='order-pay'>确定</button>
+      <!-- <label>支付</label> -->
+    </view>
+  </view>
+</form>

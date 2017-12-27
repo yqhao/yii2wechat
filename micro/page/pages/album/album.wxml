@@ -1,0 +1,27 @@
+<!--page/pages/album/album.wxml-->
+
+<view class='index'>
+  <view class='index-bd'>
+    <!-- <block wx:if="{{images}}">
+<block wx:for="{{images}}">
+<view class='image-item'>
+<image lazy-load='true' mode='aspectFit' src='{{item}}'></image>
+</view>
+</block>
+</block>  -->
+
+    <!-- <import src="../../../vendor/wxParse/wxParse.wxml" />
+<template is="wxParse" data="{{wxParseData:imagesPage.nodes}}" /> -->
+
+    <scroll-view data-compid="imageList" scroll-y="true" lower-threshold="10" data-page="{{pageInfo.page}}" bindscrolltolower="pageScrollFunc" style='height:1200rpx;'>
+      <block wx:if="{{imageList}}">
+        <block wx:for="{{imageList}}" wx:key='imageList'>
+          <view class='image-item'>
+            <image data-url='{{item}}' mode='aspectFill' src='{{item}}' bindtap='tapImage'></image>
+          </view>
+        </block>
+      </block>
+    </scroll-view>
+
+  </view>
+</view>

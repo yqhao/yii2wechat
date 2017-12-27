@@ -1,0 +1,45 @@
+<!--page/pages/calendar/calendar.wxml-->
+
+
+<view class="index">
+  <view class='index-bd'>
+    <view class='calendar'>
+      <view class='calendar-item'>
+        <view class='calendar-nav-both'>
+        <block wx:if="{{lastPage == 1}}"><label bindtap='tapFlashPage' data-page='1'>上一月</label></block></view>
+        <view class='calendar-nav-center'><label>2017-11</label></view>
+        <view class='calendar-nav-both'><block wx:if="{{nextPage == 1}}"><label bindtap='tapFlashPage' data-page='2'>下一月</label></block></view>
+      </view>
+      <view class='calendar-item'>
+          <view class='calendar-title'><text>日</text></view>
+          <view class='calendar-title'><text>一</text></view>
+          <view class='calendar-title'><text>二</text></view>
+          <view class='calendar-title'><text>三</text></view>
+          <view class='calendar-title'><text>四</text></view>
+          <view class='calendar-title'><text>五</text></view>
+          <view class='calendar-title'><text>六</text></view>
+          <block wx:for="{{calendar}}" wx:key="calendar">
+            <!-- <block wx:if="{{item.t == 1}}">
+              <view class='calendar-day active select'>
+                <text class='day'>{{item.d}}</text>
+                <text class='price'>{{item.p}}</text>
+              </view>
+            </block>
+            <block wx:else>
+              <view class='calendar-day'>
+                <text class='day'>{{item.d}}</text>
+                <text class='price'>{{item.p}}</text>
+              </view>
+            </block> -->
+
+              <view class='calendar-day {{item.t}}' bindtap='tapSelectDate' data-year='{{item.y}}' data-month='{{item.m}}' data-day='{{item.d}}'>
+                <text class='day {{item.a}}'>{{item.d}}</text>
+                <block wx:if="{{item.a != 'not'}}"><text class='price'>{{item.p}}</text></block>
+              </view>
+            
+          </block>
+        </view>
+    </view>
+
+  </view>
+</view>

@@ -1,0 +1,78 @@
+<import src="/vendor/feedBack/showToast.wxml" />  
+<template is="showToast" data="{{showToast: showToast}}" />  
+<view class='index'>
+
+  <view class='headPortrait'>
+    <view class='headPortrait-img'>
+
+      <block wx:if="{{userInfo}}">
+        <image src='{{userInfo.avatarUrl}}'></image>
+      </block>
+      <block wx:else>
+        <image src='../../../image/none.png'></image>
+      </block>
+    </view>
+    <view class='username'>
+      <block wx:if="{{userInfo}}">
+        <text>{{userInfo.nickName}}</text>
+      </block>
+      <block wx:else>
+        <text>用户</text>
+      </block>
+    </view>
+  </view>
+
+  <view class='index-bd'>
+
+    <view class='v-item'>
+      <view class='v-item-sub'>
+        <view class='v-item-title'>
+          <text>我的订单</text>
+        </view>
+        <view class="light-grep"></view>
+
+        <view class='main-menu'>
+          <navigator class='main-menu-btn' open-type="navigate" url='/page/pages/orderList/orderList?payment_status=0'>
+            <image class='icon-main-btn' src='../../../image/cart.png'></image>
+            <text>待付款</text>
+          </navigator>
+
+          <navigator class='main-menu-btn' open-type="navigate" url='/page/pages/orderList/orderList?payment_status=1'>
+            <image class='icon-main-btn' src='../../../image/ticket.png'></image>
+            <text>已付款</text>
+          </navigator>
+
+          <navigator class='main-menu-btn' open-type="navigate" url='/page/pages/orderList/orderList'>
+            <image class='icon-main-btn' src='../../../image/order.png'></image>
+            <text>全部</text>
+          </navigator>
+
+        </view>
+      </view>
+    </view>
+
+    <!-- <view class='v-item'>
+      <view class='v-item-sub'>
+        <view class='v-item-title'>
+          <text>通用</text>
+        </view>
+        <view class="light-grep"></view>
+        <view class='menu-list'>
+          <view class='menu-list-item'>
+            <image class='icon-menu-btn' src='../../../image/news.png' />
+            <text>系统通知</text>
+          </view>
+          <view class="light-grep"></view>
+          <view class='menu-list-item'>
+            <image class='icon-menu-btn' src='../../../image/safe.png' />
+            <text>账户安全</text>
+          </view>
+        </view>
+      </view>
+    </view> -->
+
+
+  </view>
+
+
+</view>

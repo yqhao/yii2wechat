@@ -1,0 +1,60 @@
+/* page/pages/orderDetail/orderDetail.wxss */
+.light-grep{
+  width: 100%;
+  border-bottom: 1px solid #F2F2F2; 
+}
+.ticket-image{
+  width: 100%;
+  height: 312.5rpx;
+}
+
+.v-item {
+  background-color: white;
+  padding: 8px 0;
+  margin-bottom: 4px;
+}
+
+.v-item-sub {
+  width: 710rpx;
+  margin: 0 auto;
+  padding: 12px 0;
+}
+.package-title{
+  padding: 4px 0;
+}
+.ticket-title{
+  padding: 4px 0;
+}
+.order-info{
+  padding: 6px;
+
+}
+.order-info-item{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  /* border: 1px solid black; */
+  margin: 6px 0;
+}
+.order-info-item-label{
+  width: 200rpx;
+}
+.order-btn{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.order-btn navigator{
+  width: 120rpx;
+  height: 32px;
+  background-color: #ffc730;
+    border-radius:5px;
+    color: white;
+    text-align: center;
+    line-height: 32px;
+    margin: 0 12rpx;
+}
+.price {
+  color: #de5800;
+}

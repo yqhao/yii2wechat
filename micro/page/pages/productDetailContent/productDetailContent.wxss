@@ -1,0 +1,8 @@
+/* page/pages/productDetailContent/productDetailContent.wxss */
+.index-bd {
+  font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+}
+.index-content{
+  width: 730rpx;
+  margin: 0 auto;
+}
