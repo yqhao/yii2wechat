@@ -1,14 +1,14 @@
 {
   "pages": [
-        
-    
+
+
     "page/pages/index/index",
 
     "page/pages/userCenter/userCenter",
     "page/pages/orderDetail/orderDetail",
     "page/pages/calendar/calendar",
-    
     "page/pages/productDetail/productDetail",
+    
     "page/pages/productDetailContent/productDetailContent",
     "page/pages/orderConfirm/orderConfirm",
 

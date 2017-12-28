@@ -7,7 +7,7 @@
       <view class='calendar-item'>
         <view class='calendar-nav-both'>
         <block wx:if="{{lastPage == 1}}"><label bindtap='tapFlashPage' data-page='1'>上一月</label></block></view>
-        <view class='calendar-nav-center'><label>2017-11</label></view>
+        <view class='calendar-nav-center'><label>{{title}}</label></view>
         <view class='calendar-nav-both'><block wx:if="{{nextPage == 1}}"><label bindtap='tapFlashPage' data-page='2'>下一月</label></block></view>
       </view>
       <view class='calendar-item'>

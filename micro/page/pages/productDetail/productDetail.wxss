@@ -1,10 +1,13 @@
 /* page/pages/productDetail/productDetail.wxss */
-.light-grep{
+
+.light-grep {
   width: 100%;
-  border-bottom: 1px solid #F2F2F2; 
+  border-bottom: 1px solid #f2f2f2;
 }
+
 .index-swiper {
-    height: 312.5rpx;
+  height: 312.5rpx;
+  overflow-y: hidden;
 }
 
 .index-swiper image {
@@ -34,8 +37,7 @@
 }
 
 .address {
-  /* height: 20px; */
-  /* text-align: center;
+  /* height: 20px; *//* text-align: center;
   margin:0 auto; *//* line-height: 18px; */
 }
 
@@ -62,6 +64,10 @@
   justify-content: flex-start;
   align-items: center;
   height: 38px;
+}
+
+.description {
+  font-size: 11px;
 }
 
 .ticket-item-info {
@@ -91,17 +97,20 @@
 .ticket-description {
   margin-left: 12px;
 }
-.detail{
+
+.detail {
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-.detail-left{
+
+.detail-left {
   width: 70%;
 }
-.detail-right{
-  width: 30%; 
+
+.detail-right {
+  width: 30%;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -109,35 +118,39 @@
   margin-right: 0;
   font-size: 16px;
 }
-.light-blue{
-  color: #00BFFF;
+
+.light-blue {
+  color: #00bfff;
   margin: 0 12px;
   font-size: 15px;
 }
-.content-title{
+
+.content-title {
   display: flex;
   flex-direction: row;
   align-items: center;
   font-size: 16px;
   margin-top: 12px;
 }
+
 .btn-order {
   color: black;
   /* background-color: rgb( 245, 176, 65 ); */
   background-color: #ffc730;
   width: 60px;
-  height:30px; 
-  border-radius:5px;
+  height: 30px;
+  border-radius: 5px;
   text-align: center;
   font-size: 14px;
   line-height: 30px;
 }
+
 .btn-order-unactive {
   color: black;
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
   width: 60px;
-  height:30px; 
-  border-radius:5px;
+  height: 30px;
+  border-radius: 5px;
   text-align: center;
   font-size: 14px;
   line-height: 30px;

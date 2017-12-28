@@ -207,26 +207,17 @@ Page({
     var currentPage = appInstance.getCurrentPagesFormat();
     if (e.detail.value.contactName == undefined || !e.detail.value.contactName){
       currentPage.setData({ focusName:true});
-      appInstance.showToast({
-        title:'请填写联系人',
-        icon:'loading'
-      });
+      appInstance.toast({ title: '请填写联系人'});
       return false;
     }
     if (e.detail.value.contactMobile == undefined || !e.detail.value.contactMobile) {
       currentPage.setData({ focusMobile: true });
-      appInstance.showToast({
-        title: '请填写手机号',
-        icon: 'loading'
-      });
+      appInstance.toast({ title: '请填写手机号' });
       return false;
     }
     if (e.detail.value.contactIdNumber == undefined || !e.detail.value.contactIdNumber) {
       currentPage.setData({ focusIdNumber: true });
-      appInstance.showToast({
-        title: '请填写身份证号',
-        icon: 'loading'
-      });
+      appInstance.toast({ title: '请填写身份证号' });
       return false;
     }
 

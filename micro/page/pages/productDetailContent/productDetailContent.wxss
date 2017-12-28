@@ -5,4 +5,5 @@
 .index-content{
   width: 730rpx;
   margin: 0 auto;
+  padding-bottom: 12rpx;
 }

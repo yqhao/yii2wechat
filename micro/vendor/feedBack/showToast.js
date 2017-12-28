@@ -38,7 +38,30 @@ function hideToast() {
     });
   }
 }
+
+
+function showModel(obj) {
+  if (typeof obj == 'object' && obj.title) {
+    var that = getCurrentPages()[getCurrentPages().length - 1];//获取当前page实例  
+    obj.isShow = true;//开启toast  
+    that.setData({
+      showModel: obj
+    });
+  } else {
+    console.log('showModel fail:请确保传入的是对象并且title必填');
+  }
+}
+function hideModel() {
+  var that = getCurrentPages()[getCurrentPages().length - 1];//获取当前page实例  
+  if (that.data.showModel) {
+    that.setData({
+      'showModel.isShow': false
+    });
+  }
+}
 module.exports = {
   showToast: showToast,
-  hideToast: hideToast
+  hideToast: hideToast,
+  showModel: showModel,
+  hideModel: hideModel,
 } 

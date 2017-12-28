@@ -2,7 +2,7 @@
 <template is="showToast" data="{{showToast: showToast}}" />  
 <view class="index">
   <view class='index-swiper'>
-    <swiper indicator-dots="true" autoplay="true" interval="3000" duration="1000" style="margin-left:auto;margin-right:auto;margin-top:0;opacity:1;">
+    <swiper indicator-dots="{{indexAds.length > 1}}" autoplay="true" interval="3000" duration="1000" style="margin-left:auto;margin-right:auto;margin-top:0;opacity:1;">
     <!-- <swiper indicator-dots="true" autoplay="true" interval="3000" duration="1000" style="height:320rpx;margin-left:auto;margin-right:auto;margin-top:0;opacity:1;"> -->
       <block wx:key="indexAds" wx:for="{{indexAds}}">
         <swiper-item>
@@ -39,7 +39,7 @@
               <view>
                 <text class='recommand-item-price'>¥{{item.price}}</text>
                 <text>\t起\t</text>
-                <text>{{item.market_price}}</text>
+                <text class='line-through'>{{item.market_price}}</text>
               </view>
             </view>
             

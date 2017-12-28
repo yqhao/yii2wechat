@@ -11,7 +11,8 @@ Page({
     packageInfoDetail: null,
     purchaseNotice: null,
     trafficGuide: null,
-    packageItems: null
+    packageItems: null,
+    showTicktNum:null
   },
   packageId: null,
   /**
@@ -120,5 +121,44 @@ Page({
   },
   tapImage:function(e){
     appInstance.turnToPage('/page/pages/album/album?id=' + this.packageId);
+  },
+  tapTicketDetail:function(e){
+    // console.log();
+    var that = this;
+    var id = e.currentTarget.dataset.id;
+    var currentPage = appInstance.getCurrentPagesFormat();
+    var item = currentPage.data.packageItems[id];
+    //console.log(item);
+    if (id != undefined && item != undefined){
+      var content = "<p style='padding-top: 6px'>" + item.title + "</p>";
+      if (item.detail) {
+        content += "<p style='padding: 12px 0 6px 0'><strong>【 详情 】</strong></p><p>" + item.detail + "</p>";
+      }
+      if (item.special_description){
+        content += "<p style='padding: 12px 0 6px 0'><strong>【 特别说明 】</strong></p><p>" + item.special_description + "</p>";
+      }
+      if (item.unsubscribe_rules) {
+        content += "<p style='padding: 12px 0 6px 0'><strong>【 退订规则 】</strong></p><p>" + item.unsubscribe_rules + "</p>";
+      }
+
+      if (item.change_rules) {
+        content += "<p style='padding: 12px 0 6px 0'><strong>【 改期规则 】</strong></p><p>" + item.change_rules + "</p>";
+      }
+      if (item.important_clause) {
+        content += "<p style='padding: 12px 0 6px 0'><strong>【 重要条款 】</strong></p><p>" + item.important_clause + "</p>";
+      }
+
+      WxParse.wxParse('layerContent', 'html', content , that);
+      appInstance.modelShow({
+        title: '商品说明',
+        cover: item.cover,
+        content: currentPage.data.layerContent.nodes
+      });
+    }
+
+
+  },
+  layerModelClose:function(e){
+    appInstance.modelHide();
   }
 })

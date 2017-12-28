@@ -54,6 +54,7 @@
    width: 280rpx; 
   height: 210rpx;
   /* margin: 0 auto; */
+  overflow-y: hidden;
 }
 .recommand-item-left image{
   width: 100%;
@@ -82,9 +83,16 @@
 }
 .recommand-item-saleout{
   height: 50rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
 }
 .recommand-item-price{
   font-size: 18px;
   /* color: #FFBF00; */
   color: #de5800;
+}
+.line-through{
+  text-decoration:line-through; 
 }

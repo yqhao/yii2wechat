@@ -729,5 +729,10 @@ App({
   toast:function(params){
     feedbackApi.showToast(params);
   },
-
+  modelShow: function (params) {
+    feedbackApi.showModel(params);
+  },
+  modelHide: function () {
+    feedbackApi.hideModel();
+  },
 })

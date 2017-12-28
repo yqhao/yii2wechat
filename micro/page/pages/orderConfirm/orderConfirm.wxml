@@ -1,4 +1,5 @@
-<!--page/pages/orderConfirm/orderConfirm.wxml-->
+<import src="/vendor/feedBack/showToast.wxml" />  
+<template is="showToast" data="{{showToast: showToast}}" />  
 <form bindsubmit="formSubmit">
   <view class='index'>
     <view class='index-bd'>

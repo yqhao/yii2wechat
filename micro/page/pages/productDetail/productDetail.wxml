@@ -1,3 +1,6 @@
+<import src="/vendor/feedBack/showToast.wxml" />  
+<template is="showModel" data="{{showModel: showModel}}" />  
+
 <view class='index'>
   <block wx:if='{{packageInfo.cover}}'>
     <view class='index-swiper'>
@@ -9,11 +12,12 @@
     <view class='v-item'>
       <view class='v-item-sub'>
         <text class='title'>{{packageInfo.title}}</text>
-        <block wx:if="{{packageInfo.description}}">
-          <text class='title'>\t\t-\t\t</text>
-          <text class='description'>{{packageInfo.description}}</text>
-        </block>
       </view>
+      <block wx:if="{{packageInfo.description}}">
+      <view class='v-item-sub'>
+          <text class='description'>{{packageInfo.description}}</text>
+      </view>
+      </block>
     </view>
 
     <block wx:if="{{packageInfo.address}}">
@@ -45,7 +49,7 @@
                 <view class='ticket-item-info'>
                   <text class='ticket-price'>¥{{item.price}}</text>\t\t
                   <text>起</text>
-                  <text class='ticket-description'>套餐说明</text>
+                  <text class='ticket-description' bindtap='tapTicketDetail' data-id='{{index}}'>商品说明</text>
                   <i class="fa fa-caret-down" aria-hidden="true"></i>
                 </view>
 

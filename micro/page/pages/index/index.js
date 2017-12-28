@@ -26,10 +26,10 @@ Page({
     var that = this;
     // 顶部广告
     appInstance.sendRequest({
-      'url': '/api/v1/widget-carousel?expand=items', 'data': [],
+      'url': '/api/v1/widget-carousel?expand=activeItems', 'data': [],
       'complete': function (res) {
         if (res.status == 1) {
-          that.setData({ indexAds: res.data[0].items });
+          that.setData({ indexAds: res.data[0].activeItems });
           //  console.log(that.indexAds)
         }
       }

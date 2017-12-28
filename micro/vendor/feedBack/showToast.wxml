@@ -1,11 +1,39 @@
-    <template name="showToast">  
-      <block wx:if="{{showToast.isShow? showToast.isShow: false}}">  
-        <view class="toast-bg" wx:if="{{showToast.mask==false? false : true}}"></view>  
-        <view class="toast-center">  
-          <view class="toast">  
-            <image class="toast-icon" src="{{showToast.icon}}" mode="scaleToFill" wx:if="{{showToast.icon}}" />  
-            <text class="toast-text">{{showToast.title}}</text>  
-          </view>  
-        </view>  
-      </block>  
-    </template>  
+<template name="showToast">
+  <block wx:if="{{showToast.isShow? showToast.isShow: false}}">
+    <view class="toast-bg" wx:if="{{showToast.mask==false? false : true}}"></view>
+    <view class="toast-center">
+      <view class="toast">
+        <image class="toast-icon" src="{{showToast.icon}}" mode="scaleToFill" wx:if="{{showToast.icon}}" />
+        <text class="toast-text">{{showToast.title}}</text>
+      </view>
+    </view>
+  </block>
+</template>
+
+<template name="showModel">
+  <block wx:if="{{showModel.isShow? showModel.isShow: false}}">
+    <view class="toast-bg" wx:if="{{showModel.mask==false? false : true}}"></view>
+    <view class="layer-model-center">
+      <view class="layer-model">
+        <view class="layer-model-title">
+          <text class="layer-model-title-text">{{showModel.title}}</text>
+          <image class="layer-close" src="/image/close.png" bindtap='layerModelClose' />
+        </view>
+        <block wx:if="{{showModel.cover}}">
+          <view class="layer-model-cover">
+            <image class="layer-model-cover" src="{{showModel.cover}}" mode="scaleToFill" wx:if="{{showModel.cover}}" />
+          </view>
+        </block>
+        <view class="layer-model-content">
+
+          <scroll-view scroll-y class='layer-model-content-text{{showModel.cover?"-min":""}}'>
+            <import src="../wxParse/wxParse.wxml" />
+            <template is="wxParse" data="{{wxParseData:showModel.content}}" />
+          </scroll-view>
+        </view>
+
+
+      </view>
+    </view>
+  </block>
+</template>
