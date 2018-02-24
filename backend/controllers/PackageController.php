@@ -112,6 +112,7 @@ class PackageController extends Controller
         $categories = PackageCategory::find()->noParents()->all();
         $categories = ArrayHelper::map($categories, 'id', 'title');
 
+        $model->updated_at = time();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {

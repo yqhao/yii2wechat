@@ -100,7 +100,7 @@ use yii\bootstrap\ActiveForm;
     <?php echo $form->field($model, 'detail')->widget(
         \yii\imperavi\Widget::className(),
         [
-            'plugins' => ['fullscreen', 'fontcolor', 'video'],
+            'plugins' => ['fullscreen', 'fontcolor', 'video','clips','fontsize','fontfamily','table','textdirection'],
             'options' => [
                 'lang' => 'zh_cn',
                 'minHeight' => 400,

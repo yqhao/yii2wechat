@@ -74,7 +74,7 @@ class PackageItem extends \yii\db\ActiveRecord
     {
         return [
             [['package_id', 'sales', 'stock', 'weight', 'is_published', 'created_at', 'updated_at', 'last_update'], 'integer'],
-            [['title','package_id','price'], 'required'],
+            [['title','package_id','price', 'stock'], 'required'],
             [['price','market_price','weekend_price','holiday_price', 'max_can_use_integral', 'integral'], 'number'],
             [['content', 'detail', 'special_description', 'unsubscribe_rules', 'change_rules', 'important_clause'], 'string'],
             [['title', 'cover', 'description', 'base_url'], 'string', 'max' => 255],
@@ -138,19 +138,30 @@ class PackageItem extends \yii\db\ActiveRecord
     }
 
     public $_weekend = [0,6];
-    public function getPriceByDate($time){
+    public function getRealPrice($time){
         $price = $this->price;
         if(in_array(date('w',$time),$this->_weekend) && $this->price_rise_at_weekend){
             $price = PackageItem::getPriceByFormula($price,$this->price_rise_at_weekend);
         }
-        return ['full_date'=>date('Y-m-d',$time),'date'=>date('m-d',$time),'price'=>$price];
+        return $price;
+    }
+    public function getPriceByDate($time){
+        return [
+            'full_date'=>date('Y-m-d',$time),
+            'date'=>date('m-d',$time),
+            'price'=>$this->getRealPrice($time)
+        ];
     }
     /**
      * @return string
      */
     public function getCover()
     {
-        return rtrim($this->base_url, '/') . '/' . ltrim($this->cover, '/');
+        $url = '';
+        if(ltrim($this->cover, '/')){
+            $url = rtrim($this->base_url, '/') . '/' . ltrim($this->cover, '/');
+        }
+        return  $url;
     }
 
     public static function getPriceByFormula($price,$formula){

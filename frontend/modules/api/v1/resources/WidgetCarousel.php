@@ -18,7 +18,7 @@ class WidgetCarousel extends \common\models\WidgetCarousel implements Linkable
 
     public function extraFields()
     {
-        return ['items'];
+        return ['items','activeItems'];
     }
 
     /**

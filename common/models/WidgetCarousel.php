@@ -86,6 +86,13 @@ class WidgetCarousel extends ActiveRecord
             ->select(["id","base_url","path","url"])
             ->orderBy(['order'=>SORT_ASC]);
     }
+    public function getActiveItems()
+    {
+        return $this->hasMany(WidgetCarouselItem::className(), ['carousel_id' => 'id'])
+            ->select(["id","base_url","path","url"])
+            ->andWhere(['status'=>WidgetCarousel::STATUS_ACTIVE])
+            ->orderBy(['order'=>SORT_ASC]);
+    }
     /**
      * @return WidgetCarouselQuery
      */

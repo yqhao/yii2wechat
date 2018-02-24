@@ -89,6 +89,7 @@ class Package extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['title', 'category_id','price'], 'required'],
             [['category_id', 'sales', 'is_recommend', 'stock', 'weight', 'goods_type', 'express_rule_id', 'is_seckill', 'seckill_status', 'is_group_buy', 'is_published', 'created_at', 'updated_at', 'last_update', 'province_id', 'city_id', 'county_id'], 'integer'],
             [['price', 'market_price', 'max_can_use_integral', 'integral'], 'number'],
             [['content', 'detail', 'images', 'purchase_notice', 'traffic_guide'], 'string'],

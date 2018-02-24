@@ -47,7 +47,7 @@ class PackageController extends ApiController
     {
         $params = \Yii::$app->request->queryParams;
         return new ActiveDataProvider(array(
-            'query' => Package::find()->published()->filterCategory($params),
+            'query' => Package::find()->published()->filterCategory($params)->orderBy(['updated_at' => SORT_DESC]),
             //'pagination' => ['pageSize' => '2']
         ));
     }

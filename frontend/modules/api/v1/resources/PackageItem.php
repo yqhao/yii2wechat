@@ -13,7 +13,11 @@ class PackageItem extends \common\models\PackageItem implements Linkable
     public function fields()
     {
         return [
-            'id', 'package_id', 'title','cover', 'price','market_price','weekend_price','holiday_price', 'sales','stock',
+            'id', 'package_id', 'title',
+            'cover' => function($model){
+                return $model->getCover();
+            },
+	    'price','market_price','weekend_price','holiday_price', 'sales','stock',
             'detail',
             'special_description',
             'unsubscribe_rules',

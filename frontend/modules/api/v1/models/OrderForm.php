@@ -29,6 +29,7 @@ class OrderForm extends Model
     public $contact_name;
     public $contact_mobile;
     public $remark;
+    public $total_pay_amount;
 
     private $model;
 
@@ -121,7 +122,7 @@ class OrderForm extends Model
                 $model->package_title = $package->title;
                 $model->user_id = \Yii::$app->user->identity->getUserId();
                 $model->total_quantity = $total_quantity;
-                $model->total_price = ($total_quantity * $packageItem->price);
+                $model->total_price = ($total_quantity * $packageItem->getRealPrice(strtotime($this->use_date)));
                 $model->created_at = time();
                 $model->status = Order::STATUS_CREATED;
                 
@@ -181,7 +182,7 @@ class OrderForm extends Model
                 }
                 $this->order_id = $model->id;
                 $this->order_code = $model->code;
-
+                $this->total_pay_amount = $model->payment_price;
 
             }
 

@@ -6,9 +6,12 @@ use common\models\Coupon;
 use common\models\OrderItem;
 use common\models\Package;
 use common\models\PackageItem;
+use common\models\UserWechat;
+use frontend\modules\api\v1\components\Wechat;
 use frontend\modules\api\v1\filters\BearerAuth;
 use frontend\modules\api\v1\models\OrderForm;
 use frontend\modules\api\v1\resources\Order;
+
 
 use Yii;
 use yii\base\Exception;
@@ -118,12 +121,24 @@ class OrderController extends ApiController
 
             $transaction->commit();
 
-            return ["data"=>$model];
+//            return ["data"=>$model];
         } catch (Exception $e) {
             $transaction->rollBack();
             throw new HttpException(422,$e->getMessage());
 //            return ["status"=>0,"message"=>$e->getMessage(),'trace'=>$e->getTraceAsString()];
         }
+
+        // 统一下单结果处理
+//        $user = UserWechat::findOne(['user_id'=>\Yii::$app->getUser()->getId()]);
+//        if(empty($user)){
+//            throw new HttpException(422,'用户不存在'.$userId);
+//        }
+        $paymentParams = null;
+        if($model->total_pay_amount > 0){
+            $paymentParams = \GuzzleHttp\json_decode(Wechat::unifiedOrder(\Yii::$app->getUser()->getId(),$model->order_code,$model->package_id,($model->total_pay_amount*100)));
+        }
+
+        return ["data"=>$model,'paymentParams'=>$paymentParams];
     }
 
     public function actionCheckCoupon(){
@@ -321,12 +336,13 @@ class OrderController extends ApiController
             $runTime = $startTime;
             for($i=1;$i<=42;$i++){
                 $dateInfo = getdate($runTime);
+                $t_class = $dateInfo[0] == $selectTime ? 'select' : ($dateInfo['mon'] != $firstDayDateInfo['mon'] ? 'other' : '');
                 $calendar[$i] = [
                     'y' => $dateInfo['year'],//year
                     'm' => $dateInfo['mon'],//month
                     'w' => $dateInfo['wday'],//weekDay
                     'd'=> $dateInfo['mday'],//day
-                    't'=> $dateInfo[0] == $selectTime ? 'select' : '',//isToday
+                    't'=> $t_class,//isToday
                     'a' => $dateInfo[0] >= $todayTime ? '' : 'not',//isAllowed
                     'p' => in_array($dateInfo['wday'],[0,6]) ? $weekendPrice : $price//price
                 ];
