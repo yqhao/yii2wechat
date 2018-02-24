@@ -3,7 +3,7 @@
 
 
     "page/pages/index/index",
-
+"page/pages/pay/pay",
     "page/pages/userCenter/userCenter",
     "page/pages/orderDetail/orderDetail",
     "page/pages/calendar/calendar",
@@ -13,7 +13,7 @@
     "page/pages/orderConfirm/orderConfirm",
 
     "page/pages/orderSuccess/orderSuccess",
-    "page/pages/pay/pay",
+    
     "page/pages/orderList/orderList",
     "page/pages/album/album"
   ],

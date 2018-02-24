@@ -1,6 +1,7 @@
 // page/pages/orderConfirm/orderConfirm.js
 var appInstance = getApp();
 var WxParse = require('../../../vendor/wxParse/wxParse.js');
+var util = require('../../../util/util');
 Page({
 
   /**
@@ -205,9 +206,14 @@ Page({
   },
   formSubmit: function (e) {
     var currentPage = appInstance.getCurrentPagesFormat();
-    if (e.detail.value.contactName == undefined || !e.detail.value.contactName){
-      currentPage.setData({ focusName:true});
-      appInstance.toast({ title: '请填写联系人'});
+    // if (e.detail.value.coupon == undefined || !e.detail.value.coupon) {
+    //   currentPage.setData({ focusCoupon: true });
+    //   appInstance.toast({ title: '请填写优惠码' });
+    //   return false;
+    // }
+    if (e.detail.value.contactName == undefined || !e.detail.value.contactName) {
+      currentPage.setData({ focusName: true });
+      appInstance.toast({ title: '请填写联系人' });
       return false;
     }
     if (e.detail.value.contactMobile == undefined || !e.detail.value.contactMobile) {
@@ -253,7 +259,21 @@ Page({
           //   content: '下单成功 '
           // })
           // appInstance.turnToPage('/page/pages/orderSuccess/orderSuccess');
-          appInstance.turnToPage('/page/pages/pay/pay?id=' + res.data.order_id);
+
+          var url_pay = '/page/pages/pay/pay?id=' + res.data.order_id + '&amount=' + res.data.total_pay_amount ;
+
+          if (res.paymentParams == undefined || res.paymentParams == '' || res.paymentParams == null) {
+            url_pay += '&type=no';
+            // appInstance.showModal({
+            //   title: '统一下单失败!',
+            //   content: message
+            // });
+            // return false;
+          }else{
+            url_pay += '&type=wx&' + util.json2Form(res.paymentParams);
+          }
+
+          appInstance.turnToPage(url_pay);
         }
       },
       complete: function (res) {
@@ -272,6 +292,9 @@ Page({
     })
 
   },
+
+  
+
 
   tapExplain:function(e){
     var currentPage = appInstance.getCurrentPagesFormat();

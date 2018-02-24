@@ -88,7 +88,12 @@
             <view class='order-info-item-value'>
               <view class='order-btn'>
                 <block wx:if="{{orderInfo.order.payment_status != 1}}">
-                  <navigator open-type="navigate" url='/page/pages/pay/pay?id={{orderInfo.order.id}}'>付款</navigator>
+                  <block wx:if="{{orderInfo.order.payment_price <= 0}}">
+                    <navigator open-type="navigate" url='/page/pages/pay/pay?id={{orderInfo.order.id}}&type=no'>付款</navigator>
+                  </block>
+                  <block wx:else>
+                  </block>
+
                   <navigator bindtap="orderCancel" data-oid='{{orderInfo.order.id}}' url='/page/pages/userCenter/userCenter'>取消</navigator>
                   <!-- <navigator>修改</navigator> -->
                 </block>

@@ -91,17 +91,17 @@
           <view class='user-info'>
             <view class='user-info-item'>
               <label for='user-name'>联系人 *</label>
-              <input class='input-text' id='user-name' name="contactName" type='text' focus="{{focusName}}" />
+               <input class='input-text' id='user-name' name="contactName" type='text' focus="{{focusName}}" /> 
             </view>
             <view class="light-grep"></view>
             <view class='user-info-item'>
               <label for='user-mobile'>手机号码 *</label>
-              <input class='input-text' id='user-mobile' type='text' name="contactMobile" focus="{{focusMobile}}" />
+               <input class='input-text' id='user-mobile' type='text' name="contactMobile" focus="{{focusMobile}}" /> 
             </view>
             <view class="light-grep"></view>
             <view class='user-info-item'>
               <label for='user-id'>身份证号 *</label>
-              <input class='input-text' id='user-id' type='text' name="contactIdNumber" focus="{{focusIdNumber}}" />
+               <input class='input-text' id='user-id' type='text' name="contactIdNumber" focus="{{focusIdNumber}}" /> 
             </view>
             <view class="light-grep"></view>
             <view class='user-info-item'>

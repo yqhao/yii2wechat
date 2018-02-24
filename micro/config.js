@@ -14,7 +14,9 @@ var config = {
 };
 
 if (env == 'dev') {
-  var api_host = "api.weapp.dev";
+  //var api_host = "api.weapp.dev";
+  var api_host = "api.wechat.dev";
+
   var config = {
     api_host,
     indexAdUrl: `http://${api_host}/api/v1/widget-carousel?expand=items`,
