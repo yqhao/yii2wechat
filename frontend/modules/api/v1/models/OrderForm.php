@@ -30,6 +30,7 @@ class OrderForm extends Model
     public $contact_mobile;
     public $remark;
     public $total_pay_amount;
+    public $product_name;
 
     private $model;
 
@@ -43,7 +44,7 @@ class OrderForm extends Model
             [[ 'coupon_code','order_code','use_date','contact_id_number'], 'string', 'max' => 32],
             [[ 'contact_name'], 'string', 'max' => 64],
 //            [[ 'contact_mobile'], 'string', 'max' => 16],
-            [[ 'remark'], 'string', 'max' => 255],
+            [[ 'remark','product_name'], 'string', 'max' => 255],
             [[ 'order_id'], 'integer', 'max' => 255],
             ['contact_mobile','\common\validators\MobileValidator','on'=>'create','message'=>'手机号码格式有误，请重新输入'],
         ];
@@ -66,6 +67,7 @@ class OrderForm extends Model
             'contact_name' => Yii::t('common', 'Contact Name'),
             'contact_mobile' => Yii::t('common', 'Contact Mobile'),
             'remark' => Yii::t('common', 'Remark'),
+            'product_name' => Yii::t('common', 'Product Name'),
         ];
     }
 
@@ -183,6 +185,7 @@ class OrderForm extends Model
                 $this->order_id = $model->id;
                 $this->order_code = $model->code;
                 $this->total_pay_amount = $model->payment_price;
+                $this->product_name = $package->title.'-'.$packageItem->title;
 
             }
 

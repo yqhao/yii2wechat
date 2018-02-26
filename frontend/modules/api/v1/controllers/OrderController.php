@@ -135,7 +135,7 @@ class OrderController extends ApiController
 //        }
         $paymentParams = null;
         if($model->total_pay_amount > 0){
-            $paymentParams = \GuzzleHttp\json_decode(Wechat::unifiedOrder(\Yii::$app->getUser()->getId(),$model->order_code,$model->package_id,($model->total_pay_amount*100)));
+            $paymentParams = \GuzzleHttp\json_decode(Wechat::unifiedOrder(\Yii::$app->getUser()->getId(),$model->order_code,$model->product_name,$model->package_id,($model->total_pay_amount*100)));
         }
 
         return ["data"=>$model,'paymentParams'=>$paymentParams];

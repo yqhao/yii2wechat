@@ -77,11 +77,11 @@ class Wechat
     }
 
 
-    public static function unifiedOrder($openid,$orderCode,$productId,$totalFee,$clientIp=''){
+    public static function unifiedOrder($openid,$orderCode,$productName,$productId,$totalFee,$clientIp=''){
         $clientIp = $clientIp ? $clientIp : \Yii::$app->getRequest()->getUserIP();
         $obj = new WxPayUnifiedOrder();
 
-        $obj->SetBody('澳雪旅游下单'.$orderCode);
+        $obj->SetBody($productName);
         $obj->SetOut_trade_no($orderCode);//商户订单号
         $obj->SetTotal_fee((int)$totalFee);//总金额
         $obj->SetSpbill_create_ip($clientIp);

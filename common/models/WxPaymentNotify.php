@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use yii\base\Exception;
+use yii\log\Logger;
 
 /**
  * This is the model class for table "wx_payment_notify".
@@ -77,6 +78,12 @@ class WxPaymentNotify extends \yii\db\ActiveRecord
 
     public static function handleOrder($data,$appid,$mch_id){
         // todo insert payment
+        $record = WxPaymentNotify::findOne(['transaction_id' => $data['transaction_id'],'handle_status'=>self::HANDLE_SUCCESS]);
+        if(!empty($record)){
+            \Yii::getLogger()->log('回调重复请求transaction_id:'.$data['transaction_id'],Logger::LEVEL_ERROR);
+            return true;
+        }
+
         $model = new WxPaymentNotify();
         $data['created_at'] = time();
         $data['response'] = json_encode($data);
