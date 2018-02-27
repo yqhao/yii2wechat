@@ -149,32 +149,19 @@ App({
         'content-type': 'application/json'
       },
       success: function (res) {
+        that.hideToast();
         // console.log('----请求失败success');
         if (res.statusCode == undefined || res.statusCode != 200) {
+          let message = res.message;
 
-          that.hideToast();
-
-          if (res.data.status) {
-            // if (res.data.status == 401 || res.data.status == 2) {
-            //   // 未登录
-            //   that.login();
-            //   return;
-            // }
-            if (res.data.status != 1) {
-              that.showModal({
-                content: '' + res.data.message
-              });
-              return;
-            }
+          if (res.data && res.data.status != 1 && res.data.message) {
+            message = res.data.message;
           }
 
-          
           that.showModal({
-            content: '' + res.message
+            content: message
           });
-          // console.log('----request error-----');
-          // console.log(res);
-          return;
+          return;//终止执行,应该改为提示页面显示
         }
         
         //console.log(requestUrl);

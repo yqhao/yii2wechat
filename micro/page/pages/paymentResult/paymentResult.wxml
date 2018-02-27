@@ -1,0 +1,36 @@
+<!--page/pages/paymentResult/paymentResult.wxml-->
+
+<view class='index'>
+  <view class='index-bd'>
+    <view class='index-content'>
+      <view class='icon'>
+        <block wx:if='{{status=="success"}}'>
+          <icon type="success" size="90" />
+        </block>
+        <block wx:else>
+          <icon type="warn" size="90" />
+        </block>
+      </view>
+      <view class='message'>
+        <block wx:if='{{status=="success"}}'>
+          <text>付款成功!</text>
+        </block>
+         <block wx:elif='{{message}}'>
+          <text>{{message}}</text>
+        </block> 
+        <block wx:else>
+          <text>付款失败!</text>
+        </block>
+      </view>
+      <view class='button'>
+        <navigator open-type="reLaunch" url='/page/pages/index/index'>返回首页</navigator>
+        <text>|</text>
+        <block wx:if='{{status=="success"}}'>
+          <navigator open-type="reLaunch" url='/page/pages/orderDetail/orderDetail?id={{orderId}}'>查看订单</navigator>
+        </block>
+
+      </view>
+
+    </view>
+  </view>
+</view>

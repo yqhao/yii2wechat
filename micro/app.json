@@ -1,9 +1,9 @@
 {
   "pages": [
-
-
     "page/pages/index/index",
-"page/pages/pay/pay",
+    "page/pages/pay/pay",
+    "page/pages/payment/payment",
+    "page/pages/paymentResult/paymentResult",
     "page/pages/userCenter/userCenter",
     "page/pages/orderDetail/orderDetail",
     "page/pages/calendar/calendar",

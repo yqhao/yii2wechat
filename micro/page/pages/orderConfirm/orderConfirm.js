@@ -231,6 +231,7 @@ Page({
     
 
     let params = {
+      'version':'2',
       'package_id': currentPage.data.packageItems.package_id,
       'package_item_id': currentPage.data.packageItems.id,
       'total_quantity': currentPage.data.bookingTotalQuantity,
@@ -255,25 +256,17 @@ Page({
       success: function (res) {
         // console.log(res);
         if (res != undefined && res.status == 1) {
-          // appInstance.showModal({
-          //   content: '下单成功 '
-          // })
-          // appInstance.turnToPage('/page/pages/orderSuccess/orderSuccess');
-
-          var url_pay = '/page/pages/pay/pay?id=' + res.data.order_id + '&amount=' + res.data.total_pay_amount ;
-
-          if (res.paymentParams == undefined || res.paymentParams == '' || res.paymentParams == null) {
-            url_pay += '&type=no';
-            // appInstance.showModal({
-            //   title: '统一下单失败!',
-            //   content: message
-            // });
-            // return false;
+          if (params.version == 2){
+            appInstance.turnToPage('/page/pages/payment/payment?orderId=' + res.data.order_id,true);
           }else{
-            url_pay += '&type=wx&' + util.json2Form(res.paymentParams);
+            var url_pay = '/page/pages/pay/pay?id=' + res.data.order_id + '&amount=' + res.data.total_pay_amount;
+            if (res.paymentParams == undefined || res.paymentParams == '' || res.paymentParams == null) {
+              url_pay += '&type=no';
+            } else {
+              url_pay += '&type=wx&' + util.json2Form(res.paymentParams);
+            }
+            appInstance.turnToPage(url_pay);
           }
-
-          appInstance.turnToPage(url_pay);
         }
       },
       complete: function (res) {

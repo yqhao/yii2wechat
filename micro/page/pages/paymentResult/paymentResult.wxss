@@ -1,0 +1,39 @@
+.index-bd {
+  font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+}
+
+.index-content{
+  height: 600rpx;
+  width: 670rpx;
+  margin: 40rpx auto;
+   background-color: white; 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.icon{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  padding: 80rpx 0 20rpx 0;
+
+   /* background-color: yellow;  */
+}
+.message{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 20rpx 0 40rpx 0;
+}
+.button{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 20rpx 0 20rpx 0;
+  font-size: 12px;
+}
+.button navigator{
+  margin: 0 auto;
+  
+}
