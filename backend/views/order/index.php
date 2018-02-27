@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="order-index">
 
-    <?php  // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
 
 <!--    <p>-->
 <!--        --><?php //echo Html::a(Yii::t('backend', 'Create {modelClass}', [
@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php echo GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+//        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -69,15 +69,36 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'status',
                 'enum' => \common\models\Order::status()
             ],
+//            [
+//                'class' => \common\grid\EnumColumn::className(),
+//                'attribute' => 'payment_type',
+//                'enum' => \common\models\Order::paymentTypes()
+//            ],
+//            [
+//                'class' => \common\grid\EnumColumn::className(),
+//                'attribute' => 'payment_status',
+//                'enum' => \common\models\Order::paymentStatus()
+//            ],
             [
-                'class' => \common\grid\EnumColumn::className(),
                 'attribute' => 'payment_type',
-                'enum' => \common\models\Order::paymentTypes()
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \common\models\Order::getPaymentTypeForPage($model->payment_type);
+                }
             ],
             [
-                'class' => \common\grid\EnumColumn::className(),
                 'attribute' => 'payment_status',
-                'enum' => \common\models\Order::paymentStatus()
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \common\models\Order::getPaymentStatusForPage($model->payment_status);
+                }
+            ],
+            [
+                'attribute' => 'refund_status',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \common\models\Order::getRefundStatusForPage($model->refund_status);
+                }
             ],
              'coupon_code',
             // 'contact_name',

@@ -12,15 +12,18 @@ use common\models\Order;
  */
 class OrderSearch extends Order
 {
+    public $created_at_start;
+    public $created_at_end;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'user_id', 'package_id', 'total_quantity', 'created_at', 'updated_at', 'status', 'payment_type', 'payment_status', 'after_sale_status'], 'integer'],
+            [['id', 'user_id', 'package_id', 'total_quantity', 'created_at', 'updated_at', 'status', 'payment_type', 'payment_status', 'after_sale_status','refund_status'], 'integer'],
             [['code', 'package_title', 'discount_info', 'coupon_code', 'contact_name', 'contact_mobile', 'remark'], 'safe'],
             [['total_price', 'total_sale_price', 'payment_price', 'discount'], 'number'],
+            [['created_at_start', 'created_at_end'], 'string', 'max' => 26],
         ];
     }
 
@@ -68,7 +71,10 @@ class OrderSearch extends Order
             'payment_type' => $this->payment_type,
             'payment_status' => $this->payment_status,
             'after_sale_status' => $this->after_sale_status,
+            'refund_status' => $this->refund_status,
         ]);
+        if($this->created_at_start)$query->andFilterWhere([">=",'created_at',strtotime($this->created_at_start)]);
+        if($this->created_at_end)$query->andFilterWhere(["<=",'created_at',strtotime($this->created_at_end)]);
 
         $query->andFilterWhere(['like', 'code', $this->code])
             ->andFilterWhere(['like', 'package_title', $this->package_title])

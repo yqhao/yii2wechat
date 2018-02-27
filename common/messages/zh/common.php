@@ -131,5 +131,6 @@ return [
     'Purchase Notice' => '购买须知',
     'Traffic Guide' => '交通指引',
     'Not Active' => '禁用',
-    'Logged At' => '登录时间'
+    'Logged At' => '登录时间',
+    'Refund Status' => '退款状态'
 ];

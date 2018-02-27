@@ -30,14 +30,21 @@ use Yii;
  * @property string $contact_mobile
  * @property string $remark
  * @property integer $after_sale_status
+ * @property integer $refund_status
  */
 class Order extends \yii\db\ActiveRecord
 {
     const STATUS_CANCEL = 0;//已取消
     const STATUS_CREATED = 1;//新订单
 
+    const REFUND_STATUS_DEFAULT = 0;//未申请
+    const REFUND_STATUS_APPLIED = 1;//已申请退款
+    const REFUND_STATUS_SUCCESS = 2;//退款成功
+    const REFUND_STATUS_FAIL = 3;//退款失败
+
     const PAYMENT_TYPE_DEFAULT = 0;//默认
     const PAYMENT_TYPE_WX = 1;//微信支付
+
     const PAYMENT_STATUS_NO = 0; //未支付
     const PAYMENT_STATUS_YES = 1; //已支付
 
@@ -80,7 +87,7 @@ class Order extends \yii\db\ActiveRecord
         return [
             [[ 'package_id', 'total_quantity', 'coupon_code', 'contact_name', 'remark'], 'required','on' => 'add'],
             [['code', 'package_title', 'user_id', 'package_id', 'total_quantity', 'total_price', 'created_at'], 'required'],
-            [['user_id', 'package_id', 'total_quantity', 'created_at', 'updated_at', 'status', 'payment_type', 'payment_status', 'after_sale_status'], 'integer'],
+            [['user_id', 'package_id', 'total_quantity', 'created_at', 'updated_at', 'status', 'payment_type', 'payment_status', 'after_sale_status','refund_status'], 'integer'],
             [['total_price','total_sale_price', 'payment_price', 'discount'], 'number'],
             [['discount_info','remark','package_title'], 'string'],
             [['code', 'coupon_code','contact_id_number'], 'string', 'max' => 32],
@@ -118,6 +125,7 @@ class Order extends \yii\db\ActiveRecord
             'contact_mobile' => Yii::t('common', 'Contact Mobile'),
             'remark' => Yii::t('common', 'Remark'),
             'after_sale_status' => Yii::t('common', 'After Sale Status'),
+            'refund_status' => Yii::t('common', 'Refund Status'),
         ];
     }
     /**
@@ -182,4 +190,75 @@ class Order extends \yii\db\ActiveRecord
         ];
         return $key !== null ? (isset($ary[$key]) ? $ary[$key] : null) : $ary;
     }
+
+    public static function refundStatus($key=null){
+        $ary = [
+            static::REFUND_STATUS_DEFAULT => '未申请',
+            static::REFUND_STATUS_APPLIED => '已申请',
+            static::REFUND_STATUS_SUCCESS => '退款成功',
+            static::REFUND_STATUS_FAIL => '退款失败',
+        ];
+        return $key !== null ? (isset($ary[$key]) ? $ary[$key] : null) : $ary;
+    }
+    public static function getRefundStatusForPage($key){
+        $span = '';
+        $label = static::refundStatus($key);
+        switch ($key){
+            case static::REFUND_STATUS_DEFAULT:
+                $span = '<span class="label label-primary">'.$label.'</span>';
+                break;
+            case static::REFUND_STATUS_APPLIED:
+                $span = '<span class="label label-warning">'.$label.'</span>';
+                break;
+            case static::REFUND_STATUS_SUCCESS:
+                $span = '<span class="label label-success">'.$label.'</span>';
+                break;
+            case static::REFUND_STATUS_FAIL:
+                $span = '<span class="label label-danger">'.$label.'</span>';
+                break;
+            default: break;
+        }
+        return $span;
+    }
+    public static function getPaymentStatusForPage($key){
+        //success warning primary danger
+        $span = '';
+        $label = static::paymentStatus($key);
+        switch ($key){
+            case static::PAYMENT_STATUS_NO:
+                $span = '<span class="label label-primary">'.$label.'</span>';
+                break;
+            case static::PAYMENT_STATUS_YES:
+                $span = '<span class="label label-success">'.$label.'</span>';
+                break;
+            default: break;
+        }
+        return $span;
+    }
+    public static function getPaymentTypeForPage($key){
+        //success warning primary danger
+        $span = '';
+        $label = static::paymentTypes($key);
+        switch ($key){
+            case static::PAYMENT_TYPE_DEFAULT:
+                $span = '<span class="label label-primary">'.$label.'</span>';
+                break;
+            case static::PAYMENT_TYPE_WX:
+                $span = '<span class="label label-success">'.$label.'</span>';
+                break;
+            default: break;
+        }
+        return $span;
+    }
+    /**
+     * ALTER TABLE `order`
+    ADD COLUMN `refund_status`  tinyint(1) UNSIGNED NULL DEFAULT 0 AFTER `after_sale_status`,
+    ADD INDEX (`code`) ,
+    ADD INDEX (`user_id`) ,
+    ADD INDEX (`status`) ,
+    ADD INDEX (`payment_status`) ,
+    ADD INDEX (`refund_status`) ;
+
+
+     */
 }
