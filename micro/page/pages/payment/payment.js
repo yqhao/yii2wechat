@@ -124,7 +124,7 @@ Page({
         console.log('---success---');
         console.log(res);
         // 付款成功
-        appInstance.turnToPage('/page/pages/paymentResult/paymentResult?status=success', true);
+        appInstance.turnToPage('/page/pages/paymentResult/paymentResult?status=success&orderId=' + currentPage.data.orderId, true);
       },
       fail: function (res) {
         console.log(res);
@@ -151,7 +151,7 @@ Page({
     };
     appInstance.sendRequest({
       url: '/api/v1/order/pay',
-      // data: { 'id': orderId },
+      data: { 'id': orderId },
       method: 'post',
       header: header,
       success: function (res) {
