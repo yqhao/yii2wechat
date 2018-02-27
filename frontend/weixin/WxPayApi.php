@@ -65,7 +65,7 @@ class WxPayApi {
         $startTimeStamp = self::getMillisecond(); //请求开始时间
         $response = self::postXmlCurl($xml, $url, false, $timeOut);
         $result = WxPayResults::Init($response);
-        self::reportCostTime($url, $startTimeStamp, $result); //上报请求花费时间
+        self::reportCostTime($url, $startTimeStamp, $result,$inputObj->GetSpbill_create_ip()); //上报请求花费时间
         return $result;
     }
 
@@ -325,7 +325,7 @@ class WxPayApi {
         }
         $inputObj->SetAppid(WxPayConfig::APPID); //公众账号ID
         $inputObj->SetMch_id(WxPayConfig::MCHID); //商户号
-        $inputObj->SetUser_ip($_SERVER['REMOTE_ADDR']); //终端ip
+        //$inputObj->SetUser_ip($_SERVER['REMOTE_ADDR']); //终端ip
         $inputObj->SetTime(date("YmdHis")); //商户上报时间	 
         $inputObj->SetNonce_str(self::getNonceStr()); //随机字符串
 
@@ -444,9 +444,10 @@ class WxPayApi {
      * 上报数据， 上报的时候将屏蔽所有异常流程
      * @param string $usrl
      * @param int $startTimeStamp
+     * @param string $userIp
      * @param array $data
      */
-    private static function reportCostTime($url, $startTimeStamp, $data) {
+    private static function reportCostTime($url, $startTimeStamp, $data,$userIp = null) {
         //如果不需要上报数据
         if (WxPayConfig::REPORT_LEVENL == 0) {
             return;
@@ -492,6 +493,10 @@ class WxPayApi {
         //设备号
         if (array_key_exists("device_info", $data)) {
             $objInput->SetDevice_info($data["device_info"]);
+        }
+        //设备号
+        if ($userIp) {
+            $objInput->SetUser_ip($userIp);
         }
 
         try {

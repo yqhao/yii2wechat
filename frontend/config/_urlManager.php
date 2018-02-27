@@ -20,7 +20,7 @@ return [
         ['class' => 'yii\rest\UrlRule', 'controller' => 'api/v1/package', 'only' => ['index', 'view','detail','images']],
         ['class' => 'yii\rest\UrlRule', 'controller' => 'api/v1/package-item', 'only' => ['index', 'view']],
         ['class' => 'yii\rest\UrlRule', 'controller' => 'api/v1/user-auth', 'only' => ['send-code','check-login']],
-        ['class' => 'yii\rest\UrlRule', 'controller' => 'api/v1/order', 'only' => ['index', 'view', 'create','add','check-coupon','pay','detail','cancel']],
+        ['class' => 'yii\rest\UrlRule', 'controller' => 'api/v1/order', 'only' => ['index', 'view', 'create','add','check-coupon','pay','detail','cancel','get-payment-info']],
         ['class' => 'yii\rest\UrlRule', 'controller' => 'api/v1/payment-notify', 'only' => ['receive']],
 //        'GET api/v1/widget-carousel/getAd' => 'api/v1/widget-carousel/getIndexAd',
     ]

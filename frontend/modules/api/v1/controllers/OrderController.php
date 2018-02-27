@@ -360,4 +360,55 @@ class OrderController extends ApiController
             throw new HttpException(422,$e->getMessage());
         }
     }
+
+
+    public function actionGetPaymentInfo($orderId){
+        try{
+            $paymentType = 'DEFAULT';
+            $paymentStatus = 'PAID';
+            $paymentParams = null;
+            $openId = \Yii::$app->getUser()->getId();
+            $userId = UserWechat::find()->select('user_id')->where(['openid'=>$openId])->scalar();
+            if(!$userId){
+                throw new Exception('用户不存在');
+            }
+            // 用order id查询订单信息
+
+            $order = Order::findOne(['id'=>$orderId, 'user_id'=>$userId]);
+            if(empty($order)){
+                throw new Exception('订单不存在');
+            }
+            // 如果已支付,跳转到订单详情
+            
+            // 未支付
+            if($order->payment_status == Order::PAYMENT_STATUS_NO){
+
+                // 如果支付金额为0,成功则跳转支付成功页面,否则支付失败页面
+
+                // 如果需要支付,调用微信支付接口,成功则跳转支付成功页面,否则支付失败页面
+                $paymentStatus = 'UNPAID';
+                if($order->payment_price > 0){
+                    $paymentType = 'WECHAT';
+                    $paymentParams = \GuzzleHttp\json_decode(Wechat::unifiedOrder($openId,$order->code,$order->package_title,$order->package_id,($order->payment_price*100)));
+                }
+            }
+
+            return ['data'=>[
+                'order' => $order->toArray(['id','code','package_title','total_price','payment_price','status','payment_type','payment_status','coupon_code']),
+                'payment' => [
+                    'type' => $paymentType,
+                    'status' => $paymentStatus,
+                    'params ' => $paymentParams
+                ]
+            ]];
+
+
+        }catch (Exception $e){
+            throw new HttpException(422,$e->getMessage());
+        }
+
+
+
+
+    }
 }
