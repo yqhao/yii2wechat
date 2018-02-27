@@ -134,7 +134,7 @@ class OrderController extends ApiController
 //            throw new HttpException(422,'用户不存在'.$userId);
 //        }
         $paymentParams = null;
-        if($model->total_pay_amount > 0){
+        if(!isset($post['version']) && $model->total_pay_amount > 0){
             $paymentParams = \GuzzleHttp\json_decode(Wechat::unifiedOrder(\Yii::$app->getUser()->getId(),$model->order_code,$model->product_name,$model->package_id,($model->total_pay_amount*100)));
         }
 
@@ -398,7 +398,7 @@ class OrderController extends ApiController
                 'payment' => [
                     'type' => $paymentType,
                     'status' => $paymentStatus,
-                    'params ' => $paymentParams
+                    'params' => $paymentParams
                 ]
             ]];
 
