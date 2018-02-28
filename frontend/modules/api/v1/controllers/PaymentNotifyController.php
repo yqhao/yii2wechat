@@ -55,7 +55,6 @@ class PaymentNotifyController extends ActiveController
     
     public function actionReceive(){
         \Yii::$app->response->format = \yii\web\Response::FORMAT_XML;
-        \Yii::getLogger()->log(var_export(file_get_contents('php://input'),true),Logger::LEVEL_ERROR);
         try{
             try{
                 $notify = new WxPayNotify();

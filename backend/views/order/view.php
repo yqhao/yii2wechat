@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="order-view">
 
     <p>
-        <?php echo Html::a('< 返回', Yii::$app->request->referrer, ['class' => 'btn bg-purple']) ?>
+        <?php echo Html::a('< 返回', ['index'], ['class' => 'btn bg-purple']) ?>
         <?php //echo Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?php /*echo Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
@@ -75,26 +75,11 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'package_id',
             'total_quantity',
             'total_price',
-            'total_sale_price',
+//            'total_sale_price',
             'payment_price',
-            'discount',
-            'discount_info:ntext',
-            'created_at:datetime',
-            'updated_at:datetime',
-            [
-                'attribute' => 'payment_type',
-                'format' => 'raw',
-                'value' => function ($model) {
-                    return \common\models\Order::paymentTypes($model->payment_type);
-                }
-            ],
-            [
-                'attribute' => 'payment_status',
-                'format' => 'raw',
-                'value' => function ($model) {
-                    return \common\models\Order::paymentStatus($model->payment_status);
-                }
-            ],
+            'coupon_code',
+//            'discount',
+//            'discount_info:ntext',
             [
                 'attribute' => 'status',
                 'format' => 'raw',
@@ -102,8 +87,30 @@ $this->params['breadcrumbs'][] = $this->title;
                     return \common\models\Order::status($model->status);
                 }
             ],
-            'coupon_code',
-            'after_sale_status',
+            [
+                'attribute' => 'payment_type',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \common\models\Order::getPaymentTypeForPage($model->payment_type);
+                }
+            ],
+            [
+                'attribute' => 'payment_status',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \common\models\Order::getPaymentStatusForPage($model->payment_status);
+                }
+            ],
+
+            [
+                'attribute' => 'refund_status',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \common\models\Order::getRefundStatusForPage($model->refund_status);
+                }
+            ],
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 

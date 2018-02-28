@@ -52,7 +52,8 @@ use yii\bootstrap\ActiveForm;
     <?php echo $form->field($model, 'contact_mobile')->textInput(['maxlength' => true]) ?>
 
     <?php echo $form->field($model, 'remark')->textInput(['maxlength' => true]) ?>
-
+    <?php echo $form->field($model, 'status')->dropDownList(\common\models\Order::status()) ?>
+    <?php echo $form->field($model, 'refund_status')->dropDownList(\common\models\Order::refundStatus()) ?>
 <!--    --><?php //echo $form->field($model, 'after_sale_status')->textInput() ?>
 
     <div class="form-group">
