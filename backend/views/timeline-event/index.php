@@ -27,7 +27,7 @@ $this->registerJs('
         var areaChart = new Chart(areaChartCanvas);
         var orderCount = '.$orderCounts.';
         var areaChartData = {
-            labels: orderCount.day,
+            labels: orderCount.dayShort,
             datasets: [
                 {
                     label: "新订单",
@@ -99,7 +99,7 @@ $this->registerJs('
         //--------------
         var memberCount = '.$memberCounts.';
         var memberChartData = {
-            labels: memberCount.day,
+            labels: memberCount.dayShort,
             datasets: [
                 {
                     label: "新会员",

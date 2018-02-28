@@ -26,8 +26,8 @@ class TimelineEventController extends Controller
         $dataProvider->sort = [
             'defaultOrder'=>['created_at'=>SORT_DESC]
         ];
-        $startTime = time()-86400*6;
-        $endTime = time();
+        $startTime = strtotime(date('Ymd'))-86400*6;
+        $endTime = strtotime(date('Ymd'))+86400;
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -36,63 +36,69 @@ class TimelineEventController extends Controller
         ]);
     }
 
-    protected function getOrderCount($startTime,$endTime){
+    protected function getOrderCount($startTime,$endTime,$fresh=false){
         $cacheKey = 'get-order-counts-'.$startTime.'-'.$endTime;
         $cacheData = \Yii::$app->getCache()->get($cacheKey);
-        if(!empty($cacheData)){
-            var_dump($cacheData);exit;
+        if(!$fresh && !empty($cacheData)){
             return $cacheData;
         }
         $data = [];
         $payData = [];
         $map = [];
-        $startDay = date('Ymd',$startTime);
-        $endDay = date('Ymd',$endTime);
+        $dayShort = $day = [];
+        $days = round(($endTime-$startTime)/3600/24);
 
         $orderCounts = \Yii::$app->db->createCommand("SELECT count(id) as counts, FROM_UNIXTIME(created_at, '%Y%m%d') AS create_day
 FROM `order` WHERE created_at BETWEEN :start AND :end GROUP BY create_day;")
             ->bindValues([':start'=>$startTime,':end'=>$endTime])->queryAll();
         if(!empty($orderCounts))$map = ArrayHelper::map($orderCounts,'create_day','counts');
-        for($i=$startDay;$i<=$endDay;$i++){
-            $data[$i] = isset($map[$i]) ? $map[$i] : 0;
+        for($i=0;$i<$days;$i++){
+            $today = date('Ymd',$startTime+($i*86400));
+            $data[$today] = isset($map[$today]) ? $map[$today] : 0;
+            $day[] = $today;
+            $dayShort[] = date('m-d',$startTime+($i*86400));
         }
-        $day = array_keys($data);
+//        $day = array_keys($data);
 
         $payCounts = \Yii::$app->db->createCommand("SELECT count(id) as counts, FROM_UNIXTIME(created_at, '%Y%m%d') AS create_day
 FROM `order` WHERE payment_status=:pay AND created_at BETWEEN :start AND :end GROUP BY create_day;")
             ->bindValues([':pay'=>Order::PAYMENT_STATUS_YES,':start'=>$startTime,':end'=>$endTime])->queryAll();
         if(!empty($payCounts))$payCountsMap = ArrayHelper::map($payCounts,'create_day','counts');
-        for($i=$startDay;$i<=$endDay;$i++){
-            $payData[$i] = isset($payCountsMap[$i]) ? $payCountsMap[$i] : 0;
+        for($i=0;$i<=$days;$i++){
+            $today = date('Ymd',$startTime+($i*86400));
+            $payData[$today] = isset($payCountsMap[$today]) ? $payCountsMap[$today] : 0;
         }
 
 
-        $result =  json_encode(['day' => $day, 'totalCount' => $data, 'payCount' => $payData]);
+        $result =  json_encode(['day' => $day,'dayShort' => $dayShort, 'totalCount' => $data, 'payCount' => $payData]);
         \Yii::$app->getCache()->set($cacheKey,$result,3600);
         return $result;
     }
 
-    protected function getMemberCount($startTime,$endTime){
+    protected function getMemberCount($startTime,$endTime,$fresh=false){
         $cacheKey = 'get-member-counts-'.$startTime.'-'.$endTime;
         $cacheData = \Yii::$app->cache->get($cacheKey);
-        if(!empty($cacheData)){
+        if(!$fresh && !empty($cacheData)){
             return $cacheData;
         }
         $data = [];
         $map = [];
 
-        $startDay = date('Ymd',$startTime);
-        $endDay = date('Ymd',$endTime);
+        $dayShort = $day = [];
+        $days = round(($endTime-$startTime)/3600/24);
 
         $counts = \Yii::$app->db->createCommand("SELECT count(1) as counts, FROM_UNIXTIME(created_at, '%Y%m%d') AS create_day
 FROM `user_wechat` WHERE created_at BETWEEN :start AND :end GROUP BY create_day;")
             ->bindValues([':start'=>$startTime,':end'=>$endTime])->queryAll();
         if(!empty($counts))$map = ArrayHelper::map($counts,'create_day','counts');
-        for($i=$startDay;$i<=$endDay;$i++){
-            $data[$i] = isset($map[$i]) ? $map[$i] : 0;
+        for($i=0;$i<$days;$i++){
+            $today = date('Ymd',$startTime+($i*86400));
+            $data[$today] = isset($map[$today]) ? $map[$today] : 0;
+            $day[] = $today;
+            $dayShort[] = date('m-d',$startTime+($i*86400));
         }
         $day = array_keys($data);
-        $result = json_encode(['day' => $day, 'count' => $data]);
+        $result = json_encode(['day' => $day,'dayShort' => $dayShort, 'count' => $data]);
         \Yii::$app->cache->set($cacheKey,$result,3600);
         return $result;
     }
