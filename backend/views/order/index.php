@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => '门票',
                 'attribute' => 'package_id',
                 'format' => 'raw',
-                'headerOptions' => ['width' => '240px'],
+                'headerOptions' => ['width' => '180px'],
                 'value' => function ($model) {
                     $string = '';
                     if(!empty($model->orderItems))foreach ($model->orderItems as $value){
@@ -56,7 +56,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
 //            'package_id',
-             'total_quantity',
+//             'total_quantity',
+            ['attribute' => 'total_quantity', 'headerOptions' => ['width' => '40px']],
              'total_price',
             // 'total_sale_price',
             // 'payment_price',

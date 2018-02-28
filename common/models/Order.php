@@ -250,15 +250,5 @@ class Order extends \yii\db\ActiveRecord
         }
         return $span;
     }
-    /**
-     * ALTER TABLE `order`
-    ADD COLUMN `refund_status`  tinyint(1) UNSIGNED NULL DEFAULT 0 AFTER `after_sale_status`,
-    ADD INDEX (`code`) ,
-    ADD INDEX (`user_id`) ,
-    ADD INDEX (`status`) ,
-    ADD INDEX (`payment_status`) ,
-    ADD INDEX (`refund_status`) ;
 
-
-     */
 }
