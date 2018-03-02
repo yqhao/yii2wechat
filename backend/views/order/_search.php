@@ -66,8 +66,17 @@ use trntv\yii\datetime\DateTimeWidget;
     </div>
 
     <div class="form-group">
+        <div class="col-md-2">
         <?php echo Html::submitButton(Yii::t('backend', 'Search'), ['class' => 'btn btn-primary']) ?>
         <?php echo Html::resetButton(Yii::t('backend', 'Reset'), ['class' => 'btn btn-default']) ?>
+        </div>
+        <div class="col-md-2">
+        <?php echo Html::submitButton('导出', [
+            'class' => 'btn btn-info',
+            'style' => 'width:120px;',
+            'onclick'=>'javascript:this.form.action="export";'
+        ]) ?>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

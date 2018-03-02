@@ -319,6 +319,10 @@ class Excel extends \yii\base\Widget
 	
 	/**
 	 * Setting data from models
+	 * @param PHPExcel_Worksheet $activeSheet
+	 * @param $models
+	 * @param array $columns
+	 * @param array $headers
 	 */
 	public function executeColumns(&$activeSheet = null, $models, $columns = [], $headers = [])
 	{
@@ -531,21 +535,13 @@ class Excel extends \yii\base\Widget
 	 * Getting the file name of exporting xls file
 	 * @return string
 	 */
-//	public function getFileName()
-//	{
-//		$fileName = 'exports.xls';
-//		if (isset($this->fileName)) {
-//			$fileName = $this->fileName;
-//			if (strpos($fileName, '.xls') === false)
-//				$fileName .= '.xls';
-//		}
-//		return $fileName;
-//	}
 	public function getFileName()
 	{
-		$fileName = 'exports';
+		$fileName = 'exports.xls';
 		if (isset($this->fileName)) {
 			$fileName = $this->fileName;
+			if (strpos($fileName, '.xls') === false)
+				$fileName .= '.xls';
 		}
 		return $fileName;
 	}

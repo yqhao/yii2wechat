@@ -118,4 +118,12 @@ class OrderController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionExport()
+    {
+        $searchModel = new OrderSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model= $dataProvider->query->all();
+        return $this->render('export',['data'=>$model]);
+    }
 }
