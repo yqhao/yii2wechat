@@ -48,8 +48,8 @@ class ComposerStaticInit5d7a5a531fe735b2b3cf2b92690b4044
         ),
         'm' => 
         array (
-            'mihaildev\\elfinder\\' => 19,
             'moonland\\phpexcel\\' => 18,
+            'mihaildev\\elfinder\\' => 19,
         ),
         'c' => 
         array (
@@ -193,13 +193,13 @@ class ComposerStaticInit5d7a5a531fe735b2b3cf2b92690b4044
             1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
         ),
+        'moonland\\phpexcel\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/moonlandsoft/yii2-phpexcel',
+        ),
         'mihaildev\\elfinder\\' => 
         array (
             0 => __DIR__ . '/..' . '/mihaildev/yii2-elfinder',
-        ),
-        'moonland\\phpexcel\\' =>
-        array (
-            0 => __DIR__ . '/..' . '/moonland/phpexcel',
         ),
         'cheatsheet\\' => 
         array (
@@ -348,6 +348,10 @@ class ComposerStaticInit5d7a5a531fe735b2b3cf2b92690b4044
             'Pdp\\' => 
             array (
                 0 => __DIR__ . '/..' . '/jeremykendall/php-domain-parser/src',
+            ),
+            'PHPExcel' => 
+            array (
+                0 => __DIR__ . '/..' . '/phpoffice/phpexcel/Classes',
             ),
         ),
         'H' => 
