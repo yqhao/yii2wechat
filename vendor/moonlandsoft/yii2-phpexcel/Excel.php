@@ -531,13 +531,21 @@ class Excel extends \yii\base\Widget
 	 * Getting the file name of exporting xls file
 	 * @return string
 	 */
+//	public function getFileName()
+//	{
+//		$fileName = 'exports.xls';
+//		if (isset($this->fileName)) {
+//			$fileName = $this->fileName;
+//			if (strpos($fileName, '.xls') === false)
+//				$fileName .= '.xls';
+//		}
+//		return $fileName;
+//	}
 	public function getFileName()
 	{
-		$fileName = 'exports.xls';
+		$fileName = 'exports';
 		if (isset($this->fileName)) {
 			$fileName = $this->fileName;
-			if (strpos($fileName, '.xls') === false)
-				$fileName .= '.xls';
 		}
 		return $fileName;
 	}
