@@ -18,6 +18,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php echo Html::a(Yii::t('backend', 'Create {modelClass}', [
     'modelClass' => 'Coupon',
 ]), ['create'], ['class' => 'btn btn-success']) ?>
+        <?php
+            echo Html::a('全部导出','export',['class'=>'btn btn-info','target'=>'_blank']);
+        ?>
     </p>
 
     <?php echo GridView::widget([

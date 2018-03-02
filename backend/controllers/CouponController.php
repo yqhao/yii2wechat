@@ -128,4 +128,8 @@ class CouponController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    public function actionExport()
+    {
+        return $this->render('export',['data'=>Coupon::find()->all()]);
+    }
 }
